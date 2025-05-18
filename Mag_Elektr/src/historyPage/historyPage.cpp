@@ -4,7 +4,7 @@ HistoryPage::HistoryPage(UserRole userRole, QWidget *parent) : QWidget(parent)
 {
     m_userRole = userRole;
 
-    this->setStyleSheet(MainStyle::StyleSheets[STYLE_COMPONENTSPAGE_NAME]);
+    this->setStyleSheet(MainStyle::StyleSheets[STYLE_HISTORYPAGE_NAME]);
     this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
     m_mainLayout = new QVBoxLayout(this); //!< @note temporary

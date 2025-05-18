@@ -8,10 +8,6 @@
 
 QMap<QString, QString> MainStyle::StyleSheets;
 
-//! @brief Wczytuje arkusze stylów z plików .qss
-//!
-//! @details Wczytuje arkusze stylów z plików .qss i zapisuje je w mapie StyleSheets.
-
 void MainStyle::loadStyleSheets()
 {
     QFile fileStyle_componentsPage(STYLE_COMPONENTSPAGE_PATH);

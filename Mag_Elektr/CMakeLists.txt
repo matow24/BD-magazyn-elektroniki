@@ -35,7 +35,12 @@ set (SRC_FILES
     ${SRC_DIR}/mainWindow/mainToolButton.cpp
 
     ${SRC_DIR}/componentsPage/componentsPage.cpp
+    ${SRC_DIR}/componentsPage/displayComponentsSpace.cpp
+    ${SRC_DIR}/componentsPage/filterTypeSpace.cpp
+
+
     ${SRC_DIR}/historyPage/historyPage.cpp
+
     ${SRC_DIR}/modifyPage/modifyPage.cpp
 )
 

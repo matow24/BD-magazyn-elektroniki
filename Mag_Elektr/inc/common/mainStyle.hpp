@@ -11,6 +11,8 @@
 #include <QMap>
 #include <QString>
 
+#include "main.hpp"
+
 class MainStyle
 {
 public:

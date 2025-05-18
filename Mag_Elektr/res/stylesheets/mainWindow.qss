@@ -19,7 +19,7 @@ QToolButton
     font-size: 20px;
     min-height: 30px;
     min-width: 45px;
-    border: 1px solid darkgreen;
+    border: 1px solid green;
     background-color: transparent;
 }
 
