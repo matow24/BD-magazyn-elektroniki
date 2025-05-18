@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QSqlDatabase>
+#include <QSqlError>
 #include <QSqlQuery>
 #include <QString>
 

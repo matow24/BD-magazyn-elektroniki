@@ -2,6 +2,26 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="pl">
 <context>
+    <name>FilterTypeSpace</name>
+    <message>
+        <location filename="../src/componentsPage/filterTypeSpace.cpp" line="112"/>
+        <source>Nr. Regału</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/filterTypeSpace.cpp" line="118"/>
+        <source>Nr. Półki</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/filterTypeSpace.cpp" line="124"/>
+        <location filename="../src/componentsPage/filterTypeSpace.cpp" line="139"/>
+        <location filename="../src/componentsPage/filterTypeSpace.cpp" line="145"/>
+        <source>Szukaj</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainToolBar</name>
     <message>
         <location filename="../src/mainWindow/mainToolBar.cpp" line="43"/>

@@ -6,4 +6,8 @@
         <file>stylesheets/mainWindow.qss</file>
         <file>stylesheets/modifyPage.qss</file>
     </qresource>
+    <qresource>
+        <file>icons/location.png</file>
+        <file>icons/search.png</file>
+    </qresource>
 </RCC>
