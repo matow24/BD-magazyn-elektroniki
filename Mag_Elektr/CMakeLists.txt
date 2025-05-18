@@ -25,7 +25,10 @@ set (RES_FILES
 
 set (SRC_FILES 
     ${SRC_DIR}/main.cpp
-    ${SRC_DIR}/common/mainWindow.cpp
+
+    ${SRC_DIR}/loginWindow/loginWindow.cpp
+
+    ${SRC_DIR}/mainWindow/mainWindow.cpp
 )
 
 ################################################################################

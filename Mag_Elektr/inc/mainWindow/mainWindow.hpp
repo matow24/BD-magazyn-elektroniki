@@ -3,11 +3,13 @@
 
 #include <QMainWindow>
 
+#include "main.hpp"
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    MainWindow(QWidget *parent = nullptr) : QMainWindow(parent) {};
+    MainWindow(UserRole userRole, QWidget *parent = nullptr) : QMainWindow(parent) {};
 };
 
 #endif // _MAINWINDOW_HPP
