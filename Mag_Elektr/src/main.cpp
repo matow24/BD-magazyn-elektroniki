@@ -9,6 +9,15 @@ int main(int argc, char *argv[])
 {
     QApplication mainApp(argc, argv);
 
+    if (argc < 2)
+    {
+        qDebug() << "Error: Not enough arguments";
+        exit(1);
+    }
+
+    if (!MainDatabase::ConnectToDatabase(argv[1]))
+        exit(1);
+
     MainStyle::loadStyleSheets();
 
     MainWindow mainWindow(UserRole::Admin); //!< Tworzenie instancji głównego okna aplikacji

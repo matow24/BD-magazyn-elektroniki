@@ -1,11 +1,6 @@
 set (LOCAL_TARGET_NAME "Mag_Elektr")
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets LinguistTools)
-
-find_package(PkgConfig REQUIRED)
-
-# libmodbus & libmodbus-devel packages from official repositories
-pkg_check_modules(modbus REQUIRED IMPORTED_TARGET libmodbus)
+find_package(Qt6 REQUIRED COMPONENTS Widgets LinguistTools Sql)
 
 set (INC_DIR ${CMAKE_CURRENT_LIST_DIR}/inc)
 set (LANG_DIR ${CMAKE_CURRENT_LIST_DIR}/lang)
@@ -25,6 +20,8 @@ set (RES_FILES
 
 set (SRC_FILES 
     ${SRC_DIR}/main.cpp
+
+    ${SRC_DIR}/common/mainDatabase.cpp
 
     ${SRC_DIR}/common/mainStyle.cpp
 
@@ -62,7 +59,7 @@ qt_add_translations(${LOCAL_TARGET_NAME} TS_FILE_BASE ${LOCAL_TARGET_NAME} TS_OU
 
 target_sources(${LOCAL_TARGET_NAME} PRIVATE ${SRC_FILES} ${RES_FILES})
 
-target_link_libraries(${LOCAL_TARGET_NAME} PRIVATE Qt::Core Qt::Widgets)
+target_link_libraries(${LOCAL_TARGET_NAME} PRIVATE Qt::Core Qt::Widgets Qt::Sql)
 
 set_target_properties(${LOCAL_TARGET_NAME} PROPERTIES
     AUTOMOC ON
