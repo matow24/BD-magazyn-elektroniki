@@ -9,6 +9,8 @@ int main(int argc, char *argv[])
 {
     QApplication mainApp(argc, argv);
 
+    MainStyle::loadStyleSheets();
+
     MainWindow mainWindow(UserRole::Admin); //!< Tworzenie instancji głównego okna aplikacji
 
     mainWindow.show();     //! Wyświetlenie głównego okna aplikacji

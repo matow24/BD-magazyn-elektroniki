@@ -26,9 +26,17 @@ set (RES_FILES
 set (SRC_FILES 
     ${SRC_DIR}/main.cpp
 
+    ${SRC_DIR}/common/mainStyle.cpp
+
     ${SRC_DIR}/loginWindow/loginWindow.cpp
 
     ${SRC_DIR}/mainWindow/mainWindow.cpp
+    ${SRC_DIR}/mainWindow/mainToolBar.cpp
+    ${SRC_DIR}/mainWindow/mainToolButton.cpp
+
+    ${SRC_DIR}/componentsPage/componentsPage.cpp
+    ${SRC_DIR}/historyPage/historyPage.cpp
+    ${SRC_DIR}/modifyPage/modifyPage.cpp
 )
 
 ################################################################################

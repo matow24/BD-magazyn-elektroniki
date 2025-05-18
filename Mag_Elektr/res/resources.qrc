@@ -1,2 +1,9 @@
 <!DOCTYPE RCC><RCC version="1.0">
+    <qresource>
+        <file>stylesheets/componentsPage.qss</file>
+        <file>stylesheets/historyPage.qss</file>
+        <file>stylesheets/loginWindow.qss</file>
+        <file>stylesheets/mainWindow.qss</file>
+        <file>stylesheets/modifyPage.qss</file>
+    </qresource>
 </RCC>

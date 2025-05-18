@@ -1,0 +1,48 @@
+QMainWindow
+{
+    min-height: 720px;
+    min-width: 1280px;
+}
+
+QToolBar
+{
+    border: none;
+    padding: 0px;
+    spacing: 0px;
+    background-color: transparent;
+}
+
+QToolButton
+{
+    padding: 0px;
+    icon-size: 20px;
+    font-size: 20px;
+    min-height: 30px;
+    min-width: 45px;
+    border: 1px solid darkgreen;
+    background-color: transparent;
+}
+
+QToolButton:hover
+{
+    background-color: darkgreen;
+}
+
+QToolButton:open
+{
+    background-color: green;
+}
+
+QToolButton:checked
+{
+    background-color: green;
+    color: palette(Base);
+}
+
+QToolButton::menu-indicator
+{
+    image: none;
+    subcontrol-origin: padding;
+    subcontrol-position: right center;
+    width: 0px;
+}
