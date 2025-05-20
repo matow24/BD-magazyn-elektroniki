@@ -1,7 +1,195 @@
-QFrame#Spacer
+QLineEdit#ComponentsPageNS_FilterWidget_LineEdit
+{
+    border: 1px solid green;
+    font-size: 14px;
+    background-color: transparent;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+QPushButton#ComponentsPageNS_FilterWidget_Button
+{
+    padding: 5px;
+    icon-size: 21px;
+    font-size: 14px;
+    border: none;
+    background-color: green;
+    color: palette(Base);
+}
+
+QPushButton#ComponentsPageNS_FilterWidget_Button:disabled
+{
+    background-color: rgba(0, 128, 0, 128);
+}
+
+QPushButton#ComponentsPageNS_FilterWidget_Button:checked
+{
+    background-color: darkgreen;
+}
+
+QPushButton#ComponentsPageNS_FilterWidget_Button:pressed
+{
+    background-color: darkgreen;
+}
+
+QTreeWidget#ComponentsPageNS_TreeFilterWidget
+{
+    border: none;
+    padding: 0px;
+    spacing: 0px;
+    background-color: transparent;
+}
+
+QTreeWidget::item#ComponentsPageNS_TreeFilterWidget:selected
+{
+    background-color: darkgreen;
+}
+
+QFrame#ComponentsPage_Frame
 {
     border: none;
     padding: 0px;
     spacing: 0px;
     background-color: green;
+}
+
+QWidget#ComponentsPageNS_ContainerWidget
+{
+    border: none;
+    background-color: transparent;
+}
+
+QWidget#Component_Component
+{
+    border: 2px solid green;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+QWidget#Component_EditWidget
+{
+    border: none;
+    background-color: green;
+}
+
+QPushButton#Component_EditWidget_Button
+{
+    border: none;
+    background-color: transparent;
+    icon-size: 21px;
+    font-size: 14px;
+    padding: 7px;
+}
+
+QPushButton#Component_EditWidget_Button:pressed
+{
+    background-color: darkgreen;
+    color: palette(Base);
+}
+
+QWidget#Component_ParametersWidget
+{
+    border: none;
+    background-color: transparent;
+}
+
+QLabel#Component_ParametersWidget_NameLabel
+{
+    font-size: 14px;
+    font-weight: bold;
+    background-color: green;
+    color: palette(Base);
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+QLabel#Component_ParametersWidget_ValueLabel
+{
+    font-size: 14px;
+    background-color: transparent;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+QWidget#Component_QuantityWidget
+{
+    border: none;
+    background-color: transparent;
+}
+
+QWidget#Component_QuantityWidget_InfoWidget
+{
+    border: none;
+    background-color: green;
+}
+
+QLabel#Component_QuantityWidget_NameLabel
+{
+    font-size: 8px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: palette(Base);
+}
+
+QLabel#Component_QuantityWidget_ValueLabel
+{
+    font-size: 16px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: palette(Base);
+}
+
+QLabel#Component_QuantityWidget_EditLabel
+{
+    font-size: 8px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+QLineEdit#Component_QuantityWidget_EditField
+{
+    font-size: 16px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: transparent;
+    border: 1px solid green;
+    min-width: 20px;
+}
+
+QPushButton#Component_QuantityWidget_Button
+{
+    icon-size: 16px;
+    font-size: 16px;
+    padding: 3px;
+    border: 1px solid green;
+    background-color: green;
+    min-width: 20px;
+    min-height: 20px;
+}
+
+QPushButton#Component_QuantityWidget_Button:disabled
+{
+    background-color: rgba(0, 128, 0, 128);
+}
+
+QPushButton#Component_QuantityWidget_Button:pressed
+{
+    background-color: darkgreen;
+    color: palette(Base);
+}
+
+#FilterTypeSpace
+{
+    border: none;
+    padding: 0px;
+    spacing: 0px;
+    background-color: transparent;
+}
+
+#DisplayComponentsSpace
+{
+    border: none;
+    padding: 0px;
+    spacing: 0px;
+    background-color: transparent;
 }

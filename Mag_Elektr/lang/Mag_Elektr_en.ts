@@ -2,22 +2,82 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en">
 <context>
-    <name>FilterTypeSpace</name>
+    <name>ComponentNS::ParametersWidget</name>
     <message>
-        <location filename="../src/componentsPage/filterTypeSpace.cpp" line="112"/>
-        <source>Nr. Regału</source>
+        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="83"/>
+        <source>Nazwa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/filterTypeSpace.cpp" line="118"/>
-        <source>Nr. Półki</source>
+        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="90"/>
+        <source>Rodzaj</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/filterTypeSpace.cpp" line="124"/>
-        <location filename="../src/componentsPage/filterTypeSpace.cpp" line="139"/>
-        <location filename="../src/componentsPage/filterTypeSpace.cpp" line="145"/>
+        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="97"/>
+        <source>Typ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="104"/>
+        <source>Producent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="111"/>
+        <source>Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="118"/>
+        <source>Karta Katalogowa</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ComponentNS::QuantityWidget</name>
+    <message>
+        <location filename="../src/componentsPage/component/quantityWidget.cpp" line="77"/>
+        <source>Stan Magazynowy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/component/quantityWidget.cpp" line="85"/>
+        <source>Regał</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/component/quantityWidget.cpp" line="93"/>
+        <source>Półka</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/component/quantityWidget.cpp" line="104"/>
+        <source>Nowa ilość elementów</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ComponentsPageNS::FilterWidget</name>
+    <message>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="109"/>
+        <source>Półka</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="118"/>
+        <source>Regał</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="127"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="154"/>
         <source>Szukaj</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="145"/>
+        <source>Nazwa</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

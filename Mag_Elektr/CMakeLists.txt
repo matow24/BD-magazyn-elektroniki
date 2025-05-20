@@ -32,8 +32,14 @@ set (SRC_FILES
     ${SRC_DIR}/mainWindow/mainToolButton.cpp
 
     ${SRC_DIR}/componentsPage/componentsPage.cpp
-    ${SRC_DIR}/componentsPage/displayComponentsSpace.cpp
-    ${SRC_DIR}/componentsPage/filterTypeSpace.cpp
+    ${SRC_DIR}/componentsPage/componentsPage/containerWidget.cpp
+    ${SRC_DIR}/componentsPage/componentsPage/filterWidget.cpp
+    ${SRC_DIR}/componentsPage/componentsPage/treeFilterWidget.cpp
+
+    ${SRC_DIR}/componentsPage/component/componentWidget.cpp
+    ${SRC_DIR}/componentsPage/component/editWidget.cpp
+    ${SRC_DIR}/componentsPage/component/parametersWidget.cpp
+    ${SRC_DIR}/componentsPage/component/quantityWidget.cpp
 
 
     ${SRC_DIR}/historyPage/historyPage.cpp

@@ -3,13 +3,15 @@
 
 #include <QFrame>
 #include <QHBoxLayout>
+#include <QMap>
 #include <QWidget>
 #include <QVBoxLayout>
 
 #include "main.hpp"
 
-#include "componentsPage/displayComponentsSpace.hpp"
-#include "componentsPage/filterTypeSpace.hpp"
+#include "componentsPage/componentsPage/containerWidget.hpp"
+#include "componentsPage/componentsPage/filterWidget.hpp"
+#include "componentsPage/componentsPage/treeFilterWidget.hpp"
 
 class ComponentsPage : public QWidget
 {
@@ -18,10 +20,15 @@ private:
     UserRole m_userRole;
 
     QHBoxLayout *m_mainLayout = nullptr;
+    QFrame *m_mainFrame = nullptr;
 
-    FilterTypeSpace *m_filterTypeSpace = nullptr;
-    QFrame *m_firstSpacer = nullptr;
-    DisplayComponentsSpace *m_displayComponentsSpace = nullptr;
+    QWidget *m_filterPanel = nullptr;
+    QVBoxLayout *m_filterPanelLayout = nullptr;
+    QFrame *m_filterPanelFrame = nullptr;
+
+    ComponentsPageNS::ContainerWidget *m_containerWidget = nullptr;
+    ComponentsPageNS::FilterWidget *m_filterWidget = nullptr;
+    ComponentsPageNS::TreeFilterWidget *m_treeFilterWidget = nullptr;
 
 public:
     ComponentsPage(UserRole userRole, QWidget *parent = nullptr);

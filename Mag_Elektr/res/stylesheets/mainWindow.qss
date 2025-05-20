@@ -14,11 +14,10 @@ QToolBar
 
 QToolButton
 {
-    padding: 0px;
+    padding: 5px;
     icon-size: 20px;
     font-size: 20px;
     min-height: 30px;
-    min-width: 45px;
     border: 1px solid green;
     background-color: transparent;
 }
@@ -26,11 +25,6 @@ QToolButton
 QToolButton:hover
 {
     background-color: darkgreen;
-}
-
-QToolButton:open
-{
-    background-color: green;
 }
 
 QToolButton:checked
