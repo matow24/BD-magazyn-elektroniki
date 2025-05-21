@@ -60,23 +60,23 @@
 <context>
     <name>ComponentsPageNS::FilterWidget</name>
     <message>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="109"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="73"/>
         <source>Półka</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="118"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="82"/>
         <source>Regał</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="127"/>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="154"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="91"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="118"/>
         <source>Szukaj</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="145"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="109"/>
         <source>Nazwa</source>
         <translation type="unfinished"></translation>
     </message>

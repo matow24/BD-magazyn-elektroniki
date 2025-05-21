@@ -1,43 +1,5 @@
 #include "componentsPage/componentsPage/treeFilterWidget.hpp"
 
-#define QUERY_VARIANT_ALL "SELECT * FROM Variant"
-
-#define QUERY_COMPONENT_ALL_RELATED_BY_VARIANT_NAME     \
-    "SELECT "                                           \
-    "C.ID, "                                            \
-    "V.Name AS Variant_Name, "                          \
-    "V.Type AS Variant_Type, "                          \
-    "C.Name, "                                          \
-    "C.Manufacturer, "                                  \
-    "C.Symbol, "                                        \
-    "C.Datasheet, "                                     \
-    "C.MaksQuantity, "                                  \
-    "L.Quantity AS Location_Quantity, "                 \
-    "L.Rack AS Location_Rack, "                         \
-    "L.Drawer AS Location_Drawer "                      \
-    "FROM Component AS C "                              \
-    "JOIN Variant AS V ON C.Variant_Name = V.Name "     \
-    "LEFT JOIN Location AS L ON C.ID = L.Component_ID " \
-    "WHERE V.Name = ?;"
-
-#define QUERY_COMPONENT_ALL_RELATED_BY_VARIANT_TYPE     \
-    "SELECT "                                           \
-    "C.ID, "                                            \
-    "V.Name AS Variant_Name, "                          \
-    "V.Type AS Variant_Type, "                          \
-    "C.Name, "                                          \
-    "C.Manufacturer, "                                  \
-    "C.Symbol, "                                        \
-    "C.Datasheet, "                                     \
-    "C.MaksQuantity, "                                  \
-    "L.Quantity AS Location_Quantity, "                 \
-    "L.Rack AS Location_Rack, "                         \
-    "L.Drawer AS Location_Drawer "                      \
-    "FROM Component AS C "                              \
-    "JOIN Variant AS V ON C.Variant_Name = V.Name "     \
-    "LEFT JOIN Location AS L ON C.ID = L.Component_ID " \
-    "WHERE V.Type = ?;"
-
 void ComponentsPageNS::TreeFilterWidget::addByVariantName(QString variantName)
 {
     if (m_fromDataBaseFlag)
@@ -117,14 +79,9 @@ void ComponentsPageNS::TreeFilterWidget::showInContainerByVariantType(QString va
 void ComponentsPageNS::TreeFilterWidget::addFromDatabaseByVariantName(QString variantName)
 {
     QSqlQuery query;
-    query.prepare(QUERY_COMPONENT_ALL_RELATED_BY_VARIANT_NAME);
-    query.addBindValue(variantName);
-
-    if (!query.exec())
-    {
-        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+    DB::Attrb::Variant::Name queryName(variantName);
+    if (!DB::Queries::Component::SelectWhere(query, queryName))
         return;
-    }
 
     while (query.next())
     {
@@ -139,7 +96,7 @@ void ComponentsPageNS::TreeFilterWidget::addFromDatabaseByVariantName(QString va
         QString symbol = query.value("Symbol").toString();
         QString datasheet = query.value("Datasheet").toString();
 
-        int maxQuantity = query.value("MaksQuantity").toInt();
+        int maxQuantity = query.value("MaxQuantity").toInt();
         int locationQuantity = query.value("Location_Quantity").toInt();
         int locationRack = query.value("Location_Rack").toInt();
         int locationDrawer = query.value("Location_Drawer").toInt();
@@ -160,7 +117,8 @@ void ComponentsPageNS::TreeFilterWidget::addFromDatabaseByVariantName(QString va
 
         m_containerWidget->addComponentWidget(componentWidget);
 
-        connect(componentWidget, &ComponentNS::ComponentWidget::componentDeleted, this, &ComponentsPageNS::TreeFilterWidget::rescanVariants);
+        connect(componentWidget, &ComponentNS::ComponentWidget::componentDeleted, this, [this](ComponentNS::ComponentWidget *componentWidget)
+                { this->rescanVariants(); });
     }
 }
 
@@ -181,14 +139,9 @@ void ComponentsPageNS::TreeFilterWidget::removeFromDatabaseByVariantName(QString
 void ComponentsPageNS::TreeFilterWidget::addFromDatabaseByVariantType(QString variantType)
 {
     QSqlQuery query;
-    query.prepare(QUERY_COMPONENT_ALL_RELATED_BY_VARIANT_TYPE);
-    query.addBindValue(variantType);
-
-    if (!query.exec())
-    {
-        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+    DB::Attrb::Variant::Type queryType(variantType);
+    if (!DB::Queries::Component::SelectWhere(query, queryType))
         return;
-    }
 
     while (query.next())
     {
@@ -203,7 +156,7 @@ void ComponentsPageNS::TreeFilterWidget::addFromDatabaseByVariantType(QString va
         QString symbol = query.value("Symbol").toString();
         QString datasheet = query.value("Datasheet").toString();
 
-        int maxQuantity = query.value("MaksQuantity").toInt();
+        int maxQuantity = query.value("MaxQuantity").toInt();
         int locationQuantity = query.value("Location_Quantity").toInt();
         int locationRack = query.value("Location_Rack").toInt();
         int locationDrawer = query.value("Location_Drawer").toInt();
@@ -224,7 +177,8 @@ void ComponentsPageNS::TreeFilterWidget::addFromDatabaseByVariantType(QString va
 
         m_containerWidget->addComponentWidget(componentWidget);
 
-        connect(componentWidget, &ComponentNS::ComponentWidget::componentDeleted, this, &ComponentsPageNS::TreeFilterWidget::rescanVariants);
+        connect(componentWidget, &ComponentNS::ComponentWidget::componentDeleted, this, [this](ComponentNS::ComponentWidget *componentWidget)
+                { this->rescanVariants(); });
     }
 }
 
@@ -288,13 +242,8 @@ void ComponentsPageNS::TreeFilterWidget::disableAll()
 void ComponentsPageNS::TreeFilterWidget::rescanVariants()
 {
     QSqlQuery query;
-    query.prepare(QUERY_VARIANT_ALL);
-
-    if (!query.exec())
-    {
-        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+    if (!DB::Queries::Variant::Select(query))
         return;
-    }
 
     QMap<QString, QSet<QString>> actualVariants;
 
@@ -342,13 +291,8 @@ void ComponentsPageNS::TreeFilterWidget::resetVariants()
     m_containerWidget->resetContainer();
 
     QSqlQuery query;
-    query.prepare(QUERY_VARIANT_ALL);
-
-    if (!query.exec())
-    {
-        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+    if (!DB::Queries::Variant::Select(query))
         return;
-    }
 
     while (query.next())
     {

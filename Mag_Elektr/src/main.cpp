@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    if (!MainDatabase::ConnectToDatabase(argv[1]))
+    if (!DB::MainDatabase::ConnectToDatabase(argv[1]))
         exit(1);
 
     MainStyle::loadStyleSheets();

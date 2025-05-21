@@ -3,7 +3,7 @@
 
 #include <QDebug>
 
-#include "common/mainDatabase.hpp"
+#include "mainDatabase/mainDatabase.hpp"
 #include "common/mainStyle.hpp"
 
 enum UserRole

@@ -1,41 +1,6 @@
 #include "componentsPage/component/componentWidget.hpp"
 #include "componentsPage/component/parametersWidget.hpp"
 
-#define QUERY_COMPONENT_GET_BY_ID                       \
-    "SELECT "                                           \
-    "C.ID, "                                            \
-    "V.Name AS Variant_Name, "                          \
-    "V.Type AS Variant_Type, "                          \
-    "C.Name, "                                          \
-    "C.Manufacturer, "                                  \
-    "C.Symbol, "                                        \
-    "C.Datasheet, "                                     \
-    "C.MaksQuantity, "                                  \
-    "L.Quantity AS Location_Quantity, "                 \
-    "L.Rack AS Location_Rack, "                         \
-    "L.Drawer AS Location_Drawer "                      \
-    "FROM Component AS C "                              \
-    "JOIN Variant AS V ON C.Variant_Name = V.Name "     \
-    "LEFT JOIN Location AS L ON C.ID = L.Component_ID " \
-    "WHERE C.ID = ?;"
-
-#define QUERY_LOCATION_UPDATE_BY_ID \
-    "UPDATE Location "              \
-    "SET Quantity = ? "             \
-    "WHERE Component_ID = ?;"
-
-#define QUERY_OPERATION_INSERT \
-    "INSERT INTO "             \
-    "Operation (DateTime) "    \
-    "VALUES (DATETIME('now'));"
-
-#define QUERY_OPERATION_GET_ID "SELECT last_insert_rowid() AS Operation_ID;"
-
-#define QUERY_OPERATION_CHANGEQUANTITY_INSERT                       \
-    "INSERT INTO "                                                  \
-    "Operation_ChangeQuantity (Operation_ID, Component_ID, Delta) " \
-    "VALUES (?, ?, ?);"
-
 int ComponentNS::ComponentWidget::getID() const
 {
     return m_ID;
@@ -95,50 +60,16 @@ ComponentNS::ComponentWidget::ComponentWidget(int ID, UserRole userRole, QWidget
 void ComponentNS::ComponentWidget::deltaConfirmed(int &delta)
 {
     QSqlQuery query;
-    query.prepare(QUERY_LOCATION_UPDATE_BY_ID);
-    query.addBindValue(m_quantityWidget->getQuantity() + delta);
-    query.addBindValue(m_ID);
-    if (!query.exec())
-    {
-        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+    if (!DB::Func::changeQuantity(query, m_ID, delta))
         return;
-    }
-
-    m_quantityWidget->setQuantity(m_quantityWidget->getQuantity() + delta);
-
-    query.prepare(QUERY_OPERATION_INSERT);
-    if (!query.exec())
-    {
-        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
-        return;
-    }
-
-    query.prepare(QUERY_OPERATION_GET_ID);
-    if (!query.exec())
-    {
-        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
-        return;
-    }
-    if (!query.next())
-    {
-        qDebug() << "Error: Unable to get last insert row ID:" << query.lastError().text();
-        return;
-    }
-    int operationID = query.value("Operation_ID").toInt();
-    
-    query.prepare(QUERY_OPERATION_CHANGEQUANTITY_INSERT);
-    query.addBindValue(operationID);
-    query.addBindValue(m_ID);
-    query.addBindValue(delta);
-    if (!query.exec())
-    {
-        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
-        return;
-    }
+    this->updateComponent();
 }
 
 void ComponentNS::ComponentWidget::deleteComponent()
 {
+    QSqlQuery query;
+    if (!DB::Func::deleteComponent(query, m_ID))
+        return;
     emit componentDeleted(this);
     this->deleteLater();
 }
@@ -146,13 +77,9 @@ void ComponentNS::ComponentWidget::deleteComponent()
 void ComponentNS::ComponentWidget::updateComponent()
 {
     QSqlQuery query;
-    query.prepare(QUERY_COMPONENT_GET_BY_ID);
-    query.addBindValue(m_ID);
-    if (!query.exec())
-    {
-        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+    DB::Attrb::Component::ID queryID(m_ID);
+    if (!DB::Queries::Component::SelectWhere(query, queryID))
         return;
-    }
 
     if (query.next())
     {
@@ -163,7 +90,7 @@ void ComponentNS::ComponentWidget::updateComponent()
         QString symbol = query.value("Symbol").toString();
         QString datasheet = query.value("Datasheet").toString();
 
-        int maxQuantity = query.value("MaksQuantity").toInt();
+        int maxQuantity = query.value("MaxQuantity").toInt();
         int locationQuantity = query.value("Location_Quantity").toInt();
         int locationRack = query.value("Location_Rack").toInt();
         int locationDrawer = query.value("Location_Drawer").toInt();

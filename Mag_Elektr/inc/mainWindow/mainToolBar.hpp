@@ -39,7 +39,6 @@ public:
 private slots:
     void pageButtonClicked(QAbstractButton *button);
     void logoutButtonClicked();
-    
 
 signals:
     void pageChanged(Page &newPage);

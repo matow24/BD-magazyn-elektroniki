@@ -21,7 +21,7 @@ set (RES_FILES
 set (SRC_FILES 
     ${SRC_DIR}/main.cpp
 
-    ${SRC_DIR}/common/mainDatabase.cpp
+    ${SRC_DIR}/mainDatabase/mainDatabase.cpp
 
     ${SRC_DIR}/common/mainStyle.cpp
 

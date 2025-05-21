@@ -4,42 +4,6 @@
 #define ICON_SEARCH ":/icons/search.png"
 #define ICON_UNDO ":/icons/undo.png"
 
-#define QUERY_COMPONENT_ALL_RELATED_BY_KEYWORD          \
-    "SELECT "                                           \
-    "C.ID, "                                            \
-    "V.Name AS Variant_Name, "                          \
-    "V.Type AS Variant_Type, "                          \
-    "C.Name, "                                          \
-    "C.Manufacturer, "                                  \
-    "C.Symbol, "                                        \
-    "C.Datasheet, "                                     \
-    "C.MaksQuantity, "                                  \
-    "L.Quantity AS Location_Quantity, "                 \
-    "L.Rack AS Location_Rack, "                         \
-    "L.Drawer AS Location_Drawer "                      \
-    "FROM Component AS C "                              \
-    "JOIN Variant AS V ON C.Variant_Name = V.Name "     \
-    "LEFT JOIN Location AS L ON C.ID = L.Component_ID " \
-    "WHERE C.Name LIKE '%' || ? || '%';"
-
-#define QUERY_COMPONENT_ALL_RELATED_BY_LOCATION         \
-    "SELECT "                                           \
-    "C.ID, "                                            \
-    "V.Name AS Variant_Name, "                          \
-    "V.Type AS Variant_Type, "                          \
-    "C.Name, "                                          \
-    "C.Manufacturer, "                                  \
-    "C.Symbol, "                                        \
-    "C.Datasheet, "                                     \
-    "C.MaksQuantity, "                                  \
-    "L.Quantity AS Location_Quantity, "                 \
-    "L.Rack AS Location_Rack, "                         \
-    "L.Drawer AS Location_Drawer "                      \
-    "FROM Component AS C "                              \
-    "JOIN Variant AS V ON C.Variant_Name = V.Name "     \
-    "LEFT JOIN Location AS L ON C.ID = L.Component_ID " \
-    "WHERE L.Rack = ? AND L.Drawer = ?;"
-
 ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, TreeFilterWidget *treeFilterWidget, UserRole userRole, QWidget *parent) : QWidget(parent)
 {
     m_userRole = userRole;
@@ -214,14 +178,10 @@ void ComponentsPageNS::FilterWidget::findByLocation()
         m_treeFilterWidget->disableAll();
 
         QSqlQuery query;
-        query.prepare(QUERY_COMPONENT_ALL_RELATED_BY_LOCATION);
-        query.addBindValue(rack);
-        query.addBindValue(drawer);
-        if (!query.exec())
-        {
-            qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        DB::Attrb::Location::Rack queryRack(rack.toInt());
+        DB::Attrb::Location::Drawer queryDrawer(drawer.toInt());
+        if (!DB::Queries::Component::SelectWhere(query, queryRack, queryDrawer))
             return;
-        }
 
         while (query.next())
         {
@@ -233,7 +193,7 @@ void ComponentsPageNS::FilterWidget::findByLocation()
             QString datasheet = query.value("Datasheet").toString();
 
             int ID = query.value("ID").toInt();
-            int maxQuantity = query.value("MaksQuantity").toInt();
+            int maxQuantity = query.value("MaxQuantity").toInt();
             int locationQuantity = query.value("Location_Quantity").toInt();
             int locationRack = query.value("Location_Rack").toInt();
             int locationDrawer = query.value("Location_Drawer").toInt();
@@ -263,21 +223,16 @@ void ComponentsPageNS::FilterWidget::findByName()
 {
     if (m_searchFieldText->hasAcceptableInput())
     {
-        QString keyword = m_searchFieldText->text();
+        QString substr_Name = m_searchFieldText->text();
 
         m_treeFilterWidget->setFromDataBaseFlag(true);
         m_treeFilterWidget->resetVariants();
         m_treeFilterWidget->disableAll();
 
         QSqlQuery query;
-        query.prepare(QUERY_COMPONENT_ALL_RELATED_BY_KEYWORD);
-        query.addBindValue(keyword);
-
-        if (!query.exec())
-        {
-            qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        DB::Attrb::Component::Name queryName(substr_Name);
+        if (!DB::Queries::Component::SelectLike(query, queryName))
             return;
-        }
 
         while (query.next())
         {
@@ -289,7 +244,7 @@ void ComponentsPageNS::FilterWidget::findByName()
             QString datasheet = query.value("Datasheet").toString();
 
             int ID = query.value("ID").toInt();
-            int maxQuantity = query.value("MaksQuantity").toInt();
+            int maxQuantity = query.value("MaxQuantity").toInt();
             int locationQuantity = query.value("Location_Quantity").toInt();
             int locationRack = query.value("Location_Rack").toInt();
             int locationDrawer = query.value("Location_Drawer").toInt();
