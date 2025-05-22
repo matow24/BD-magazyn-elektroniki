@@ -1,3 +1,9 @@
+QWidget#ComponentsPage_FilterPanel
+{
+    border: none;
+    background-color: rgba(0, 128, 0, 8);
+}
+
 QLineEdit#ComponentsPageNS_FilterWidget_LineEdit
 {
     border: 1px solid green;

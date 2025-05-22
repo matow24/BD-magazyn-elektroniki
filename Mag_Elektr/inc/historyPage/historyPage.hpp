@@ -8,12 +8,18 @@
 
 #include "main.hpp"
 
+#include "historyPage/historyPage/containerWidget.hpp"
+#include "historyPage/historyPage/filterWidget.hpp"
+
 class HistoryPage : public QWidget
 {
     Q_OBJECT
 private:
+    QHBoxLayout *m_mainLayout = nullptr;
+    QFrame *m_mainFrame = nullptr;
 
-    QVBoxLayout *m_mainLayout = nullptr;
+    HistoryPageNS::ContainerWidget *m_containerWidget = nullptr;
+    HistoryPageNS::FilterWidget *m_filterWidget = nullptr;
 
 public:
     HistoryPage(QWidget *parent = nullptr);

@@ -16,17 +16,17 @@ ComponentNS::EditWidget::EditWidget(QWidget *parent) : QWidget(parent)
     m_mainLayout->setContentsMargins(0, 0, 0, 0);
     m_mainLayout->setSpacing(0);
 
-    m_statisticsButton = new QPushButton(this);
-    m_mainLayout->addWidget(m_statisticsButton, 1, Qt::AlignCenter);
-    m_statisticsButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    m_statisticsButton->setIcon(QIcon(ICON_CHART));
-    m_statisticsButton->setObjectName("Component_EditWidget_Button");
+    // m_statisticsButton = new QPushButton(this);
+    // m_mainLayout->addWidget(m_statisticsButton, 1, Qt::AlignCenter);
+    // m_statisticsButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    // m_statisticsButton->setIcon(QIcon(ICON_CHART));
+    // m_statisticsButton->setObjectName("Component_EditWidget_Button");
 
-    m_editButton = new QPushButton(this);
-    m_mainLayout->addWidget(m_editButton, 1, Qt::AlignCenter);
-    m_editButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    m_editButton->setIcon(QIcon(ICON_EDIT));
-    m_editButton->setObjectName("Component_EditWidget_Button");
+    // m_editButton = new QPushButton(this);
+    // m_mainLayout->addWidget(m_editButton, 1, Qt::AlignCenter);
+    // m_editButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    // m_editButton->setIcon(QIcon(ICON_EDIT));
+    // m_editButton->setObjectName("Component_EditWidget_Button");
 
     m_deleteButton = new QPushButton(this);
     m_mainLayout->addWidget(m_deleteButton, 1, Qt::AlignCenter);
@@ -35,11 +35,17 @@ ComponentNS::EditWidget::EditWidget(QWidget *parent) : QWidget(parent)
     m_deleteButton->setObjectName("Component_EditWidget_Button");
 
     connect(m_deleteButton, &QPushButton::clicked, this, &ComponentNS::EditWidget::deleteButtonClicked);
+    // connect(m_statisticsButton, &QPushButton::clicked, this, &ComponentNS::EditWidget::statisticsButtonClicked);
 }
 
 void ComponentNS::EditWidget::deleteButtonClicked()
 {
     emit deleteComponent();
+}
+
+void ComponentNS::EditWidget::statisticsButtonClicked()
+{
+    emit statisticsComponent();
 }
 
 #include "componentsPage/component/moc_editWidget.cpp"

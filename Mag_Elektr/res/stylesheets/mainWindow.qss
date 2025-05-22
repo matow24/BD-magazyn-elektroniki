@@ -9,7 +9,7 @@ QToolBar
     border: none;
     padding: 0px;
     spacing: 0px;
-    background-color: transparent;
+    background-color: rgba(0, 128, 0, 8);
 }
 
 QToolButton

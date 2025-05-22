@@ -103,6 +103,7 @@ void ComponentsPageNS::TreeFilterWidget::addFromDatabaseByVariantName(QString va
 
         ComponentNS::ComponentWidget *componentWidget = new ComponentNS::ComponentWidget(ID, m_containerWidget);
 
+        componentWidget->getParametersWidget().setID(ID);
         componentWidget->getParametersWidget().setVariantName(variantName);
         componentWidget->getParametersWidget().setVariantType(variantType);
         componentWidget->getParametersWidget().setName(name);
@@ -163,6 +164,7 @@ void ComponentsPageNS::TreeFilterWidget::addFromDatabaseByVariantType(QString va
 
         ComponentNS::ComponentWidget *componentWidget = new ComponentNS::ComponentWidget(ID, m_containerWidget);
 
+        componentWidget->getParametersWidget().setID(ID);
         componentWidget->getParametersWidget().setVariantName(variantName);
         componentWidget->getParametersWidget().setVariantType(variantType);
         componentWidget->getParametersWidget().setName(name);

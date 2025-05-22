@@ -28,7 +28,7 @@
     "   C.Manufacturer, "                               \
     "   C.Symbol, "                                     \
     "   C.Datasheet, "                                  \
-    "   C.MaxQuantity, "                               \
+    "   C.MaxQuantity, "                                \
     "   L.Quantity AS Location_Quantity, "              \
     "   L.Rack AS Location_Rack, "                      \
     "   L.Drawer AS Location_Drawer "                   \
@@ -46,7 +46,7 @@
     "   C.Manufacturer, "                               \
     "   C.Symbol, "                                     \
     "   C.Datasheet, "                                  \
-    "   C.MaxQuantity, "                               \
+    "   C.MaxQuantity, "                                \
     "   L.Quantity AS Location_Quantity, "              \
     "   L.Rack AS Location_Rack, "                      \
     "   L.Drawer AS Location_Drawer "                   \
@@ -64,7 +64,7 @@
     "   C.Manufacturer, "                               \
     "   C.Symbol, "                                     \
     "   C.Datasheet, "                                  \
-    "   C.MaxQuantity, "                               \
+    "   C.MaxQuantity, "                                \
     "   L.Quantity AS Location_Quantity, "              \
     "   L.Rack AS Location_Rack, "                      \
     "   L.Drawer AS Location_Drawer "                   \
@@ -82,7 +82,7 @@
     "   C.Manufacturer, "                               \
     "   C.Symbol, "                                     \
     "   C.Datasheet, "                                  \
-    "   C.MaxQuantity, "                               \
+    "   C.MaxQuantity, "                                \
     "   L.Quantity AS Location_Quantity, "              \
     "   L.Rack AS Location_Rack, "                      \
     "   L.Drawer AS Location_Drawer "                   \
@@ -100,7 +100,7 @@
     "   C.Manufacturer, "                               \
     "   C.Symbol, "                                     \
     "   C.Datasheet, "                                  \
-    "   C.MaxQuantity, "                               \
+    "   C.MaxQuantity, "                                \
     "   L.Quantity AS Location_Quantity, "              \
     "   L.Rack AS Location_Rack, "                      \
     "   L.Drawer AS Location_Drawer "                   \
@@ -134,9 +134,9 @@
     "SET Component_ID = :Component_ID "              \
     "WHERE Rack = :Rack AND Drawer = :Drawer;"
 
-#define OPERATION_INSERTOPERATION \
-    "INSERT INTO "                \
-    "Operation (DateTime, User_Email) "       \
+#define OPERATION_INSERTOPERATION       \
+    "INSERT INTO "                      \
+    "Operation (DateTime, User_Email) " \
     "VALUES (DATETIME('now'), :User_Email);"
 
 #define OPERATION_INSERTCHANGECOMPONENT                             \
@@ -153,5 +153,79 @@
     "INSERT INTO "                                                                                                                          \
     "Operation_MoveComponent (Operation_ID, Component_ID, Old_Location_Rack, Old_Location_Drawer, New_Location_Rack, New_Location_Drawer) " \
     "VALUES (:Operation_ID, :Component_ID, :Old_Location_Rack, :Old_Location_Drawer, :New_Location_Rack, :New_Location_Drawer);"
+
+#define OPERATION_SELECTWHERECHANGECOMPONENT__NOT_NULL            \
+    "SELECT "                                                     \
+    "  O.ID, "                                                    \
+    "  O.DateTime, "                                              \
+    "  O.User_Email, "                                            \
+    "  O_CC.Component_ID, "                                       \
+    "  O_CC.Type "                                                \
+    "FROM Operation_ChangeComponent AS O_CC "                     \
+    "JOIN Operation AS O ON O_CC.Operation_ID = O.ID "            \
+    "WHERE (:DateTimeMin IS NULL OR O.DateTime >= :DateTimeMin) " \
+    "  AND (:DateTimeMax IS NULL OR O.DateTime <= :DateTimeMax) " \
+    "  AND (:User_Email IS NULL OR O.User_Email = :User_Email) "  \
+    "  AND (:Component_ID IS NULL OR O_CC.Component_ID = :Component_ID);"
+
+#define OPERATION_SELECTWHERECHANGEQUANTITY__NOT_NULL             \
+    "SELECT "                                                     \
+    "  O.ID, "                                                    \
+    "  O.DateTime, "                                              \
+    "  O.User_Email, "                                            \
+    "  O_CQ.Component_ID, "                                       \
+    "  O_CQ.Delta "                                               \
+    "FROM Operation_ChangeQuantity AS O_CQ "                      \
+    "JOIN Operation AS O ON O_CQ.Operation_ID = O.ID "            \
+    "WHERE (:DateTimeMin IS NULL OR O.DateTime >= :DateTimeMin) " \
+    "  AND (:DateTimeMax IS NULL OR O.DateTime <= :DateTimeMax) " \
+    "  AND (:User_Email IS NULL OR O.User_Email = :User_Email) "  \
+    "  AND (:Component_ID IS NULL OR O_CQ.Component_ID = :Component_ID);"
+
+#define OPERATION_SELECTWHERECHANGERACK__NOT_NULL                 \
+    "SELECT "                                                     \
+    "  O.ID, "                                                    \
+    "  O.DateTime, "                                              \
+    "  O.User_Email, "                                            \
+    "  O_CR.RackNr, "                                             \
+    "  O_CR.Type "                                                \
+    "FROM Operation_ChangeRack AS O_CR "                          \
+    "JOIN Operation AS O ON O_CR.Operation_ID = O.ID "            \
+    "WHERE (:DateTimeMin IS NULL OR O.DateTime >= :DateTimeMin) " \
+    "  AND (:DateTimeMax IS NULL OR O.DateTime <= :DateTimeMax) " \
+    "  AND (:User_Email IS NULL OR O.User_Email = :User_Email) "  \
+    "  AND (:RackNr IS NULL OR O_CR.RackNr = :RackNr);"
+
+#define OPERATION_SELECTWHERECHANGEUSER__NOT_NULL                 \
+    "SELECT "                                                     \
+    "  O.ID, "                                                    \
+    "  O.DateTime, "                                              \
+    "  O.User_Email, "                                            \
+    "  O_CU.User_Email AS Modified_User_Email, "                  \
+    "  O_CU.Type "                                                \
+    "FROM Operation_ChangeUser AS O_CU "                          \
+    "JOIN Operation AS O ON O_CU.Operation_ID = O.ID "            \
+    "WHERE (:DateTimeMin IS NULL OR O.DateTime >= :DateTimeMin) " \
+    "  AND (:DateTimeMax IS NULL OR O.DateTime <= :DateTimeMax) " \
+    "  AND (:User_Email IS NULL OR O.User_Email = :User_Email OR O_CU.User_Email = :User_Email);"
+
+#define OPERATION_SELECTWHEREMOVECOMPONENT__NOT_NULL                                                                        \
+    "SELECT "                                                                                                               \
+    "  O.ID, "                                                                                                              \
+    "  O.DateTime, "                                                                                                        \
+    "  O.User_Email, "                                                                                                      \
+    "  O_MC.Component_ID, "                                                                                                 \
+    "  O_MC.Old_Location_Rack, "                                                                                            \
+    "  O_MC.Old_Location_Drawer, "                                                                                          \
+    "  O_MC.New_Location_Rack, "                                                                                            \
+    "  O_MC.New_Location_Drawer "                                                                                           \
+    "FROM Operation_MoveComponent AS O_MC "                                                                                 \
+    "JOIN Operation AS O ON O_MC.Operation_ID = O.ID "                                                                      \
+    "WHERE (:DateTimeMin IS NULL OR O.DateTime >= :DateTimeMin) "                                                           \
+    "  AND (:DateTimeMax IS NULL OR O.DateTime <= :DateTimeMax) "                                                           \
+    "  AND (:User_Email IS NULL OR O.User_Email = :User_Email) "                                                            \
+    "  AND (:Component_ID IS NULL OR O_MC.Component_ID = :Component_ID) "                                                   \
+    "  AND (:Location_Rack IS NULL OR O_MC.Old_Location_Rack = :Location_Rack OR O_MC.New_Location_Rack = :Location_Rack) " \
+    "  AND (:Location_Drawer IS NULL OR O_MC.Old_Location_Drawer = :Location_Drawer OR O_MC.New_Location_Drawer = :Location_Drawer);"
 
 #endif // _DB_QUERIES_HPP

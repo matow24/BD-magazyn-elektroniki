@@ -1,5 +1,15 @@
 #include "componentsPage/component/parametersWidget.hpp"
 
+void ComponentNS::ParametersWidget::setID(int ID)
+{
+    m_idValue->setText(QString::number(ID));
+}
+
+int ComponentNS::ParametersWidget::getID() const
+{
+    return m_idValue->text().toInt();
+}
+
 void ComponentNS::ParametersWidget::setName(QString &name)
 {
     m_nameValue->setText(name);
@@ -80,46 +90,53 @@ ComponentNS::ParametersWidget::ParametersWidget(QWidget *parent) : QWidget(paren
     m_mainLayout->setContentsMargins(0, 0, 0, 0);
     m_mainLayout->setSpacing(0);
 
+    m_idParameter = new QLabel(tr("ID") + QString(": "), this);
+    m_mainLayout->addWidget(m_idParameter, 0, 0);
+    m_idParameter->setObjectName("Component_ParametersWidget_NameLabel");
+    m_idValue = new QLabel("", this);
+    m_mainLayout->addWidget(m_idValue, 0, 1);
+    m_idValue->setObjectName("Component_ParametersWidget_ValueLabel");
+
     m_nameParameter = new QLabel(tr("Nazwa") + QString(": "), this);
-    m_mainLayout->addWidget(m_nameParameter, 0, 0);
+    m_mainLayout->addWidget(m_nameParameter, 1, 0);
     m_nameParameter->setObjectName("Component_ParametersWidget_NameLabel");
     m_nameValue = new QLabel("", this);
-    m_mainLayout->addWidget(m_nameValue, 0, 1);
+    m_mainLayout->addWidget(m_nameValue, 1, 1);
     m_nameValue->setObjectName("Component_ParametersWidget_ValueLabel");
 
     m_variantNameParameter = new QLabel(tr("Rodzaj") + QString(": "), this);
-    m_mainLayout->addWidget(m_variantNameParameter, 1, 0);
+    m_mainLayout->addWidget(m_variantNameParameter, 2, 0);
     m_variantNameParameter->setObjectName("Component_ParametersWidget_NameLabel");
     m_variantNameValue = new QLabel("", this);
-    m_mainLayout->addWidget(m_variantNameValue, 1, 1);
+    m_mainLayout->addWidget(m_variantNameValue, 2, 1);
     m_variantNameValue->setObjectName("Component_ParametersWidget_ValueLabel");
 
     m_variantTypeParameter = new QLabel(tr("Typ") + QString(": "), this);
-    m_mainLayout->addWidget(m_variantTypeParameter, 2, 0);
+    m_mainLayout->addWidget(m_variantTypeParameter, 3, 0);
     m_variantTypeParameter->setObjectName("Component_ParametersWidget_NameLabel");
     m_variantTypeValue = new QLabel("", this);
-    m_mainLayout->addWidget(m_variantTypeValue, 2, 1);
+    m_mainLayout->addWidget(m_variantTypeValue, 3, 1);
     m_variantTypeValue->setObjectName("Component_ParametersWidget_ValueLabel");
 
     m_manufacturerParameter = new QLabel(tr("Producent") + QString(": "), this);
-    m_mainLayout->addWidget(m_manufacturerParameter, 3, 0);
+    m_mainLayout->addWidget(m_manufacturerParameter, 4, 0);
     m_manufacturerParameter->setObjectName("Component_ParametersWidget_NameLabel");
     m_manufacturerValue = new QLabel("", this);
-    m_mainLayout->addWidget(m_manufacturerValue, 3, 1);
+    m_mainLayout->addWidget(m_manufacturerValue, 4, 1);
     m_manufacturerValue->setObjectName("Component_ParametersWidget_ValueLabel");
 
     m_symbolParameter = new QLabel(tr("Symbol") + QString(": "), this);
-    m_mainLayout->addWidget(m_symbolParameter, 4, 0);
+    m_mainLayout->addWidget(m_symbolParameter, 5, 0);
     m_symbolParameter->setObjectName("Component_ParametersWidget_NameLabel");
     m_symbolValue = new QLabel("", this);
-    m_mainLayout->addWidget(m_symbolValue, 4, 1);
+    m_mainLayout->addWidget(m_symbolValue, 5, 1);
     m_symbolValue->setObjectName("Component_ParametersWidget_ValueLabel");
 
     m_datasheetParameter = new QLabel(tr("Karta Katalogowa") + QString(": "), this);
-    m_mainLayout->addWidget(m_datasheetParameter, 5, 0);
+    m_mainLayout->addWidget(m_datasheetParameter, 6, 0);
     m_datasheetParameter->setObjectName("Component_ParametersWidget_NameLabel");
     m_datasheetValue = new QLabel("", this);
-    m_mainLayout->addWidget(m_datasheetValue, 5, 1);
+    m_mainLayout->addWidget(m_datasheetValue, 6, 1);
     m_datasheetValue->setObjectName("Component_ParametersWidget_ValueLabel");
     m_datasheetValue->setTextFormat(Qt::RichText);
     m_datasheetValue->setTextInteractionFlags(Qt::TextBrowserInteraction);

@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     this->setWindowTitle(tr("Magazyn Elektroniki") + " - " + *g_userRoleName);
     this->setMinimumSize(1280, 720);
+    this->showMaximized();
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MAINWINDOW_NAME]);
 
     if (g_userRole != UserRole::Guest)

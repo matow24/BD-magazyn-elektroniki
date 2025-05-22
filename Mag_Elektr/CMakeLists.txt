@@ -43,8 +43,8 @@ set (SRC_FILES
 
 
     ${SRC_DIR}/historyPage/historyPage.cpp
-    # ${SRC_DIR}/historyPage/historyPage/containerWidget.cpp
-    # ${SRC_DIR}/historyPage/historyPage/filterWidget.cpp
+    ${SRC_DIR}/historyPage/historyPage/containerWidget.cpp
+    ${SRC_DIR}/historyPage/historyPage/filterWidget.cpp
 
     ${SRC_DIR}/modifyPage/modifyPage.cpp
 )

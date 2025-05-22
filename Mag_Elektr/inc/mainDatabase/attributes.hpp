@@ -144,7 +144,6 @@ namespace DB
             struct Component_ID
             {
                 QVariant m_Component_ID;
-                explicit Component_ID() : m_Component_ID() {};
                 explicit Component_ID(int arg_Component_ID) : m_Component_ID(arg_Component_ID) {};
             };
 
@@ -166,7 +165,6 @@ namespace DB
             struct Component_ID
             {
                 QVariant m_Component_ID;
-                explicit Component_ID() : m_Component_ID() {};
                 explicit Component_ID(int arg_Component_ID) : m_Component_ID(arg_Component_ID) {};
             };
 
@@ -209,7 +207,6 @@ namespace DB
             struct User_Email
             {
                 QVariant m_User_Email;
-                explicit User_Email() : m_User_Email() {};
                 explicit User_Email(QString arg_User_Email) : m_User_Email(arg_User_Email) {};
             };
 

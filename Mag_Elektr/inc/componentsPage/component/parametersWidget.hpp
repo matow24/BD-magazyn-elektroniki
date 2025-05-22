@@ -19,6 +19,9 @@ namespace ComponentNS
     private:
         QGridLayout *m_mainLayout = nullptr;
 
+        QLabel *m_idParameter = nullptr;
+        QLabel *m_idValue = nullptr;
+
         QLabel *m_nameParameter = nullptr;
         QLabel *m_nameValue = nullptr;
 
@@ -39,6 +42,9 @@ namespace ComponentNS
         QLabel *m_datasheetValue = nullptr;
 
     public:
+        void setID(int ID);
+        int getID() const;
+
         void setName(QString &name);
         QString getName() const;
 

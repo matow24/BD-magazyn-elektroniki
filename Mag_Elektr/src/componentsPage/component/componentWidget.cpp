@@ -53,6 +53,7 @@ ComponentNS::ComponentWidget::ComponentWidget(int ID, QWidget *parent) : QWidget
         m_mainLayout->addWidget(m_editWidget, 0);
 
         connect(m_editWidget, &ComponentNS::EditWidget::deleteComponent, this, &ComponentNS::ComponentWidget::deleteComponent);
+        connect(m_editWidget, &ComponentNS::EditWidget::statisticsComponent, this, &ComponentNS::ComponentWidget::statisticsComponent);
     }
 }
 
@@ -71,6 +72,10 @@ void ComponentNS::ComponentWidget::deleteComponent()
         return;
     emit componentDeleted(this);
     this->deleteLater();
+}
+
+void ComponentNS::ComponentWidget::statisticsComponent()
+{
 }
 
 void ComponentNS::ComponentWidget::updateComponent()
@@ -96,6 +101,7 @@ void ComponentNS::ComponentWidget::updateComponent()
 
         if (m_parametersWidget != nullptr)
         {
+            m_parametersWidget->setID(m_ID);
             m_parametersWidget->setVariantName(variantName);
             m_parametersWidget->setVariantType(variantType);
             m_parametersWidget->setName(name);

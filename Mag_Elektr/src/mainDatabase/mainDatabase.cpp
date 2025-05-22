@@ -282,6 +282,103 @@ bool Queries::Operation::InsertMoveComponent(QSqlQuery &query, Attrb::Operation_
     return true;
 }
 
+bool Queries::Operation::SelectWhereChangeComponent(QSqlQuery &query,
+                                                    QVariant DateTimeMin,
+                                                    QVariant DateTimeMax,
+                                                    QVariant User_Email,
+                                                    QVariant Component_ID)
+{
+    query.prepare(OPERATION_SELECTWHERECHANGECOMPONENT__NOT_NULL);
+    query.bindValue(":DateTimeMin", DateTimeMin);
+    query.bindValue(":DateTimeMax", DateTimeMax);
+    query.bindValue(":User_Email", User_Email);
+    query.bindValue(":Component_ID", Component_ID);
+    if (!query.exec())
+    {
+        qDebug() << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Operation::SelectWhereChangeQuantity(QSqlQuery &query,
+                                                   QVariant DateTimeMin,
+                                                   QVariant DateTimeMax,
+                                                   QVariant User_Email,
+                                                   QVariant Component_ID)
+{
+    query.prepare(OPERATION_SELECTWHERECHANGEQUANTITY__NOT_NULL);
+    query.bindValue(":DateTimeMin", DateTimeMin);
+    query.bindValue(":DateTimeMax", DateTimeMax);
+    query.bindValue(":User_Email", User_Email);
+    query.bindValue(":Component_ID", Component_ID);
+    if (!query.exec())
+    {
+        qDebug() << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Operation::SelectWhereChangeRack(QSqlQuery &query,
+                                               QVariant DateTimeMin,
+                                               QVariant DateTimeMax,
+                                               QVariant User_Email,
+                                               QVariant RackNr)
+{
+    query.prepare(OPERATION_SELECTWHERECHANGERACK__NOT_NULL);
+    query.bindValue(":DateTimeMin", DateTimeMin);
+    query.bindValue(":DateTimeMax", DateTimeMax);
+    query.bindValue(":User_Email", User_Email);
+    query.bindValue(":RackNr", RackNr);
+    if (!query.exec())
+    {
+        qDebug() << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Operation::SelectWhereChangeUser(QSqlQuery &query,
+                                               QVariant DateTimeMin,
+                                               QVariant DateTimeMax,
+                                               QVariant User_Email)
+{
+    query.prepare(OPERATION_SELECTWHERECHANGEUSER__NOT_NULL);
+    query.bindValue(":DateTimeMin", DateTimeMin);
+    query.bindValue(":DateTimeMax", DateTimeMax);
+    query.bindValue(":User_Email", User_Email);
+    if (!query.exec())
+    {
+        qDebug() << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Operation::SelectWhereMoveComponent(QSqlQuery &query,
+                                                  QVariant DateTimeMin,
+                                                  QVariant DateTimeMax,
+                                                  QVariant User_Email,
+                                                  QVariant Component_ID,
+                                                  QVariant Location_Rack,
+                                                  QVariant Location_Drawer)
+{
+    query.prepare(OPERATION_SELECTWHEREMOVECOMPONENT__NOT_NULL);
+    query.bindValue(":DateTimeMin", DateTimeMin);
+    query.bindValue(":DateTimeMax", DateTimeMax);
+    query.bindValue(":User_Email", User_Email);
+    query.bindValue(":Component_ID", Component_ID);
+    query.bindValue(":Location_Rack", Location_Rack);
+    query.bindValue(":Location_Drawer", Location_Drawer);
+    if (!query.exec())
+    {
+        qDebug() << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 bool Func::changeQuantity(QSqlQuery &query, int componentID, int delta)
 {
     Attrb::Location::Component_ID Location_Component_ID(componentID);

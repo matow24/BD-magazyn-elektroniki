@@ -31,9 +31,11 @@ namespace ComponentNS
 
     signals:
         void deleteComponent();
+        void statisticsComponent();
 
     private slots:
         void deleteButtonClicked();
+        void statisticsButtonClicked();
     };
 } // namespace ComponentNS
 

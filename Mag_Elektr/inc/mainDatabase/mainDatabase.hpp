@@ -8,6 +8,7 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QSqlRecord>
 #include <QString>
 
 #include "main.hpp"
@@ -81,6 +82,20 @@ namespace DB
                                         Attrb::Operation_MoveComponent::Old_Location_Drawer Old_Location_Drawer,
                                         Attrb::Operation_MoveComponent::New_Location_Rack New_Location_Rack,
                                         Attrb::Operation_MoveComponent::New_Location_Drawer New_Location_Drawer);
+
+               bool SelectWhereChangeComponent(QSqlQuery &query, QVariant DateTimeMin, QVariant DateTimeMax,
+                                               QVariant User_Email, QVariant Component_ID);
+
+               bool SelectWhereChangeQuantity(QSqlQuery &query, QVariant DateTimeMin, QVariant DateTimeMax, QVariant User_Email,
+                                              QVariant Component_ID);
+
+               bool SelectWhereChangeRack(QSqlQuery &query, QVariant DateTimeMin, QVariant DateTimeMax, QVariant User_Email,
+                                          QVariant RackNr);
+
+               bool SelectWhereChangeUser(QSqlQuery &query, QVariant DateTimeMin, QVariant DateTimeMax, QVariant User_Email);
+
+               bool SelectWhereMoveComponent(QSqlQuery &query, QVariant DateTimeMin, QVariant DateTimeMax, QVariant User_Email,
+                                             QVariant Component_ID, QVariant Location_Rack, QVariant Location_Drawer);
 
           } // namespace Operation
 

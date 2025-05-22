@@ -6,6 +6,7 @@
 #include <QWidget>
 
 #include "main.hpp"
+
 #include "componentsPage/component/editWidget.hpp"
 #include "componentsPage/component/parametersWidget.hpp"
 #include "componentsPage/component/quantityWidget.hpp"
@@ -40,6 +41,7 @@ namespace ComponentNS
     private slots:
         void deltaConfirmed(int &delta);
         void deleteComponent();
+        void statisticsComponent();
 
     public slots:
         void updateComponent();

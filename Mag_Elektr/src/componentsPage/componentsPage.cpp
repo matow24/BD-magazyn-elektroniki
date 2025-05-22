@@ -13,8 +13,10 @@ ComponentsPage::ComponentsPage(QWidget *parent) : QWidget(parent)
 
     m_filterPanel = new QWidget(this);
     m_mainLayout->addWidget(m_filterPanel, 0);
+    m_filterPanel->setObjectName("ComponentsPage_FilterPanel");
     m_filterPanel->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     m_filterPanel->setContentsMargins(0, 0, 0, 0);
+    m_filterPanel->setAttribute(Qt::WA_StyledBackground, true);
 
     m_filterPanelLayout = new QVBoxLayout(m_filterPanel);
     m_filterPanel->setLayout(m_filterPanelLayout);
