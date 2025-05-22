@@ -1,9 +1,7 @@
 #include "modifyPage/modifyPage.hpp"
 
-ModifyPage::ModifyPage(UserRole userRole, QWidget *parent) : QWidget(parent)
+ModifyPage::ModifyPage(QWidget *parent) : QWidget(parent)
 {
-    m_userRole = userRole;
-
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MODIFYPAGE_NAME]);
     this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 

@@ -27,8 +27,6 @@ namespace ComponentsPageNS
     private:
         bool m_treeRecurrencyFlag = false;
 
-        UserRole m_userRole;
-
         ContainerWidget *m_containerWidget = nullptr;
         TreeFilterWidget *m_treeFilterWidget = nullptr;
 
@@ -58,7 +56,7 @@ namespace ComponentsPageNS
         QPushButton *m_searchFieldButton = nullptr;
 
     public:
-        FilterWidget(ContainerWidget *containerWidget, TreeFilterWidget *treeFilterWidget, UserRole userRole, QWidget *parent = nullptr);
+        FilterWidget(ContainerWidget *containerWidget, TreeFilterWidget *treeFilterWidget, QWidget *parent = nullptr);
 
     private slots:
         void toggleLocationField(bool checked);

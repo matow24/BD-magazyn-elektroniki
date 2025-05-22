@@ -19,8 +19,6 @@ namespace ComponentNS
     private:
         int m_ID = -1;
 
-        UserRole m_userRole;
-
         QHBoxLayout *m_mainLayout = nullptr;
 
         ParametersWidget *m_parametersWidget = nullptr;
@@ -34,7 +32,7 @@ namespace ComponentNS
         ParametersWidget &getParametersWidget();
         QuantityWidget &getQuantityWidget();
 
-        ComponentWidget(int ID, UserRole userRole, QWidget *parent = nullptr);
+        ComponentWidget(int ID, QWidget *parent = nullptr);
 
     signals:
         void componentDeleted(ComponentWidget *component);

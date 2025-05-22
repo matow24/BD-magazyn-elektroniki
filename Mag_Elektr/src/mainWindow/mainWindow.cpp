@@ -1,49 +1,48 @@
 #include "mainWindow/mainWindow.hpp"
 
-MainWindow::MainWindow(UserRole userRole, QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    m_userRole = userRole;
-    switch (m_userRole)
+    switch (g_userRole)
     {
     case UserRole::Guest:
-        m_userRoleName = new QString(tr("Gość"));
+        g_userRoleName = new QString(tr("Gość"));
         break;
     case UserRole::Employee:
-        m_userRoleName = new QString(tr("Pracownik"));
+        g_userRoleName = new QString(tr("Pracownik"));
         break;
     case UserRole::Logistician:
-        m_userRoleName = new QString(tr("Logistyk"));
+        g_userRoleName = new QString(tr("Logistyk"));
         break;
     case UserRole::Admin:
-        m_userRoleName = new QString(tr("Administrator"));
+        g_userRoleName = new QString(tr("Administrator"));
         break;
     }
 
-    this->setWindowTitle(tr("Magazyn Elektroniki") + " - " + *m_userRoleName);
+    this->setWindowTitle(tr("Magazyn Elektroniki") + " - " + *g_userRoleName);
     this->setMinimumSize(1280, 720);
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MAINWINDOW_NAME]);
 
-    if (m_userRole != UserRole::Guest)
+    if (g_userRole != UserRole::Guest)
     {
-        m_mainToolBar = new MainToolBar(m_userRole, this);
+        m_mainToolBar = new MainToolBar(this);
         this->addToolBar(m_mainToolBar);
     }
 
-    if (m_userRole != UserRole::Guest && m_userRole != UserRole::Employee)
+    if (g_userRole != UserRole::Guest && g_userRole != UserRole::Employee)
     {
         m_stackedWidget = new QStackedWidget(this);
         this->setCentralWidget(m_stackedWidget);
         m_stackedWidget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-        m_componentsPage = new ComponentsPage(m_userRole, this);
+        m_componentsPage = new ComponentsPage(this);
         m_stackedWidget->addWidget(m_componentsPage);
         m_componentsPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-        m_historyPage = new HistoryPage(m_userRole, this);
+        m_historyPage = new HistoryPage(this);
         m_stackedWidget->addWidget(m_historyPage);
         m_historyPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-        m_modifyPage = new ModifyPage(m_userRole, this);
+        m_modifyPage = new ModifyPage(this);
         m_stackedWidget->addWidget(m_modifyPage);
         m_modifyPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
@@ -54,7 +53,7 @@ MainWindow::MainWindow(UserRole userRole, QWidget *parent) : QMainWindow(parent)
     }
     else
     {
-        m_componentsPage = new ComponentsPage(m_userRole, this);
+        m_componentsPage = new ComponentsPage(this);
         this->setCentralWidget(m_componentsPage);
         m_componentsPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     }
@@ -65,7 +64,7 @@ void MainWindow::changePage(Page &newPage)
     if (m_stackedWidget == nullptr)
         return;
 
-    if (m_userRole == UserRole::Guest || m_userRole == UserRole::Employee)
+    if (g_userRole == UserRole::Guest || g_userRole == UserRole::Employee)
         return;
 
     switch (newPage)

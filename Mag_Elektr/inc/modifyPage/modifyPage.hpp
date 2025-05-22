@@ -12,12 +12,10 @@ class ModifyPage : public QWidget
 {
     Q_OBJECT
 private:
-    UserRole m_userRole;
-
     QVBoxLayout *m_mainLayout = nullptr;
 
 public:
-    ModifyPage(UserRole userRole, QWidget *parent = nullptr);
+    ModifyPage(QWidget *parent = nullptr);
 };
 
 #endif // _MODIFYPAGE_HPP

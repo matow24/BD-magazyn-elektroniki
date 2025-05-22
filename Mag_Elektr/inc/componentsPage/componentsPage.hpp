@@ -17,8 +17,6 @@ class ComponentsPage : public QWidget
 {
     Q_OBJECT
 private:
-    UserRole m_userRole;
-
     QHBoxLayout *m_mainLayout = nullptr;
     QFrame *m_mainFrame = nullptr;
 
@@ -31,7 +29,7 @@ private:
     ComponentsPageNS::TreeFilterWidget *m_treeFilterWidget = nullptr;
 
 public:
-    ComponentsPage(UserRole userRole, QWidget *parent = nullptr);
+    ComponentsPage(QWidget *parent = nullptr);
 };
 
 #endif // _COMPONENTSPAGE_HPP

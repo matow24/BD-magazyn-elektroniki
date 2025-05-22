@@ -4,9 +4,8 @@
 #define ICON_SEARCH ":/icons/search.png"
 #define ICON_UNDO ":/icons/undo.png"
 
-ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, TreeFilterWidget *treeFilterWidget, UserRole userRole, QWidget *parent) : QWidget(parent)
+ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, TreeFilterWidget *treeFilterWidget, QWidget *parent) : QWidget(parent)
 {
-    m_userRole = userRole;
     m_containerWidget = containerWidget;
     m_treeFilterWidget = treeFilterWidget;
 
@@ -27,7 +26,7 @@ ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, T
     m_enableButtonsLayout->setContentsMargins(0, 0, 0, 0);
     m_enableButtonsLayout->setSpacing(5);
 
-    if (m_userRole != UserRole::Guest)
+    if (g_userRole != UserRole::Guest)
     {
         m_enableLocationButton = new QPushButton(this);
         m_enableButtonsLayout->addWidget(m_enableLocationButton, 0);
@@ -56,7 +55,7 @@ ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, T
     m_resetButton->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     m_resetButton->setIcon(QIcon(ICON_UNDO));
 
-    if (m_userRole != UserRole::Guest)
+    if (g_userRole != UserRole::Guest)
     {
         m_locationField = new QWidget(this);
         m_mainLayout->addWidget(m_locationField);
@@ -120,7 +119,7 @@ ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, T
 
     m_searchField->setVisible(false);
 
-    if (m_userRole != UserRole::Guest)
+    if (g_userRole != UserRole::Guest)
     {
         connect(m_enableLocationButton, &QPushButton::toggled, this, &ComponentsPageNS::FilterWidget::toggleLocationField);
         connect(m_locationFieldRack, &QLineEdit::textEdited, this, &ComponentsPageNS::FilterWidget::locationTextChanged);
@@ -198,7 +197,7 @@ void ComponentsPageNS::FilterWidget::findByLocation()
             int locationRack = query.value("Location_Rack").toInt();
             int locationDrawer = query.value("Location_Drawer").toInt();
 
-            ComponentNS::ComponentWidget *componentWidget = new ComponentNS::ComponentWidget(ID, m_userRole, m_containerWidget);
+            ComponentNS::ComponentWidget *componentWidget = new ComponentNS::ComponentWidget(ID, m_containerWidget);
 
             componentWidget->getParametersWidget().setVariantName(variantName);
             componentWidget->getParametersWidget().setVariantType(variantType);
@@ -249,7 +248,7 @@ void ComponentsPageNS::FilterWidget::findByName()
             int locationRack = query.value("Location_Rack").toInt();
             int locationDrawer = query.value("Location_Drawer").toInt();
 
-            ComponentNS::ComponentWidget *componentWidget = new ComponentNS::ComponentWidget(ID, m_userRole, m_containerWidget);
+            ComponentNS::ComponentWidget *componentWidget = new ComponentNS::ComponentWidget(ID, m_containerWidget);
 
             componentWidget->getParametersWidget().setVariantName(variantName);
             componentWidget->getParametersWidget().setVariantType(variantType);
@@ -272,7 +271,7 @@ void ComponentsPageNS::FilterWidget::findByName()
 
 void ComponentsPageNS::FilterWidget::resetAll()
 {
-    if (m_userRole != UserRole::Guest)
+    if (g_userRole != UserRole::Guest)
     {
         m_locationFieldRack->setText("");
         m_locationFieldDrawer->setText("");

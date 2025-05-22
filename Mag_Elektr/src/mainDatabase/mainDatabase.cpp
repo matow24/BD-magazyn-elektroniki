@@ -216,9 +216,11 @@ bool Queries::Location::UpdateSetComponentID(QSqlQuery &query, Attrb::Location::
     return true;
 }
 
-bool Queries::Operation::InsertOperation(QSqlQuery &query)
+bool Queries::Operation::InsertOperation(QSqlQuery &query, Attrb::Operation::User_Email User_Email)
 {
     query.prepare(OPERATION_INSERTOPERATION);
+    query.bindValue(":User_Email", User_Email.m_User_Email);
+
     if (!query.exec())
     {
         qDebug() << "Error: Unable to execute query:" << query.lastError().text();
@@ -295,7 +297,8 @@ bool Func::changeQuantity(QSqlQuery &query, int componentID, int delta)
     if (!Queries::Location::UpdateSetQuantity(query, Location_Component_ID, Quantity))
         return false;
 
-    if (!Queries::Operation::InsertOperation(query))
+    DB::Attrb::Operation::User_Email User_Email(g_userEmail);
+    if (!Queries::Operation::InsertOperation(query, User_Email))
         return false;
 
     if (!Queries::LastInsertRowID(query))
@@ -335,7 +338,8 @@ bool Func::deleteComponent(QSqlQuery &query, int componentID)
         if (!Queries::Location::UpdateSetQuantity(query, Location_Component_ID, Quantity))
             return false;
 
-        if (!Queries::Operation::InsertOperation(query))
+        DB::Attrb::Operation::User_Email User_Email(g_userEmail);
+        if (!Queries::Operation::InsertOperation(query, User_Email))
             return false;
 
         if (!Queries::LastInsertRowID(query))
@@ -365,7 +369,8 @@ bool Func::deleteComponent(QSqlQuery &query, int componentID)
     Attrb::Operation_MoveComponent::New_Location_Rack MC_New_Location_Rack;
     Attrb::Operation_MoveComponent::New_Location_Drawer MC_New_Location_Drawer;
 
-    if (!Queries::Operation::InsertOperation(query))
+    DB::Attrb::Operation::User_Email User_Email(g_userEmail);
+    if (!Queries::Operation::InsertOperation(query, User_Email))
         return false;
 
     if (!Queries::LastInsertRowID(query))
@@ -385,7 +390,7 @@ bool Func::deleteComponent(QSqlQuery &query, int componentID)
     if (!Queries::Component::Delete(query, Component_Component_ID))
         return false;
 
-    if (!Queries::Operation::InsertOperation(query))
+    if (!Queries::Operation::InsertOperation(query, User_Email))
         return false;
 
     if (!Queries::LastInsertRowID(query))

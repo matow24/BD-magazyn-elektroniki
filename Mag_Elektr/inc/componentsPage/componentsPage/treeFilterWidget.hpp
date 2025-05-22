@@ -21,8 +21,6 @@ namespace ComponentsPageNS
         bool m_fromDataBaseFlag = true;
         bool m_treeRecurrencyFlag = false;
 
-        UserRole m_userRole = UserRole::Guest;
-
         ContainerWidget *m_containerWidget = nullptr;
 
         void addByVariantName(QString variantName);
@@ -52,7 +50,7 @@ namespace ComponentsPageNS
 
         void resetVariants();
 
-        TreeFilterWidget(ContainerWidget *containerWidget, UserRole userRole, QWidget *parent = nullptr);
+        TreeFilterWidget(ContainerWidget *containerWidget, QWidget *parent = nullptr);
 
     private slots:
         void itemChanged(QTreeWidgetItem *item, int column);

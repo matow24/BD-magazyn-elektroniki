@@ -1,6 +1,7 @@
 #ifndef _DB_ATTRIBUTES_HPP
 #define _DB_ATTRIBUTES_HPP
 
+#include <QDateTime>
 #include <QString>
 #include <QVariant>
 
@@ -110,6 +111,27 @@ namespace DB
                 explicit Quantity(int arg_Quantity) : m_Quantity(arg_Quantity) {};
             };
         } // namespace Location
+
+        namespace Operation
+        {
+            struct ID
+            {
+                QVariant m_ID;
+                explicit ID(int arg_ID) : m_ID(arg_ID) {};
+            };
+
+            struct DateTime
+            {
+                QVariant m_DateTime;
+                explicit DateTime(QDateTime arg_DateTime) : m_DateTime(arg_DateTime.toString("yyyy-MM-dd HH:mm:ss")) {};
+            };
+
+            struct User_Email
+            {
+                QVariant m_User_Email;
+                explicit User_Email(QString arg_User_Email) : m_User_Email(arg_User_Email) {};
+            };
+        } // namespace Operation
 
         namespace Operation_ChangeComponent
         {

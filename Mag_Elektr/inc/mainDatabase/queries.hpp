@@ -136,8 +136,8 @@
 
 #define OPERATION_INSERTOPERATION \
     "INSERT INTO "                \
-    "Operation (DateTime) "       \
-    "VALUES (DATETIME('now'));"
+    "Operation (DateTime, User_Email) "       \
+    "VALUES (DATETIME('now'), :User_Email);"
 
 #define OPERATION_INSERTCHANGECOMPONENT                             \
     "INSERT INTO "                                                  \

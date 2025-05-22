@@ -22,8 +22,6 @@ class MainToolBar : public QToolBar
 {
     Q_OBJECT
 private:
-    UserRole m_userRole;
-
     QButtonGroup *m_buttonsPages = nullptr;
     MainToolButton *m_buttonComponents = nullptr;
     MainToolButton *m_buttonHistory = nullptr;
@@ -34,7 +32,7 @@ private:
 public:
     void checkPageButton(Page page);
 
-    MainToolBar(UserRole userRole, QWidget *parent = nullptr);
+    MainToolBar(QWidget *parent = nullptr);
 
 private slots:
     void pageButtonClicked(QAbstractButton *button);

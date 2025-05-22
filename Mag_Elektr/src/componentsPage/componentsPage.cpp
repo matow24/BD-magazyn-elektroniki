@@ -1,9 +1,7 @@
 #include "componentsPage/componentsPage.hpp"
 
-ComponentsPage::ComponentsPage(UserRole userRole, QWidget *parent) : QWidget(parent)
+ComponentsPage::ComponentsPage(QWidget *parent) : QWidget(parent)
 {
-    m_userRole = userRole;
-
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_COMPONENTSPAGE_NAME]);
     this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     this->setContentsMargins(0, 0, 0, 0);
@@ -31,13 +29,13 @@ ComponentsPage::ComponentsPage(UserRole userRole, QWidget *parent) : QWidget(par
     m_containerWidget = new ComponentsPageNS::ContainerWidget(this);
     m_mainLayout->addWidget(m_containerWidget, 1);
 
-    m_treeFilterWidget = new ComponentsPageNS::TreeFilterWidget(m_containerWidget, m_userRole, this);
+    m_treeFilterWidget = new ComponentsPageNS::TreeFilterWidget(m_containerWidget, this);
 
     m_filterPanelFrame = new QFrame(this);
     m_filterPanelFrame->setObjectName("ComponentsPage_Frame");
     m_filterPanelFrame->setFrameShape(QFrame::HLine);
 
-    m_filterWidget = new ComponentsPageNS::FilterWidget(m_containerWidget, m_treeFilterWidget, m_userRole, this);
+    m_filterWidget = new ComponentsPageNS::FilterWidget(m_containerWidget, m_treeFilterWidget, this);
 
     m_filterPanelLayout->addWidget(m_filterWidget, 0);
     m_filterPanelLayout->addWidget(m_filterPanelFrame, 0);

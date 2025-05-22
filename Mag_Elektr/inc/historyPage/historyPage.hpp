@@ -12,12 +12,11 @@ class HistoryPage : public QWidget
 {
     Q_OBJECT
 private:
-    UserRole m_userRole;
 
     QVBoxLayout *m_mainLayout = nullptr;
 
 public:
-    HistoryPage(UserRole userRole, QWidget *parent = nullptr);
+    HistoryPage(QWidget *parent = nullptr);
 };
 
 #endif // _HISTORYPAGE_HPP

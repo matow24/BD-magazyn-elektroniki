@@ -16,10 +16,9 @@ ComponentNS::QuantityWidget &ComponentNS::ComponentWidget::getQuantityWidget()
     return *m_quantityWidget;
 }
 
-ComponentNS::ComponentWidget::ComponentWidget(int ID, UserRole userRole, QWidget *parent) : QWidget(parent)
+ComponentNS::ComponentWidget::ComponentWidget(int ID, QWidget *parent) : QWidget(parent)
 {
     m_ID = ID;
-    m_userRole = userRole;
 
     this->setObjectName("Component_Component");
     this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
@@ -34,7 +33,7 @@ ComponentNS::ComponentWidget::ComponentWidget(int ID, UserRole userRole, QWidget
     m_parametersWidget = new ComponentNS::ParametersWidget(this);
     m_mainLayout->addWidget(m_parametersWidget, 6);
 
-    if (m_userRole == UserRole::Employee || m_userRole == UserRole::Logistician || m_userRole == UserRole::Admin)
+    if (g_userRole == UserRole::Employee || g_userRole == UserRole::Logistician || g_userRole == UserRole::Admin)
     {
         m_spacer1 = new QWidget(this);
         m_mainLayout->addWidget(m_spacer1, 1);
@@ -45,7 +44,7 @@ ComponentNS::ComponentWidget::ComponentWidget(int ID, UserRole userRole, QWidget
         connect(m_quantityWidget, &ComponentNS::QuantityWidget::deltaConfirmed, this, &ComponentNS::ComponentWidget::deltaConfirmed);
     }
 
-    if (m_userRole == UserRole::Logistician || m_userRole == UserRole::Admin)
+    if (g_userRole == UserRole::Logistician || g_userRole == UserRole::Admin)
     {
         m_spacer2 = new QWidget(this);
         m_mainLayout->addWidget(m_spacer2, 1);

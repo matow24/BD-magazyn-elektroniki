@@ -2,7 +2,7 @@
 
 void MainToolBar::checkPageButton(Page page)
 {
-    if (m_userRole == UserRole::Guest || m_userRole == UserRole::Employee)
+    if (g_userRole == UserRole::Guest || g_userRole == UserRole::Employee)
         return;
 
     for (auto &button : m_buttonsPages->buttons())
@@ -22,17 +22,15 @@ void MainToolBar::checkPageButton(Page page)
     }
 }
 
-MainToolBar::MainToolBar(UserRole userRole, QWidget *parent) : QToolBar(parent)
+MainToolBar::MainToolBar(QWidget *parent) : QToolBar(parent)
 {
-    m_userRole = userRole;
-
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MAINWINDOW_NAME]);
     this->setMovable(false);
     this->setFloatable(false);
     this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
     this->setOrientation(Qt::Horizontal);
 
-    if (m_userRole != UserRole::Guest && m_userRole != UserRole::Employee)
+    if (g_userRole != UserRole::Guest && g_userRole != UserRole::Employee)
     {
         m_buttonsPages = new QButtonGroup(this);
         m_buttonsPages->setExclusive(true);
@@ -55,7 +53,7 @@ MainToolBar::MainToolBar(UserRole userRole, QWidget *parent) : QToolBar(parent)
         connect(m_buttonsPages, &QButtonGroup::buttonClicked, this, &MainToolBar::pageButtonClicked);
     }
 
-    if (m_userRole != UserRole::Guest)
+    if (g_userRole != UserRole::Guest)
     {
         m_buttonLogout = new MainToolButton(this);
         this->addWidget(m_buttonLogout);
@@ -69,7 +67,7 @@ MainToolBar::MainToolBar(UserRole userRole, QWidget *parent) : QToolBar(parent)
 
 void MainToolBar::pageButtonClicked(QAbstractButton *button)
 {
-    if (m_userRole == UserRole::Guest || m_userRole == UserRole::Employee)
+    if (g_userRole == UserRole::Guest || g_userRole == UserRole::Employee)
         return;
 
     Page page = static_cast<Page>(m_buttonsPages->id(button));
@@ -78,7 +76,7 @@ void MainToolBar::pageButtonClicked(QAbstractButton *button)
 
 void MainToolBar::logoutButtonClicked()
 {
-    if (m_userRole == UserRole::Guest)
+    if (g_userRole == UserRole::Guest)
         return;
 
     emit logoutClicked();

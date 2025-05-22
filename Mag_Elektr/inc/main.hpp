@@ -2,6 +2,7 @@
 #define _MAIN_HPP
 
 #include <QDebug>
+#include <QString>
 
 #include "mainDatabase/mainDatabase.hpp"
 #include "common/mainStyle.hpp"
@@ -13,5 +14,8 @@ enum UserRole
     Logistician,
     Admin
 };
+
+extern QString g_userEmail;
+extern UserRole g_userRole;
 
 #endif // _MAIN_HPP

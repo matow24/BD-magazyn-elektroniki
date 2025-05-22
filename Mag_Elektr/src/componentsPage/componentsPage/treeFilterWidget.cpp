@@ -101,7 +101,7 @@ void ComponentsPageNS::TreeFilterWidget::addFromDatabaseByVariantName(QString va
         int locationRack = query.value("Location_Rack").toInt();
         int locationDrawer = query.value("Location_Drawer").toInt();
 
-        ComponentNS::ComponentWidget *componentWidget = new ComponentNS::ComponentWidget(ID, m_userRole, m_containerWidget);
+        ComponentNS::ComponentWidget *componentWidget = new ComponentNS::ComponentWidget(ID, m_containerWidget);
 
         componentWidget->getParametersWidget().setVariantName(variantName);
         componentWidget->getParametersWidget().setVariantType(variantType);
@@ -161,7 +161,7 @@ void ComponentsPageNS::TreeFilterWidget::addFromDatabaseByVariantType(QString va
         int locationRack = query.value("Location_Rack").toInt();
         int locationDrawer = query.value("Location_Drawer").toInt();
 
-        ComponentNS::ComponentWidget *componentWidget = new ComponentNS::ComponentWidget(ID, m_userRole, m_containerWidget);
+        ComponentNS::ComponentWidget *componentWidget = new ComponentNS::ComponentWidget(ID, m_containerWidget);
 
         componentWidget->getParametersWidget().setVariantName(variantName);
         componentWidget->getParametersWidget().setVariantType(variantType);
@@ -327,9 +327,8 @@ void ComponentsPageNS::TreeFilterWidget::resetVariants()
     this->sortItems(0, Qt::AscendingOrder);
 }
 
-ComponentsPageNS::TreeFilterWidget::TreeFilterWidget(ContainerWidget *containerWidget, UserRole userRole, QWidget *parent) : QTreeWidget(parent)
+ComponentsPageNS::TreeFilterWidget::TreeFilterWidget(ContainerWidget *containerWidget, QWidget *parent) : QTreeWidget(parent)
 {
-    m_userRole = userRole;
     m_containerWidget = containerWidget;
 
     this->setObjectName("ComponentsPageNS_TreeFilterWidget");

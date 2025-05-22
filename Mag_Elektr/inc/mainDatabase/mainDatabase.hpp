@@ -67,7 +67,7 @@ namespace DB
 
           namespace Operation
           {
-               bool InsertOperation(QSqlQuery &query);
+               bool InsertOperation(QSqlQuery &query, Attrb::Operation::User_Email User_Email);
 
                bool InsertChangeComponent(QSqlQuery &query, Attrb::Operation_ChangeComponent::Operation_ID Operation_ID,
                                           Attrb::Operation_ChangeComponent::Component_ID Component_ID, Attrb::OperationType Type);

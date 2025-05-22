@@ -20,8 +20,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 private:
-    UserRole m_userRole;
-    QString *m_userRoleName = nullptr;
+    QString *g_userRoleName = nullptr;
 
     MainToolBar *m_mainToolBar = nullptr;
 
@@ -32,7 +31,7 @@ private:
     QStackedWidget *m_stackedWidget = nullptr;
 
 public:
-    MainWindow(UserRole userRole, QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr);
 
 private slots:
     void changePage(Page &newPage);

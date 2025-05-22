@@ -1,9 +1,11 @@
 #include <QApplication>
 #include <QObject>
-#include <QString>
 
 #include "main.hpp"
 #include "mainWindow/mainWindow.hpp"
+
+QString g_userEmail = "275431@student.pwr.edu.pl";
+UserRole g_userRole = UserRole::Admin;
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +22,7 @@ int main(int argc, char *argv[])
 
     MainStyle::loadStyleSheets();
 
-    MainWindow mainWindow(UserRole::Admin); //!< Tworzenie instancji głównego okna aplikacji
+    MainWindow mainWindow; //!< Tworzenie instancji głównego okna aplikacji
 
     mainWindow.show();     //! Wyświetlenie głównego okna aplikacji
     return mainApp.exec(); //! Uruchomienie pętli zdarzeń aplikacji
