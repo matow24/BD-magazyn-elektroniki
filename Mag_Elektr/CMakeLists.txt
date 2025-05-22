@@ -61,7 +61,7 @@ target_include_directories(${LOCAL_TARGET_NAME} PRIVATE ${INC_DIR})
 
 # qt_add_ui(${LOCAL_TARGET_NAME} SOURCES ${UI_FILES})
 
-qt_add_translations(${LOCAL_TARGET_NAME} TS_FILE_BASE ${LOCAL_TARGET_NAME} TS_OUTPUT_DIRECTORY ${LANG_DIR})
+# qt_add_translations(${LOCAL_TARGET_NAME} TS_FILE_BASE ${LOCAL_TARGET_NAME} TS_OUTPUT_DIRECTORY ${LANG_DIR})
 
 target_sources(${LOCAL_TARGET_NAME} PRIVATE ${SRC_FILES} ${RES_FILES})
 
@@ -76,4 +76,7 @@ set_target_properties(${LOCAL_TARGET_NAME} PROPERTIES
 
 qt_finalize_target(${LOCAL_TARGET_NAME})
 
-add_dependencies(${LOCAL_TARGET_NAME} update_translations)
+# qt_add_translations(${LOCAL_TARGET_NAME}
+#   TS_FILE_BASE ${LOCAL_TARGET_NAME}
+#   TS_OUTPUT_DIRECTORY ${LANG_DIR}
+# )
