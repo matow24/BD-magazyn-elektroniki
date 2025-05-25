@@ -99,6 +99,12 @@ namespace DB
 
           } // namespace Operation
 
+          namespace User
+          {
+               bool LogIn(QSqlQuery &query, QString email);
+
+          } // namespace User
+
      } // namespace Queries
 
      namespace Func

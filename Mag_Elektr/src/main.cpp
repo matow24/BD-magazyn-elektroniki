@@ -2,6 +2,7 @@
 #include <QObject>
 
 #include "main.hpp"
+#include "loginWindow/loginWindow.hpp"
 #include "mainWindow/mainWindow.hpp"
 
 QString g_userEmail = "275431@student.pwr.edu.pl";
@@ -23,8 +24,10 @@ int main(int argc, char *argv[])
     MainStyle::loadStyleSheets();
 
     MainWindow mainWindow; //!< Tworzenie instancji głównego okna aplikacji
+    LoginWindow loginWindow; //!< Tworzenie instancji okna logowania aplikacji
 
-    mainWindow.show();     //! Wyświetlenie głównego okna aplikacji
+    //mainWindow.show();     //! Wyświetlenie głównego okna aplikacji
+    loginWindow.show();     //! Wyświetlenie okna logowania aplikacji
     return mainApp.exec(); //! Uruchomienie pętli zdarzeń aplikacji
 }
 

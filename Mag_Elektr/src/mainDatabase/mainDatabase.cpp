@@ -34,6 +34,19 @@ bool MainDatabase::ConnectToDatabase(const QString &dbPath)
     return true;
 }
 
+bool Queries::User::LogIn(QSqlQuery &query, QString email)
+{
+    query.prepare(USER_LOGIN__EMAIL);
+    query.bindValue(":email", email);
+
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 bool Queries::LastInsertRowID(QSqlQuery &query)
 {
     query.prepare(LAST_INSERT_ROW_ID);
