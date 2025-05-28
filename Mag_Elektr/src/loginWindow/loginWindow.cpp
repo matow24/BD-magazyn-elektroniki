@@ -19,7 +19,7 @@ LoginWindow::LoginWindow(QWidget *parent) : QMainWindow(parent)
     forgotPasswordButton = new QPushButton("Nie pamiętm hasła", this);
     forgotPasswordButton->setFlat(true); // Makes it look like a link
 
-    // Connect slots (implement later if needed)
+    // Connect slots (TB implemented)
     connect(submitButton, &QPushButton::clicked, this, &LoginWindow::onSubmit);
     connect(forgotPasswordButton, &QPushButton::clicked, this, &LoginWindow::onForgotPassword);
     connect(proceedWithoutLoginButton, &QPushButton::clicked, this, &LoginWindow::onProceedWithoutLogin);
@@ -111,13 +111,26 @@ void LoginWindow::onSubmit() {
 
 
 void LoginWindow::onForgotPassword() {
-    // Handle password change logic here
+    /*
+    QString adminFirstName ="";
+    QString adminLastName ="";
+    QString adminEmail ="";
+
+    if (DB::Queries::Component::FindAdmin(query)){
+        adminFirstName = query.value(0).toString();
+        adminLastName = query.value(1).toString();
+        adminEmail = query.value(2).toString();
+    }
+    auto msg = "Jeśli nie pamiętasz hasła, zgłoś się do administratora bazy danych, którym jest " % adminFirstName % " " % adminLastName ", " % adminEmail;
+    QMessageBox::information(this, "Zapytaj admina o nowe hasło", msg);
+    */
 }
 
 void LoginWindow::onProceedWithoutLogin() {
-    // Handle skip login logic here
     g_userRole = UserRole::Guest;
     g_userEmail = "Szacowny gość";
+    QMessageBox::information(this, "Otwarto ograniczony widok bazy", "Witamy!");
+    // przejdź do mainWindow - sygnał ALBO zamknij loginWindow
 }
 
 #include "loginWindow/moc_loginWindow.cpp"

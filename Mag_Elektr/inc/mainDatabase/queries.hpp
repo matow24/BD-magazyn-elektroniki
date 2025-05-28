@@ -5,6 +5,8 @@
 
 #define USER_LOGIN__EMAIL "SELECT Password, Position FROM User WHERE email = :email"
 
+#define FIND_ADMIN "SELECT FirstName, LastName, Email FROM User WHERE Position = A"
+
 #define LAST_INSERT_ROW_ID "SELECT last_insert_rowid() AS ID;"
 
 #define VARIANT_SELECT "SELECT * FROM Variant;"

@@ -47,6 +47,17 @@ bool Queries::User::LogIn(QSqlQuery &query, QString email)
     return true;
 }
 
+bool DB::Queries::User::FindAdmin(QSqlQuery &query)
+{
+    query.prepare(FIND_ADMIN);
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 bool Queries::LastInsertRowID(QSqlQuery &query)
 {
     query.prepare(LAST_INSERT_ROW_ID);

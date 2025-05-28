@@ -103,6 +103,8 @@ namespace DB
           {
                bool LogIn(QSqlQuery &query, QString email);
 
+               bool FindAdmin(QSqlQuery &query);
+
           } // namespace User
 
      } // namespace Queries
