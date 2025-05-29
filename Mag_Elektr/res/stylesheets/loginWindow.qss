@@ -1,0 +1,43 @@
+QLineEdit
+{
+    font-size: 16px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: transparent;
+    border: 1px solid green;
+    min-width: 20px;
+}
+
+
+QPushButton#submitButton
+{
+    padding: 5px;
+    min-width: 20px;
+    font-size: 14px;
+    border: none;
+    background-color: green;
+    color: palette(Base);
+}
+
+QPushButton#submitButton:disabled
+{
+    background-color: rgba(0, 128, 0, 128);
+}
+
+QPushButton#submitButton:checked, QPushButton#submitButton:pressed
+{
+    background-color: darkgreen;
+}
+
+QPushButton#forgotPasswordButton{
+    flat="true";    
+    padding: 5px;
+    font-size: 11px;
+}
+
+QPushButton#proceedWithoutLoginButton{
+    margin-top: 20px;
+    background-color: transparent;
+    border: 1px solid green;
+    min-width: 20px;
+}

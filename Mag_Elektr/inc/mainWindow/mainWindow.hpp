@@ -18,7 +18,7 @@
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+    Q_OBJECT 
 private:
     QString *g_userRoleName = nullptr;
 
@@ -30,8 +30,13 @@ private:
 
     QStackedWidget *m_stackedWidget = nullptr;
 
+    void setRole();
+
 public:
     MainWindow(QWidget *parent = nullptr);
+    //MainToolBar getMainToolBar(){ return *m_mainToolBar; };
+public slots:
+    void onLogin();
 
 private slots:
     void changePage(Page &newPage);

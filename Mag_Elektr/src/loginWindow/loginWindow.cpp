@@ -2,10 +2,14 @@
 
 LoginWindow::LoginWindow(QWidget *parent) : QMainWindow(parent)
 {
-    this->setWindowTitle(tr("Magazyn Elektroniki") + " - Logowanie");
+    this->setWindowTitle(tr("Magazyn Elektroniki - Logowanie"));
     this->setMinimumSize(1280, 720);
     this->showMaximized();
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_LOGINWINDOW_NAME]);
+
+    window = new QWidget;
+    window->setMinimumSize(1260, 700);
+    window->setMaximumSize(this->width(), this->height());
 
     emailEdit = new QLineEdit(this);
     emailEdit->setPlaceholderText("Email");
@@ -16,10 +20,9 @@ LoginWindow::LoginWindow(QWidget *parent) : QMainWindow(parent)
 
     submitButton = new QPushButton("Zaloguj", this);
     proceedWithoutLoginButton = new QPushButton("Przejdź dalej bez logowania", this);
-    forgotPasswordButton = new QPushButton("Nie pamiętm hasła", this);
+    forgotPasswordButton = new QPushButton("Nie pamiętam hasła", this);
     forgotPasswordButton->setFlat(true); // Makes it look like a link
 
-    // Connect slots (TB implemented)
     connect(submitButton, &QPushButton::clicked, this, &LoginWindow::onSubmit);
     connect(forgotPasswordButton, &QPushButton::clicked, this, &LoginWindow::onForgotPassword);
     connect(proceedWithoutLoginButton, &QPushButton::clicked, this, &LoginWindow::onProceedWithoutLogin);
@@ -33,7 +36,20 @@ LoginWindow::LoginWindow(QWidget *parent) : QMainWindow(parent)
     layout->addSpacing(20);  // Bigger space between the buttons
     layout->addWidget(proceedWithoutLoginButton);
 
-    setLayout(layout);
+    window->setLayout(layout);    
+    setCentralWidget(window);
+}
+
+void LoginWindow::onLogout(){
+    emailEdit->clear();
+    passwordEdit->clear();
+
+    g_userRole = UserRole::Guest;
+    //reset g_userEmail
+
+    this->show();  
+    this->raise();  
+    this->activateWindow();
 }
 
 void LoginWindow::setUserRole(char dbRole){
@@ -59,78 +75,56 @@ void LoginWindow::onSubmit() {
         return;
     }
 
-    // Connect to SQLite database
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("TestDatabase.db");
-
-    if (!db.open()) {
-        QMessageBox::critical(this, "Błąd bazy danych", "Nie udało się połączyć z bazą.");
-        qDebug() << "DB Error:" << db.lastError().text();
-        return;
-    }
-
     QSqlQuery query;
-    query.prepare("SELECT Password, Position FROM User WHERE email = :email");
-    query.bindValue(":email", email);
+    QString queryEmail(email);
+    if (!DB::Queries::User::LogIn(query, queryEmail))
+        QMessageBox::warning(this, "Błąd logowania", "Niepoprawne hasło.");
+    else{
+        if (query.next()) {
+            QString dbPassword = query.value(0).toString();
+            char dbRole        = query.value(1).toString().at(0).toLatin1();
+            
+            if (dbPassword == password) {
+                g_userEmail = email;
+                setUserRole(dbRole);
 
-    if (!query.exec()) {
-        QMessageBox::critical(this, "Błąd zapytania", "Nie udało się pozyskać danych z bazy.");
-        qDebug() << "Query Error:" << query.lastError().text();
-        return;
-    }
-
-    if (query.next()) {
-        /*
-        DB::Attrb::User::Email queryEmail(email);
-        DB::Attrb::User::Password queryPassword(password);
-        if (!DB::Queries::Component::LogIn(query, queryEmail, queryPassword))
-            QMessageBox::warning(this, "Błąd logowania", "Niepoprawne hasło.");
-        else{
-            QMessageBox::information(this, "Zalogowano pomyślnie", "Witamy!");
-            // przejdź do mainWindow
-        }
-        */
-
-        QString dbPassword = query.value(0).toString();
-        char dbRole        = query.value(1).toString().at(0).toLatin1();
-        if (dbPassword == password) {
-            g_userEmail = email;
-            setUserRole(dbRole);
-
-            QMessageBox::information(this, "Zalogowano pomyślnie", "Witamy!");
-            // przejdź do mainWindow - sygnał ALBO zamknij loginWindow
+                QMessageBox::information(this, "Zalogowano pomyślnie", "Witamy!");
+                emit loginSuccessful(); 
+                close();
+            } else {
+                QMessageBox::warning(this, "Błąd logowania", "Niepoprawne hasło.");
+            }
         } else {
-            QMessageBox::warning(this, "Błąd logowania", "Niepoprawne hasło.");
+            QMessageBox::warning(this, "Błąd logowania", "Nie znaleziono adresu email.");
         }
-    } else {
-        QMessageBox::warning(this, "Błąd logowania", "Nie znaleziono adresu email.");
     }
-
-    db.close();
 }
 
-
 void LoginWindow::onForgotPassword() {
-    /*
+    QSqlQuery query;
     QString adminFirstName ="";
     QString adminLastName ="";
     QString adminEmail ="";
 
-    if (DB::Queries::Component::FindAdmin(query)){
-        adminFirstName = query.value(0).toString();
-        adminLastName = query.value(1).toString();
-        adminEmail = query.value(2).toString();
-    }
-    auto msg = "Jeśli nie pamiętasz hasła, zgłoś się do administratora bazy danych, którym jest " % adminFirstName % " " % adminLastName ", " % adminEmail;
+    if (DB::Queries::User::FindAdmin(query)){
+        if(query.next()){
+            adminFirstName = query.value(0).toString();
+            adminLastName = query.value(1).toString();
+            adminEmail = query.value(2).toString();
+        }
+    } else QMessageBox::information(this, "Zapytaj admina o nowe hasło", "A nie, nie ma admina XD");
+
+    auto msg = "Jeśli nie pamiętasz hasła, zgłoś się do administratora bazy danych, którym jest " % adminFirstName % " " % adminLastName % ", " % adminEmail;
     QMessageBox::information(this, "Zapytaj admina o nowe hasło", msg);
-    */
 }
 
 void LoginWindow::onProceedWithoutLogin() {
     g_userRole = UserRole::Guest;
     g_userEmail = "Szacowny gość";
-    QMessageBox::information(this, "Otwarto ograniczony widok bazy", "Witamy!");
-    // przejdź do mainWindow - sygnał ALBO zamknij loginWindow
+    QMessageBox::information(this, "Niezalogowano pomyślnie", "Witamy!");
+
+    emit loginSuccessful(); 
+    close();
 }
 
 #include "loginWindow/moc_loginWindow.cpp"

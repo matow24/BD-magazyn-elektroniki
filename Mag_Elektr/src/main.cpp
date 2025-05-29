@@ -7,6 +7,11 @@
 
 QString g_userEmail = "275431@student.pwr.edu.pl";
 UserRole g_userRole = UserRole::Admin;
+/* - dorobić aktualizację MainWindow po zalogowaniu
+domyślnie powinno być na start: 
+QString g_userEmail = "";
+UserRole g_userRole = UserRole::Guest;
+*/
 
 int main(int argc, char *argv[])
 {
@@ -26,8 +31,20 @@ int main(int argc, char *argv[])
     MainWindow mainWindow; //!< Tworzenie instancji głównego okna aplikacji
     LoginWindow loginWindow; //!< Tworzenie instancji okna logowania aplikacji
 
-    //mainWindow.show();     //! Wyświetlenie głównego okna aplikacji
+    //login handle
+    QObject::connect(&loginWindow, &LoginWindow::loginSuccessful, [&]() {
+        mainWindow.onLogin();
+        mainWindow.showMaximized();  //! Wyświetlenie głównego okna aplikacji
+    });
+
+    //logout handles
+    /*QObject::connect(mainWindow.getMainToolBar(), &MainToolBar::logoutClicked,
+                 mainWindow, &MainWindow::hide);
+    QObject::connect(mainWindow.getMainToolBar(), &MainToolBar::logoutClicked,
+                 loginWindow, &LoginWindow::onLogout);*/
+
     loginWindow.show();     //! Wyświetlenie okna logowania aplikacji
+
     return mainApp.exec(); //! Uruchomienie pętli zdarzeń aplikacji
 }
 
