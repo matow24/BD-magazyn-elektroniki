@@ -37,10 +37,6 @@ ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, T
         m_enableLocationButton->setIcon(QIcon(ICON_LOCATION));
     }
 
-    m_enableButtonsFiller = new QWidget(this);
-    m_enableButtonsLayout->addWidget(m_enableButtonsFiller, 1);
-    m_enableButtonsFiller->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
     m_enableSearchButton = new QPushButton(this);
     m_enableButtonsLayout->addWidget(m_enableSearchButton, 0);
     m_enableSearchButton->setObjectName("ComponentsPageNS_FilterWidget_Button");
@@ -48,6 +44,10 @@ ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, T
     m_enableSearchButton->setChecked(false);
     m_enableSearchButton->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     m_enableSearchButton->setIcon(QIcon(ICON_SEARCH));
+
+    m_enableButtonsFiller = new QWidget(this);
+    m_enableButtonsLayout->addWidget(m_enableButtonsFiller, 1);
+    m_enableButtonsFiller->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
     m_resetButton = new QPushButton(this);
     m_enableButtonsLayout->addWidget(m_resetButton, 0);
@@ -69,7 +69,7 @@ ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, T
         m_locationFieldLayout->addWidget(m_locationFieldRack, 1);
         m_locationFieldRack->setObjectName("ComponentsPageNS_FilterWidget_LineEdit");
         m_locationFieldRack->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
-        m_locationFieldRack->setPlaceholderText(tr("Półka"));
+        m_locationFieldRack->setPlaceholderText(tr("Regał"));
 
         m_locationFieldRackValidator = new QIntValidator(1, INT_MAX, this);
         m_locationFieldRack->setValidator(m_locationFieldRackValidator);
@@ -78,7 +78,7 @@ ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, T
         m_locationFieldLayout->addWidget(m_locationFieldDrawer, 1);
         m_locationFieldDrawer->setObjectName("ComponentsPageNS_FilterWidget_LineEdit");
         m_locationFieldDrawer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
-        m_locationFieldDrawer->setPlaceholderText(tr("Regał"));
+        m_locationFieldDrawer->setPlaceholderText(tr("Szuflada"));
 
         m_locationFieldDrawerValidator = new QIntValidator(1, INT_MAX, this);
         m_locationFieldDrawer->setValidator(m_locationFieldDrawerValidator);

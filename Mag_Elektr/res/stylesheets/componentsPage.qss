@@ -131,7 +131,7 @@ QWidget#Component_QuantityWidget_InfoWidget
 
 QLabel#Component_QuantityWidget_NameLabel
 {
-    font-size: 8px;
+    font-size: 12px;
     padding-left: 5px;
     padding-right: 5px;
     color: palette(Base);
@@ -147,7 +147,7 @@ QLabel#Component_QuantityWidget_ValueLabel
 
 QLabel#Component_QuantityWidget_EditLabel
 {
-    font-size: 8px;
+    font-size: 12px;
     padding-left: 5px;
     padding-right: 5px;
 }

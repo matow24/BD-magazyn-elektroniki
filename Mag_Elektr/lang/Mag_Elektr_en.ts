@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS version="2.1" language="en_US">
 <context>
     <name>ComponentNS::ParametersWidget</name>
     <message>
-        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="83"/>
+        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="93"/>
+        <source>ID</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="100"/>
         <source>Nazwa</source>
-        <translation type="unfinished"></translation>
+        <translation>Name</translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="90"/>
+        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="107"/>
         <source>Rodzaj</source>
-        <translation type="unfinished"></translation>
+        <translation>Subtype</translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="97"/>
+        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="114"/>
         <source>Typ</source>
-        <translation type="unfinished"></translation>
+        <translation>Type</translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="104"/>
+        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="121"/>
         <source>Producent</source>
-        <translation type="unfinished"></translation>
+        <translation>Manufacturer</translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="111"/>
+        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="128"/>
         <source>Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbol</translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="118"/>
+        <location filename="../src/componentsPage/component/parametersWidget.cpp" line="135"/>
         <source>Karta Katalogowa</source>
-        <translation type="unfinished"></translation>
+        <translation>Datasheet</translation>
     </message>
 </context>
 <context>
@@ -39,97 +44,297 @@
     <message>
         <location filename="../src/componentsPage/component/quantityWidget.cpp" line="77"/>
         <source>Stan Magazynowy</source>
-        <translation type="unfinished"></translation>
+        <translation>Quantity</translation>
     </message>
     <message>
         <location filename="../src/componentsPage/component/quantityWidget.cpp" line="85"/>
         <source>Regał</source>
-        <translation type="unfinished"></translation>
+        <translation>Rack</translation>
     </message>
     <message>
         <location filename="../src/componentsPage/component/quantityWidget.cpp" line="93"/>
-        <source>Półka</source>
-        <translation type="unfinished"></translation>
+        <source>Szuflada</source>
+        <translation>Drawer</translation>
     </message>
     <message>
         <location filename="../src/componentsPage/component/quantityWidget.cpp" line="104"/>
-        <source>Nowa ilość elementów</source>
-        <translation type="unfinished"></translation>
+        <source>Zmiana ilości elementów</source>
+        <translation>Quantity change</translation>
     </message>
 </context>
 <context>
     <name>ComponentsPageNS::FilterWidget</name>
     <message>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="73"/>
-        <source>Półka</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="82"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="72"/>
         <source>Regał</source>
-        <translation type="unfinished"></translation>
+        <translation>Rack</translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="91"/>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="118"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="81"/>
+        <source>Szuflada</source>
+        <translation>Drawer</translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="90"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="117"/>
         <source>Szukaj</source>
-        <translation type="unfinished"></translation>
+        <translation>Search</translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="109"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="108"/>
         <source>Nazwa</source>
-        <translation type="unfinished"></translation>
+        <translation>Name</translation>
+    </message>
+</context>
+<context>
+    <name>HistoryPageNS::ContainerWidget</name>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="21"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="40"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="46"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="58"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="64"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="76"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="82"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="94"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="100"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="112"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="121"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="143"/>
+        <source>Rodzaj Operacji</source>
+        <translation>Operation Type</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="22"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="41"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="47"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="59"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="65"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="77"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="83"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="95"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="101"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="113"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="122"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="144"/>
+        <source>Data</source>
+        <translation>Date</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="23"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="42"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="48"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="60"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="66"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="78"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="84"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="96"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="102"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="114"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="123"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="145"/>
+        <source>Email Użytkownika</source>
+        <translation>User Email</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="24"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="43"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="49"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="79"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="85"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="97"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="103"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="146"/>
+        <source>Typ</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="25"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="44"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="50"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="61"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="67"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="115"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="124"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="147"/>
+        <source>ID Komponentu</source>
+        <translation>Component ID</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="26"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="58"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="62"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="68"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="148"/>
+        <source>Zmiana Ilości</source>
+        <translation>Quantity Change</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="27"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="98"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="104"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="149"/>
+        <source>Adres Email Modyfikowany</source>
+        <translation>Modified Email</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="28"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="80"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="86"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="150"/>
+        <source>Nr. Regału</source>
+        <translation>Rack Nr.</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="29"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="116"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="125"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="151"/>
+        <source>Stary Regał</source>
+        <translation>Old Rack</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="30"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="117"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="126"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="152"/>
+        <source>Stara Szuflada</source>
+        <translation>Old Drawer</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="31"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="118"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="127"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="153"/>
+        <source>Nowy Regał</source>
+        <translation>New Rack</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="32"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="119"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="128"/>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="154"/>
+        <source>Nowa Szuflada</source>
+        <translation>New Drawer</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="40"/>
+        <source>Zmiana Komponent</source>
+        <translation>Change Component</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="76"/>
+        <source>Zmiana Regał</source>
+        <translation>Change Rack</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="94"/>
+        <source>Zmiana Użytkownik</source>
+        <translation>Change User</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/containerWidget.cpp" line="112"/>
+        <source>Przeniesienie Komponentu</source>
+        <translation>Component Move</translation>
+    </message>
+</context>
+<context>
+    <name>HistoryPageNS::FilterWidget</name>
+    <message>
+        <location filename="../src/historyPage/historyPage/filterWidget.cpp" line="31"/>
+        <source>Zakres czasu</source>
+        <translation>Time Period</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/filterWidget.cpp" line="64"/>
+        <location filename="../src/historyPage/historyPage/filterWidget.cpp" line="70"/>
+        <source>Adres email</source>
+        <translation>Email</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/filterWidget.cpp" line="88"/>
+        <source>Lokalizacja</source>
+        <translation>Location</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/filterWidget.cpp" line="94"/>
+        <source>Regał</source>
+        <translation>Rack</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/filterWidget.cpp" line="103"/>
+        <source>Szuflada</source>
+        <translation>Drawer</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/filterWidget.cpp" line="121"/>
+        <location filename="../src/historyPage/historyPage/filterWidget.cpp" line="127"/>
+        <source>ID Komponentu</source>
+        <translation>Component ID</translation>
+    </message>
+    <message>
+        <location filename="../src/historyPage/historyPage/filterWidget.cpp" line="137"/>
+        <source>Szukaj</source>
+        <translation>Search</translation>
+    </message>
+</context>
+<context>
+    <name>LoginWindow</name>
+    <message>
+        <location filename="../src/loginWindow/loginWindow.cpp" line="5"/>
+        <source>Magazyn Elektroniki</source>
+        <translation>Electronics Warehouse</translation>
     </message>
 </context>
 <context>
     <name>MainToolBar</name>
     <message>
-        <location filename="../src/mainWindow/mainToolBar.cpp" line="43"/>
+        <location filename="../src/mainWindow/mainToolBar.cpp" line="41"/>
         <source>Komponenty</source>
-        <translation type="unfinished"></translation>
+        <translation>Components</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainToolBar.cpp" line="48"/>
+        <location filename="../src/mainWindow/mainToolBar.cpp" line="46"/>
         <source>Historia</source>
-        <translation type="unfinished"></translation>
+        <translation>History</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainToolBar.cpp" line="53"/>
+        <location filename="../src/mainWindow/mainToolBar.cpp" line="51"/>
         <source>Modyfikacja</source>
-        <translation type="unfinished"></translation>
+        <translation>Modify</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainToolBar.cpp" line="62"/>
+        <location filename="../src/mainWindow/mainToolBar.cpp" line="60"/>
         <source>Wyloguj</source>
-        <translation type="unfinished"></translation>
+        <translation>Log Out</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainWindow/mainWindow.cpp" line="9"/>
+        <location filename="../src/mainWindow/mainWindow.cpp" line="8"/>
         <source>Gość</source>
-        <translation type="unfinished"></translation>
+        <translation>Guest</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainWindow.cpp" line="12"/>
+        <location filename="../src/mainWindow/mainWindow.cpp" line="11"/>
         <source>Pracownik</source>
-        <translation type="unfinished"></translation>
+        <translation>Employee</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainWindow.cpp" line="15"/>
+        <location filename="../src/mainWindow/mainWindow.cpp" line="14"/>
         <source>Logistyk</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistician</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainWindow.cpp" line="18"/>
+        <location filename="../src/mainWindow/mainWindow.cpp" line="17"/>
         <source>Administrator</source>
-        <translation type="unfinished"></translation>
+        <translation>Administrator</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainWindow.cpp" line="22"/>
+        <location filename="../src/mainWindow/mainWindow.cpp" line="21"/>
         <source>Magazyn Elektroniki</source>
-        <translation type="unfinished"></translation>
+        <translation>Electronics Warehouse</translation>
     </message>
 </context>
 </TS>

@@ -90,7 +90,7 @@ ComponentNS::QuantityWidget::QuantityWidget(QWidget *parent) : QWidget(parent)
     m_infoLayout->addWidget(m_rackValueLabel, 1, 1, Qt::AlignCenter);
     m_rackValueLabel->setObjectName("Component_QuantityWidget_ValueLabel");
 
-    m_drawerNameLabel = new QLabel(tr("Półka"), this);
+    m_drawerNameLabel = new QLabel(tr("Szuflada"), this);
     m_infoLayout->addWidget(m_drawerNameLabel, 0, 2, Qt::AlignCenter);
     m_drawerNameLabel->setObjectName("Component_QuantityWidget_NameLabel");
 
@@ -101,7 +101,7 @@ ComponentNS::QuantityWidget::QuantityWidget(QWidget *parent) : QWidget(parent)
     m_spacer = new QWidget(this);
     m_mainLayout->addWidget(m_spacer, 1);
 
-    m_editLabel = new QLabel(tr("Nowa ilość elementów"), this);
+    m_editLabel = new QLabel(tr("Zmiana ilości elementów"), this);
     m_mainLayout->addWidget(m_editLabel, 0, Qt::AlignCenter);
     m_editLabel->setObjectName("Component_QuantityWidget_EditLabel");
 

@@ -78,7 +78,4 @@ set_target_properties(${LOCAL_TARGET_NAME} PROPERTIES
 
 qt_finalize_target(${LOCAL_TARGET_NAME})
 
-# qt_add_translations(${LOCAL_TARGET_NAME}
-#   TS_FILE_BASE ${LOCAL_TARGET_NAME}
-#   TS_OUTPUT_DIRECTORY ${LANG_DIR}
-# )
+# add_dependencies(${LOCAL_TARGET_NAME} update_translations)

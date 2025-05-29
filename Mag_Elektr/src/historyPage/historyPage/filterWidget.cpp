@@ -100,7 +100,7 @@ HistoryPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, QWid
     m_locationFilterFieldLayout->addWidget(m_locationFilterDrawerFieldEdit, 1, 1, 1, 1);
     m_locationFilterDrawerFieldEdit->setObjectName("HistoryPageNS_FilterWidget_LineEdit");
     m_locationFilterDrawerFieldEdit->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    m_locationFilterDrawerFieldEdit->setPlaceholderText(tr("Półka"));
+    m_locationFilterDrawerFieldEdit->setPlaceholderText(tr("Szuflada"));
 
     m_locationFilterDrawerFieldValidator = new QIntValidator(1, INT_MAX, this);
     m_locationFilterDrawerFieldEdit->setValidator(m_locationFilterDrawerFieldValidator);
