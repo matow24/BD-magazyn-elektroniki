@@ -23,6 +23,7 @@ private:
 
 public:
     HistoryPage(QWidget *parent = nullptr);
+    //~HistoryPage();
 };
 
 #endif // _HISTORYPAGE_HPP

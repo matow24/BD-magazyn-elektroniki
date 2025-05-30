@@ -46,5 +46,16 @@ ComponentsPage::ComponentsPage(QWidget *parent) : QWidget(parent)
     m_treeFilterWidget->resetVariants();
 }
 
+/*ComponentsPage::~ComponentsPage()
+{
+    delete m_containerWidget;
+    delete m_filterPanel;
+    delete m_filterPanelFrame;
+    delete m_filterWidget;
+    delete m_filterPanelLayout;
+    delete m_mainFrame;
+    delete m_treeFilterWidget;
+    
+}*/
 #include "componentsPage/moc_componentsPage.cpp"
 // #include "componentsPage/componentsPage.moc"

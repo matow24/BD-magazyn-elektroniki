@@ -88,7 +88,6 @@ void LoginWindow::onSubmit() {
                 g_userEmail = email;
                 setUserRole(dbRole);
 
-                QMessageBox::information(this, "Zalogowano pomyślnie", "Witamy!");
                 emit loginSuccessful(); 
                 close();
             } else {
@@ -121,7 +120,6 @@ void LoginWindow::onForgotPassword() {
 void LoginWindow::onProceedWithoutLogin() {
     g_userRole = UserRole::Guest;
     g_userEmail = "Szacowny gość";
-    QMessageBox::information(this, "Niezalogowano pomyślnie", "Witamy!");
 
     emit loginSuccessful(); 
     close();

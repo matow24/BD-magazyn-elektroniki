@@ -7,6 +7,7 @@
 #include <QSizePolicy>
 #include <QStackedWidget>
 #include <QString>
+#include <QMessageBox>
 
 #include "main.hpp"
 
@@ -31,12 +32,16 @@ private:
     QStackedWidget *m_stackedWidget = nullptr;
 
     void setRole();
+    void setWindowName();
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    //MainToolBar getMainToolBar(){ return *m_mainToolBar; };
+    ~MainWindow();
+signals:
+    void logoutRequested();
 public slots:
     void onLogin();
+    void onLogoutClicked();
 
 private slots:
     void changePage(Page &newPage);

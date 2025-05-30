@@ -17,5 +17,9 @@ ModifyPage::ModifyPage(QWidget *parent) : QWidget(parent)
 
 }
 
+ModifyPage::~ModifyPage()
+{
+    //delete ...
+}
 #include "modifyPage/moc_modifyPage.cpp"
 // #include "modifyPage/modifyPage.moc"

@@ -33,6 +33,7 @@ public:
     void checkPageButton(Page page);
 
     MainToolBar(QWidget *parent = nullptr);
+    ~MainToolBar();
 
 private slots:
     void pageButtonClicked(QAbstractButton *button);

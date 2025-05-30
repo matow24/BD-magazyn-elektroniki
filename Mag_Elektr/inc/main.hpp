@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <QString>
+#include <QScopedPointer>
 
 #include "mainDatabase/mainDatabase.hpp"
 #include "common/mainStyle.hpp"

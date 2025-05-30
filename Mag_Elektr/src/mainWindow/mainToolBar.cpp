@@ -22,6 +22,14 @@ void MainToolBar::checkPageButton(Page page)
     }
 }
 
+MainToolBar::~MainToolBar(){
+    delete m_buttonComponents;
+    delete m_buttonHistory;
+    delete m_buttonLogout;
+    delete m_buttonModify;
+    delete m_buttonsPages;
+}
+
 MainToolBar::MainToolBar(QWidget *parent) : QToolBar(parent)
 {
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MAINWINDOW_NAME]);
@@ -53,16 +61,13 @@ MainToolBar::MainToolBar(QWidget *parent) : QToolBar(parent)
         connect(m_buttonsPages, &QButtonGroup::buttonClicked, this, &MainToolBar::pageButtonClicked);
     }
 
-    if (g_userRole != UserRole::Guest)
-    {
-        m_buttonLogout = new MainToolButton(this);
-        this->addWidget(m_buttonLogout);
-        m_buttonLogout->setText(tr("Wyloguj"));
-        m_buttonLogout->setCheckable(false);
-        m_buttonLogout->setChecked(false);
+    m_buttonLogout = new MainToolButton(this);
+    this->addWidget(m_buttonLogout);
+    m_buttonLogout->setText(tr("Wyloguj"));
+    m_buttonLogout->setCheckable(false);
+    m_buttonLogout->setChecked(false);
 
-        connect(m_buttonLogout, &QToolButton::clicked, this, &MainToolBar::logoutButtonClicked);
-    }
+    connect(m_buttonLogout, &QToolButton::clicked, this, &MainToolBar::logoutButtonClicked);
 }
 
 void MainToolBar::pageButtonClicked(QAbstractButton *button)
@@ -76,9 +81,6 @@ void MainToolBar::pageButtonClicked(QAbstractButton *button)
 
 void MainToolBar::logoutButtonClicked()
 {
-    if (g_userRole == UserRole::Guest)
-        return;
-
     emit logoutClicked();
 }
 

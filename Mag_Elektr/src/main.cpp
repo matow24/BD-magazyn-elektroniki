@@ -28,22 +28,22 @@ int main(int argc, char *argv[])
 
     MainStyle::loadStyleSheets();
 
-    MainWindow mainWindow; //!< Tworzenie instancji głównego okna aplikacji
-    LoginWindow loginWindow; //!< Tworzenie instancji okna logowania aplikacji
-
-    //login handle
-    QObject::connect(&loginWindow, &LoginWindow::loginSuccessful, [&]() {
-        mainWindow.onLogin();
-        mainWindow.showMaximized();  //! Wyświetlenie głównego okna aplikacji
-    });
-
-    //logout handles
-    /*QObject::connect(mainWindow.getMainToolBar(), &MainToolBar::logoutClicked,
-                 mainWindow, &MainWindow::hide);
-    QObject::connect(mainWindow.getMainToolBar(), &MainToolBar::logoutClicked,
-                 loginWindow, &LoginWindow::onLogout);*/
+    LoginWindow loginWindow; //!< Tworzenie instancji okna logowania aplikacji  
+    QScopedPointer<MainWindow> mainWindow; //!< Tworzenie instancji głównego okna aplikacji
 
     loginWindow.show();     //! Wyświetlenie okna logowania aplikacji
+
+    QObject::connect(&loginWindow, &LoginWindow::loginSuccessful, [&]() {
+        mainWindow.reset(new MainWindow());
+        QObject::connect(mainWindow.get(), &MainWindow::logoutRequested, [&]() {
+            loginWindow.onLogout();
+            mainWindow->close();
+            mainWindow.reset(); 
+        });
+        mainWindow->show();
+        loginWindow.hide();
+    });
+
 
     return mainApp.exec(); //! Uruchomienie pętli zdarzeń aplikacji
 }

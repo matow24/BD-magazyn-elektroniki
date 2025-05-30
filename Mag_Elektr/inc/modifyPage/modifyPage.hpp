@@ -16,6 +16,7 @@ private:
 
 public:
     ModifyPage(QWidget *parent = nullptr);
+    ~ModifyPage();
 };
 
 #endif // _MODIFYPAGE_HPP
