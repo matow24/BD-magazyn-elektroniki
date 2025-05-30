@@ -30,7 +30,6 @@ private:
 
 public:
     ComponentsPage(QWidget *parent = nullptr);
-    //~ComponentsPage();
 };
 
 #endif // _COMPONENTSPAGE_HPP

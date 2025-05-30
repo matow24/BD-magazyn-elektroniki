@@ -23,13 +23,6 @@ HistoryPage::HistoryPage(QWidget *parent) : QWidget(parent)
     m_mainLayout->addWidget(m_mainFrame, 0);
     m_mainLayout->addWidget(m_containerWidget, 1);
 }
-/*
-HistoryPage::~HistoryPage(){
-    delete m_containerWidget;
-    delete m_filterWidget;
-    delete m_mainFrame;
-    delete m_mainLayout;
-}*/
 
 #include "historyPage/moc_historyPage.cpp"
 // #include "historyPage/historyPage.moc"
