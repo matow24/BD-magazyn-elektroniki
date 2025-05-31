@@ -1,35 +1,5 @@
 #include "mainWindow/mainToolBar.hpp"
 
-void MainToolBar::checkPageButton(Page page)
-{
-    if (g_userRole == UserRole::Guest || g_userRole == UserRole::Employee)
-        return;
-
-    for (auto &button : m_buttonsPages->buttons())
-        button->setChecked(false);
-
-    switch (page)
-    {
-    case Page::Components:
-        m_buttonComponents->setChecked(true);
-        break;
-    case Page::History:
-        m_buttonHistory->setChecked(true);
-        break;
-    case Page::Modify:
-        m_buttonModify->setChecked(true);
-        break;
-    }
-}
-
-MainToolBar::~MainToolBar(){
-    delete m_buttonComponents;
-    delete m_buttonHistory;
-    delete m_buttonLogout;
-    delete m_buttonModify;
-    delete m_buttonsPages;
-}
-
 MainToolBar::MainToolBar(QWidget *parent) : QToolBar(parent)
 {
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MAINWINDOW_NAME]);
@@ -63,11 +33,40 @@ MainToolBar::MainToolBar(QWidget *parent) : QToolBar(parent)
 
     m_buttonLogout = new MainToolButton(this);
     this->addWidget(m_buttonLogout);
-    m_buttonLogout->setText(tr("Wyloguj"));
+    g_userRole == UserRole::Guest ? m_buttonLogout->setText(tr("Zaloguj")) : m_buttonLogout->setText(tr("Wyloguj"));
     m_buttonLogout->setCheckable(false);
     m_buttonLogout->setChecked(false);
 
     connect(m_buttonLogout, &QToolButton::clicked, this, &MainToolBar::logoutButtonClicked);
+}
+
+void MainToolBar::checkPageButton(Page page)
+{
+    if (g_userRole == UserRole::Guest || g_userRole == UserRole::Employee)
+        return;
+
+    for (auto &button : m_buttonsPages->buttons())
+        button->setChecked(false);
+
+    switch (page)
+    {
+    case Page::Components:
+        m_buttonComponents->setChecked(true);
+        break;
+    case Page::History:
+        m_buttonHistory->setChecked(true);
+        break;
+    case Page::Modify:
+        m_buttonModify->setChecked(true);
+        break;
+    }
+}
+
+MainToolBar::~MainToolBar(){
+    if(m_buttonComponents!=nullptr) delete m_buttonComponents;
+    if(m_buttonHistory!=nullptr) delete m_buttonHistory;
+    if(m_buttonModify!=nullptr) delete m_buttonModify;
+    if(m_buttonsPages!=nullptr) delete m_buttonsPages;
 }
 
 void MainToolBar::pageButtonClicked(QAbstractButton *button)

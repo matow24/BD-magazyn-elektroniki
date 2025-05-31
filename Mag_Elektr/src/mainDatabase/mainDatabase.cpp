@@ -58,9 +58,40 @@ bool DB::Queries::User::FindAdmin(QSqlQuery &query)
     return true;
 }
 
+bool Queries::User::Add(QSqlQuery &query, QString email, QString first_name, QString last_name, QString password, char position)
+{
+    query.prepare(USER_ADD);
+    query.bindValue(":email", email);
+    query.bindValue(":first_name", first_name);
+    query.bindValue(":last_name", last_name);
+    query.bindValue(":password", password);
+    query.bindValue(":position", position);
+
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 bool Queries::LastInsertRowID(QSqlQuery &query)
 {
     query.prepare(LAST_INSERT_ROW_ID);
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Variant::Add(QSqlQuery &query, Attrb::Variant::Name Name, Attrb::Variant::Type Type)
+{
+    query.prepare(VARIANT_ADD);
+    query.bindValue(":name", Name.m_Name);
+    query.bindValue(":type", Type.m_Type);
+
     if (!query.exec())
     {
         qDebug() << "Error: Unable to execute query:" << query.lastError().text();
@@ -83,6 +114,23 @@ bool Queries::Variant::DeleteNotExists(QSqlQuery &query)
 bool Queries::Variant::Select(QSqlQuery &query)
 {
     query.prepare(VARIANT_SELECT);
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Component::Add(QSqlQuery &query, Attrb::Variant::Name Variant_Name, Attrb::Component::Name Name, Attrb::Component::Manufacturer Manufacturer, Attrb::Component::Symbol Symbol, Attrb::Component::Datasheet Datasheet, Attrb::Component::MaxQuantity MaxQuantity){
+    query.prepare(COMPONENT_ADD);
+    query.bindValue(":variantName", Variant_Name.m_Name);
+    query.bindValue(":name", Name.m_Name);
+    query.bindValue(":manufacturer", Manufacturer.m_Manufacturer);
+    query.bindValue(":symbol", Symbol.m_Symbol);
+    query.bindValue(":datasheet", Datasheet.m_Datasheet);
+    query.bindValue(":maxQuantity", MaxQuantity.m_MaxQuantity);
+
     if (!query.exec())
     {
         qDebug() << "Error: Unable to execute query:" << query.lastError().text();
@@ -162,6 +210,31 @@ bool Queries::Component::SelectLike(QSqlQuery &query, Attrb::Component::Name sub
     query.prepare(COMPONENT_SELECTLIKE_NAME);
     query.bindValue(":substr_Name", substr_Name.m_Name);
 
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Location::Add(QSqlQuery &query, Attrb::Location::Rack Rack, Attrb::Location::Drawer Drawer)
+{
+    query.prepare(LOCATION_ADD__RACK_DRAWER);
+    query.bindValue(":Rack", Rack.m_Rack);
+    query.bindValue(":Drawer", Drawer.m_Drawer);
+
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Location::FindNextRackNumber(QSqlQuery &query)
+{
+    query.prepare(LOCATION_FIND_NEXT_RACK_NO);
     if (!query.exec())
     {
         qDebug() << "Error: Unable to execute query:" << query.lastError().text();

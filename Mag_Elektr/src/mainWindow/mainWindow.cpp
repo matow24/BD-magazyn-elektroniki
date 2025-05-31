@@ -67,6 +67,12 @@ void MainWindow::onLogoutClicked(){
         emit logoutRequested();
     }*/
 
+    if(g_userRole==UserRole::Guest){
+        this->hide();
+        emit logoutRequested();
+        return;
+    }
+
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Próba wylogowania", "Czy na pewno chcesz się wylogować?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     if (reply == QMessageBox::Yes) {

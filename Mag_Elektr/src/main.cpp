@@ -5,13 +5,8 @@
 #include "loginWindow/loginWindow.hpp"
 #include "mainWindow/mainWindow.hpp"
 
-QString g_userEmail = "275431@student.pwr.edu.pl";
-UserRole g_userRole = UserRole::Admin;
-/* - dorobić aktualizację MainWindow po zalogowaniu
-domyślnie powinno być na start: 
 QString g_userEmail = "";
 UserRole g_userRole = UserRole::Guest;
-*/
 
 int main(int argc, char *argv[])
 {

@@ -3,9 +3,46 @@
 
 #define DATABASE_TYPE "QSQLITE"
 
-#define USER_LOGIN__EMAIL "SELECT Password, Position FROM User WHERE email = :email"
+#define LOCATION_FIND_NEXT_RACK_NO \
+    "SELECT IFNULL(MAX(Rack), 0) + 1 FROM Location;"
 
-#define FIND_ADMIN "SELECT FirstName, LastName, Email FROM User WHERE Position = 'A'"
+#define LOCATION_ADD__RACK_DRAWER                       \
+    "INSERT INTO "                                      \
+    "Location (Rack, Drawer, Component_ID, Quantity) "  \
+    "VALUES (:rack, :drawer_no, 0, 0);"
+
+#define VARIANT_ADD \
+    "INSERT INTO "          \
+    "Variant (Name, Type) " \
+    "VALUES (:name, :type);"
+
+#define COMPONENT_ADD \
+    "INSERT INTO "                                                  \
+    "Component (ID, Variant_Name, Name, Manufacturer, Symbol, Datasheet, MaxQuantity) " \
+    "VALUES ("                                                      \
+        "(SELECT IFNULL(MAX(ID), 0) + 1 FROM Component), "           \
+        "(SELECT Name FROM Variant WHERE Name = :variantName), "        \
+        " :name, :manufacturer, :symbol, :datasheet, :maxQuantity)" \
+    ");"
+
+#define USER_UPDATE__EMAIL_COLUMN_NEWDATA \
+    "UPDATE User "                        \
+    "SET :column = :newdata "             \
+    "WHERE Email = :email;"
+
+#define USER_ADD \
+    "INSERT INTO "                                           \
+    "User (Email, FirstName, LastName, Password, Position) " \
+    "VALUES (:email, :first_name, :last_name, :password, :position);"
+
+#define USER_DELETE__EMAIL \
+    "DELETE FROM User WHERE email = :email"
+
+#define USER_LOGIN__EMAIL \
+    "SELECT Password, Position FROM User WHERE email = :email"
+
+#define FIND_ADMIN \
+    "SELECT FirstName, LastName, Email FROM User WHERE Position = 'A'"
 
 #define LAST_INSERT_ROW_ID "SELECT last_insert_rowid() AS ID;"
 

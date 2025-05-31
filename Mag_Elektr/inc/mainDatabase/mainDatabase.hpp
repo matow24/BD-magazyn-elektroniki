@@ -31,6 +31,8 @@ namespace DB
 
           namespace Variant
           {
+               bool Add(QSqlQuery &query, Attrb::Variant::Name Name, Attrb::Variant::Type Type);
+
                bool DeleteNotExists(QSqlQuery &query);
 
                bool Select(QSqlQuery &query);
@@ -38,6 +40,8 @@ namespace DB
 
           namespace Component
           {
+               bool Add(QSqlQuery &query, Attrb::Variant::Name Variant_Name, Attrb::Component::Name Name, Attrb::Component::Manufacturer Manufacturer, Attrb::Component::Symbol Symbol, Attrb::Component::Datasheet Datasheet, Attrb::Component::MaxQuantity MaxQuantity);
+
                bool Delete(QSqlQuery &query, Attrb::Component::ID ID);
 
                bool SelectWhere(QSqlQuery &query, Attrb::Component::ID ID);
@@ -53,6 +57,10 @@ namespace DB
 
           namespace Location
           {
+               bool Add(QSqlQuery &query, Attrb::Location::Rack Rack, Attrb::Location::Drawer Drawer);
+
+               bool FindNextRackNumber(QSqlQuery &query);
+
                bool SelectWhere(QSqlQuery &query, Attrb::Location::Rack Rack, Attrb::Location::Drawer Drawer);
 
                bool SelectWhere(QSqlQuery &query, Attrb::Location::Component_ID Component_ID);
@@ -104,6 +112,8 @@ namespace DB
                bool LogIn(QSqlQuery &query, QString email);
 
                bool FindAdmin(QSqlQuery &query);
+
+               bool Add(QSqlQuery &query, QString email, QString first_name, QString last_name, QString password, char position);
 
           } // namespace User
 
