@@ -4,6 +4,11 @@ QWidget#ComponentsPage_FilterPanel
     background-color: rgba(0, 128, 0, 8);
 }
 
+QLineEdit#ComponentsPageNS_FilterWidget_Label
+{
+    font-size: 12px;
+}
+
 QLineEdit#ComponentsPageNS_FilterWidget_LineEdit
 {
     border: 1px solid green;

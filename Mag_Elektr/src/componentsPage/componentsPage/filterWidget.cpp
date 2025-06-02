@@ -60,35 +60,51 @@ ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, T
         m_locationField = new QWidget(this);
         m_mainLayout->addWidget(m_locationField);
 
-        m_locationFieldLayout = new QHBoxLayout(m_locationField);
+        m_locationFieldLayout = new QGridLayout(m_locationField);
         m_locationField->setLayout(m_locationFieldLayout);
         m_locationFieldLayout->setContentsMargins(0, 0, 0, 0);
         m_locationFieldLayout->setSpacing(5);
 
-        m_locationFieldRack = new QLineEdit(this);
-        m_locationFieldLayout->addWidget(m_locationFieldRack, 1);
+        m_locationLabelRack = new QLabel(m_locationField);
+        m_locationFieldLayout->addWidget(m_locationLabelRack, 0, 0);
+        m_locationLabelRack->setObjectName("ComponentsPageNS_FilterWidget_Label");
+        m_locationLabelRack->setAlignment(Qt::AlignCenter);
+        m_locationLabelRack->setText(tr("Regał") + ":");
+
+        m_locationFieldRack = new QLineEdit(m_locationField);
+        m_locationFieldLayout->addWidget(m_locationFieldRack, 1, 0);
         m_locationFieldRack->setObjectName("ComponentsPageNS_FilterWidget_LineEdit");
         m_locationFieldRack->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
-        m_locationFieldRack->setPlaceholderText(tr("Regał"));
+        m_locationFieldRack->setPlaceholderText("1");
 
-        m_locationFieldRackValidator = new QIntValidator(1, INT_MAX, this);
+        m_locationFieldRackValidator = new QIntValidator(1, INT_MAX, m_locationFieldRack);
         m_locationFieldRack->setValidator(m_locationFieldRackValidator);
 
-        m_locationFieldDrawer = new QLineEdit(this);
-        m_locationFieldLayout->addWidget(m_locationFieldDrawer, 1);
+        m_locationLabelDrawer = new QLabel(m_locationField);
+        m_locationFieldLayout->addWidget(m_locationLabelDrawer, 0, 1);
+        m_locationLabelDrawer->setObjectName("ComponentsPageNS_FilterWidget_Label");
+        m_locationLabelDrawer->setAlignment(Qt::AlignCenter);
+        m_locationLabelDrawer->setText(tr("Szuflada") + ":");
+
+        m_locationFieldDrawer = new QLineEdit(m_locationField);
+        m_locationFieldLayout->addWidget(m_locationFieldDrawer, 1, 1);
         m_locationFieldDrawer->setObjectName("ComponentsPageNS_FilterWidget_LineEdit");
         m_locationFieldDrawer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
-        m_locationFieldDrawer->setPlaceholderText(tr("Szuflada"));
+        m_locationFieldDrawer->setPlaceholderText("1");
 
-        m_locationFieldDrawerValidator = new QIntValidator(1, INT_MAX, this);
+        m_locationFieldDrawerValidator = new QIntValidator(1, INT_MAX, m_locationFieldDrawer);
         m_locationFieldDrawer->setValidator(m_locationFieldDrawerValidator);
 
-        m_locationFieldButton = new QPushButton(this);
-        m_locationFieldLayout->addWidget(m_locationFieldButton, 0);
+        m_locationFieldButton = new QPushButton(m_locationField);
+        m_locationFieldLayout->addWidget(m_locationFieldButton, 1, 2);
         m_locationFieldButton->setObjectName("ComponentsPageNS_FilterWidget_Button");
         m_locationFieldButton->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
         m_locationFieldButton->setText(tr("Szukaj"));
         m_locationFieldButton->setEnabled(false);
+
+        m_locationFieldLayout->setColumnStretch(0, 1);
+        m_locationFieldLayout->setColumnStretch(1, 1);
+        m_locationFieldLayout->setColumnStretch(2, 0);
 
         m_locationField->setVisible(false);
     }
@@ -96,26 +112,35 @@ ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, T
     m_searchField = new QWidget(this);
     m_mainLayout->addWidget(m_searchField);
 
-    QHBoxLayout *searchFieldLayout = new QHBoxLayout(m_searchField);
-    m_searchField->setLayout(searchFieldLayout);
-    searchFieldLayout->setContentsMargins(0, 0, 0, 0);
-    searchFieldLayout->setSpacing(5);
+    m_searchFieldLayout = new QGridLayout(m_searchField);
+    m_searchField->setLayout(m_searchFieldLayout);
+    m_searchFieldLayout->setContentsMargins(0, 0, 0, 0);
+    m_searchFieldLayout->setSpacing(5);
 
-    m_searchFieldText = new QLineEdit(this);
-    searchFieldLayout->addWidget(m_searchFieldText, 1);
+    m_searchLabelText = new QLabel(m_searchField);
+    m_searchFieldLayout->addWidget(m_searchLabelText, 0, 0);
+    m_searchLabelText->setObjectName("ComponentsPageNS_FilterWidget_Label");
+    m_searchLabelText->setAlignment(Qt::AlignCenter);
+    m_searchLabelText->setText(tr("Nazwa") + ":");
+
+    m_searchFieldText = new QLineEdit(m_searchField);
+    m_searchFieldLayout->addWidget(m_searchFieldText, 1, 0);
     m_searchFieldText->setObjectName("ComponentsPageNS_FilterWidget_LineEdit");
     m_searchFieldText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
-    m_searchFieldText->setPlaceholderText(tr("Nazwa"));
+    m_searchFieldText->setPlaceholderText(tr("Klucz (np. STM, Opto)"));
 
-    m_searchFieldValidator = new QRegularExpressionValidator(QRegularExpression("[a-zA-Z0-9_]+"), this);
+    m_searchFieldValidator = new QRegularExpressionValidator(QRegularExpression("[a-zA-Z0-9_]+"), m_searchFieldText);
     m_searchFieldText->setValidator(m_searchFieldValidator);
 
-    m_searchFieldButton = new QPushButton(this);
-    searchFieldLayout->addWidget(m_searchFieldButton, 0);
+    m_searchFieldButton = new QPushButton(m_searchField);
+    m_searchFieldLayout->addWidget(m_searchFieldButton, 1, 1);
     m_searchFieldButton->setObjectName("ComponentsPageNS_FilterWidget_Button");
     m_searchFieldButton->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     m_searchFieldButton->setText(tr("Szukaj"));
     m_searchFieldButton->setEnabled(false);
+
+    m_searchFieldLayout->setColumnStretch(0, 1);
+    m_searchFieldLayout->setColumnStretch(1, 0);
 
     m_searchField->setVisible(false);
 

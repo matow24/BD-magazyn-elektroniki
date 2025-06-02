@@ -1,6 +1,7 @@
 #ifndef _COMPONENTSPAGE_FILTERWIDGET_HPP
 #define _COMPONENTSPAGE_FILTERWIDGET_HPP
 
+#include <QGridLayout>
 #include <QHBoxLayout>
 #include <QIntValidator>
 #include <QLineEdit>
@@ -41,16 +42,19 @@ namespace ComponentsPageNS
         QPushButton *m_resetButton = nullptr;
 
         QWidget *m_locationField = nullptr;
-        QHBoxLayout *m_locationFieldLayout = nullptr;
+        QGridLayout *m_locationFieldLayout = nullptr;
 
+        QLabel *m_locationLabelRack = nullptr;
         QLineEdit *m_locationFieldRack = nullptr;
         QIntValidator *m_locationFieldRackValidator = nullptr;
+        QLabel *m_locationLabelDrawer = nullptr;
         QLineEdit *m_locationFieldDrawer = nullptr;
         QIntValidator *m_locationFieldDrawerValidator = nullptr;
         QPushButton *m_locationFieldButton = nullptr;
 
         QWidget *m_searchField = nullptr;
-        QHBoxLayout *m_searchFieldLayout = nullptr;
+        QGridLayout *m_searchFieldLayout = nullptr;
+        QLabel *m_searchLabelText = nullptr;
         QLineEdit *m_searchFieldText = nullptr;
         QRegularExpressionValidator *m_searchFieldValidator = nullptr;
         QPushButton *m_searchFieldButton = nullptr;

@@ -70,20 +70,25 @@
         <translation>Regał</translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="81"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="87"/>
         <source>Szuflada</source>
         <translation>Szuflada</translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="90"/>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="117"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="102"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="139"/>
         <source>Szukaj</source>
         <translation>Szukaj</translation>
     </message>
     <message>
-        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="108"/>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="124"/>
         <source>Nazwa</source>
         <translation>Nazwa</translation>
+    </message>
+    <message>
+        <location filename="../src/componentsPage/componentsPage/filterWidget.cpp" line="130"/>
+        <source>Klucz (np. STM, Opto)</source>
+        <translation>Klucz (np. STM, Opto)</translation>
     </message>
 </context>
 <context>
@@ -281,60 +286,87 @@
 <context>
     <name>LoginWindow</name>
     <message>
-        <location filename="../src/loginWindow/loginWindow.cpp" line="5"/>
         <source>Magazyn Elektroniki</source>
-        <translation>Magazyn Elektroniki</translation>
+        <translation type="vanished">Magazyn Elektroniki</translation>
+    </message>
+    <message>
+        <location filename="../src/loginWindow/loginWindow.cpp" line="5"/>
+        <source>Magazyn Elektroniki - Logowanie</source>
+        <translation>Magazyn Elektroniki - Logowanie</translation>
     </message>
 </context>
 <context>
     <name>MainToolBar</name>
     <message>
-        <location filename="../src/mainWindow/mainToolBar.cpp" line="41"/>
+        <location filename="../src/mainWindow/mainToolBar.cpp" line="19"/>
         <source>Komponenty</source>
         <translation>Komponenty</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainToolBar.cpp" line="46"/>
+        <location filename="../src/mainWindow/mainToolBar.cpp" line="24"/>
         <source>Historia</source>
         <translation>Historia</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainToolBar.cpp" line="51"/>
+        <location filename="../src/mainWindow/mainToolBar.cpp" line="29"/>
         <source>Modyfikacja</source>
         <translation>Modyfikuj</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainToolBar.cpp" line="60"/>
+        <location filename="../src/mainWindow/mainToolBar.cpp" line="36"/>
         <source>Wyloguj</source>
         <translation>Wyloguj</translation>
+    </message>
+    <message>
+        <location filename="../src/mainWindow/mainToolBar.cpp" line="36"/>
+        <source>Zaloguj</source>
+        <translation>Zaloguj</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainWindow/mainWindow.cpp" line="8"/>
+        <location filename="../src/mainWindow/mainWindow.cpp" line="94"/>
         <source>Gość</source>
         <translation>Gość</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainWindow.cpp" line="11"/>
+        <location filename="../src/mainWindow/mainWindow.cpp" line="97"/>
         <source>Pracownik</source>
         <translation>Pracownik</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainWindow.cpp" line="14"/>
+        <location filename="../src/mainWindow/mainWindow.cpp" line="100"/>
         <source>Logistyk</source>
         <translation>Logistyk</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainWindow.cpp" line="17"/>
+        <location filename="../src/mainWindow/mainWindow.cpp" line="103"/>
         <source>Administrator</source>
         <translation>Administrator</translation>
     </message>
     <message>
-        <location filename="../src/mainWindow/mainWindow.cpp" line="21"/>
+        <location filename="../src/mainWindow/mainWindow.cpp" line="106"/>
         <source>Magazyn Elektroniki</source>
         <translation>Magazyn Elektroniki</translation>
+    </message>
+</context>
+<context>
+    <name>ModifyPage</name>
+    <message>
+        <location filename="../src/modifyPage/modifyPage.cpp" line="18"/>
+        <source>Edytuj komponenty</source>
+        <translation>Edytuj komponenty</translation>
+    </message>
+    <message>
+        <location filename="../src/modifyPage/modifyPage.cpp" line="27"/>
+        <source>Edytuj użytkowników</source>
+        <translation>Edytuj użytkowników</translation>
+    </message>
+    <message>
+        <location filename="../src/modifyPage/modifyPage.cpp" line="32"/>
+        <source>Edytuj regały i szuflady</source>
+        <translation>Edytuj regały i szuflady</translation>
     </message>
 </context>
 </TS>
