@@ -33,7 +33,7 @@ ComponentNS::ComponentWidget::ComponentWidget(int ID, QWidget *parent) : QWidget
     m_parametersWidget = new ComponentNS::ParametersWidget(this);
     m_mainLayout->addWidget(m_parametersWidget, 6);
 
-    if (g_userRole == UserRole::Employee || g_userRole == UserRole::Logistician || g_userRole == UserRole::Admin)
+    if (g_userRole != UserRole::Guest)
     {
         m_spacer1 = new QWidget(this);
         m_mainLayout->addWidget(m_spacer1, 1);

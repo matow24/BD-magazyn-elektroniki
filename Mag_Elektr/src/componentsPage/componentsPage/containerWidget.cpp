@@ -58,36 +58,12 @@ bool ComponentsPageNS::ContainerWidget::removeComponentWidget(ComponentNS::Compo
     return removeComponentWidget(ID);
 }
 
-bool ComponentsPageNS::ContainerWidget::hideComponentWidget(int ID)
-{
-    auto it = m_componentWidgets.find(ID);
-    if (it == m_componentWidgets.end())
-    {
-        qDebug() << "ComponentNS widget with ID" << ID << "not found.";
-        return false;
-    }
-    it.value()->hide();
-    return true;
-}
-
 bool ComponentsPageNS::ContainerWidget::hideComponentWidget(ComponentNS::ComponentWidget *componentWidget)
 {
     if (componentWidget == nullptr)
         return false;
 
-    int ID = componentWidget->getID();
-    return hideComponentWidget(ID);
-}
-
-bool ComponentsPageNS::ContainerWidget::showComponentWidget(int ID)
-{
-    auto it = m_componentWidgets.find(ID);
-    if (it == m_componentWidgets.end())
-    {
-        qDebug() << "ComponentNS widget with ID" << ID << "not found.";
-        return false;
-    }
-    it.value()->show();
+    componentWidget->hide();
     return true;
 }
 
@@ -96,8 +72,8 @@ bool ComponentsPageNS::ContainerWidget::showComponentWidget(ComponentNS::Compone
     if (componentWidget == nullptr)
         return false;
 
-    int ID = componentWidget->getID();
-    return showComponentWidget(ID);
+    componentWidget->show();
+    return true;
 }
 
 void ComponentsPageNS::ContainerWidget::resetContainer()

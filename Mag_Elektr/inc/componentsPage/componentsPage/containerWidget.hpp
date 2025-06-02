@@ -29,10 +29,8 @@ namespace ComponentsPageNS
         bool removeComponentWidget(int ID);
         bool removeComponentWidget(ComponentNS::ComponentWidget *componentWidget);
 
-        bool hideComponentWidget(int ID);
         bool hideComponentWidget(ComponentNS::ComponentWidget *componentWidget);
 
-        bool showComponentWidget(int ID);
         bool showComponentWidget(ComponentNS::ComponentWidget *componentWidget);
 
         void resetContainer();

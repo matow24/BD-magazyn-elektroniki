@@ -124,14 +124,14 @@ ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, T
         connect(m_enableLocationButton, &QPushButton::toggled, this, &ComponentsPageNS::FilterWidget::toggleLocationField);
         connect(m_locationFieldRack, &QLineEdit::textEdited, this, &ComponentsPageNS::FilterWidget::locationTextChanged);
         connect(m_locationFieldDrawer, &QLineEdit::textEdited, this, &ComponentsPageNS::FilterWidget::locationTextChanged);
+        connect(m_locationFieldButton, &QPushButton::clicked, this, &ComponentsPageNS::FilterWidget::findByLocation);
     }
 
     connect(m_enableSearchButton, &QPushButton::toggled, this, &ComponentsPageNS::FilterWidget::toggleSearchField);
     connect(m_searchFieldText, &QLineEdit::textEdited, this, &ComponentsPageNS::FilterWidget::searchTextChanged);
+    connect(m_searchFieldButton, &QPushButton::clicked, this, &ComponentsPageNS::FilterWidget::findByName);
 
     connect(m_resetButton, &QPushButton::clicked, this, &ComponentsPageNS::FilterWidget::resetAll);
-    connect(m_locationFieldButton, &QPushButton::clicked, this, &ComponentsPageNS::FilterWidget::findByLocation);
-    connect(m_searchFieldButton, &QPushButton::clicked, this, &ComponentsPageNS::FilterWidget::findByName);
 }
 
 void ComponentsPageNS::FilterWidget::toggleLocationField(bool checked)
@@ -156,12 +156,14 @@ void ComponentsPageNS::FilterWidget::toggleSearchField(bool checked)
     {
         m_searchField->show();
         m_searchFieldText->setText("");
-        m_enableLocationButton->setEnabled(false);
+        if (g_userRole != UserRole::Guest)
+            m_enableLocationButton->setEnabled(false);
     }
     else
     {
         m_searchField->hide();
-        m_enableLocationButton->setEnabled(true);
+        if (g_userRole != UserRole::Guest)
+            m_enableLocationButton->setEnabled(true);
     }
 }
 
@@ -172,7 +174,7 @@ void ComponentsPageNS::FilterWidget::findByLocation()
         QString rack = m_locationFieldRack->text();
         QString drawer = m_locationFieldDrawer->text();
 
-        m_treeFilterWidget->setFromDataBaseFlag(true);
+        m_treeFilterWidget->setFromDataBaseFlag(false);
         m_treeFilterWidget->resetVariants();
         m_treeFilterWidget->disableAll();
 
@@ -207,10 +209,13 @@ void ComponentsPageNS::FilterWidget::findByLocation()
             componentWidget->getParametersWidget().setSymbol(symbol);
             componentWidget->getParametersWidget().setDatasheet(datasheet);
 
-            componentWidget->getQuantityWidget().setMaxQuantity(maxQuantity);
-            componentWidget->getQuantityWidget().setQuantity(locationQuantity);
-            componentWidget->getQuantityWidget().setRack(locationRack);
-            componentWidget->getQuantityWidget().setDrawer(locationDrawer);
+            if (g_userRole != UserRole::Guest)
+            {
+                componentWidget->getQuantityWidget().setMaxQuantity(maxQuantity);
+                componentWidget->getQuantityWidget().setQuantity(locationQuantity);
+                componentWidget->getQuantityWidget().setRack(locationRack);
+                componentWidget->getQuantityWidget().setDrawer(locationDrawer);
+            }
 
             m_containerWidget->addComponentWidget(componentWidget);
 
@@ -225,7 +230,7 @@ void ComponentsPageNS::FilterWidget::findByName()
     {
         QString substr_Name = m_searchFieldText->text();
 
-        m_treeFilterWidget->setFromDataBaseFlag(true);
+        m_treeFilterWidget->setFromDataBaseFlag(false);
         m_treeFilterWidget->resetVariants();
         m_treeFilterWidget->disableAll();
 
@@ -259,10 +264,13 @@ void ComponentsPageNS::FilterWidget::findByName()
             componentWidget->getParametersWidget().setSymbol(symbol);
             componentWidget->getParametersWidget().setDatasheet(datasheet);
 
-            componentWidget->getQuantityWidget().setMaxQuantity(maxQuantity);
-            componentWidget->getQuantityWidget().setQuantity(locationQuantity);
-            componentWidget->getQuantityWidget().setRack(locationRack);
-            componentWidget->getQuantityWidget().setDrawer(locationDrawer);
+            if (g_userRole != UserRole::Guest)
+            {
+                componentWidget->getQuantityWidget().setMaxQuantity(maxQuantity);
+                componentWidget->getQuantityWidget().setQuantity(locationQuantity);
+                componentWidget->getQuantityWidget().setRack(locationRack);
+                componentWidget->getQuantityWidget().setDrawer(locationDrawer);
+            }
 
             m_containerWidget->addComponentWidget(componentWidget);
 
@@ -287,6 +295,7 @@ void ComponentsPageNS::FilterWidget::resetAll()
     m_enableSearchButton->setEnabled(true);
     m_searchField->setVisible(false);
 
+    m_treeFilterWidget->setFromDataBaseFlag(true);
     m_treeFilterWidget->resetVariants();
     m_containerWidget->resetContainer();
 }

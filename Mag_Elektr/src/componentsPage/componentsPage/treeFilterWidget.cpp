@@ -38,8 +38,7 @@ void ComponentsPageNS::TreeFilterWidget::hideInContainerByVariantName(QString va
     {
         if (it.value()->getParametersWidget().getVariantName() == variantName)
             m_containerWidget->hideComponentWidget(it.value());
-        else
-            ++it;
+        ++it;
     }
 }
 
@@ -49,8 +48,7 @@ void ComponentsPageNS::TreeFilterWidget::showInContainerByVariantName(QString va
     {
         if (it.value()->getParametersWidget().getVariantName() == variantName)
             m_containerWidget->showComponentWidget(it.value());
-        else
-            ++it;
+        ++it;
     }
 }
 
@@ -60,8 +58,7 @@ void ComponentsPageNS::TreeFilterWidget::hideInContainerByVariantType(QString va
     {
         if (it.value()->getParametersWidget().getVariantType() == variantType)
             m_containerWidget->hideComponentWidget(it.value());
-        else
-            ++it;
+        ++it;
     }
 }
 
@@ -71,8 +68,7 @@ void ComponentsPageNS::TreeFilterWidget::showInContainerByVariantType(QString va
     {
         if (it.value()->getParametersWidget().getVariantType() == variantType)
             m_containerWidget->showComponentWidget(it.value());
-        else
-            ++it;
+        ++it;
     }
 }
 
@@ -111,15 +107,21 @@ void ComponentsPageNS::TreeFilterWidget::addFromDatabaseByVariantName(QString va
         componentWidget->getParametersWidget().setSymbol(symbol);
         componentWidget->getParametersWidget().setDatasheet(datasheet);
 
-        componentWidget->getQuantityWidget().setMaxQuantity(maxQuantity);
-        componentWidget->getQuantityWidget().setQuantity(locationQuantity);
-        componentWidget->getQuantityWidget().setRack(locationRack);
-        componentWidget->getQuantityWidget().setDrawer(locationDrawer);
+        if (g_userRole != UserRole::Guest)
+        {
+            componentWidget->getQuantityWidget().setMaxQuantity(maxQuantity);
+            componentWidget->getQuantityWidget().setQuantity(locationQuantity);
+            componentWidget->getQuantityWidget().setRack(locationRack);
+            componentWidget->getQuantityWidget().setDrawer(locationDrawer);
+        }
 
         m_containerWidget->addComponentWidget(componentWidget);
 
-        connect(componentWidget, &ComponentNS::ComponentWidget::componentDeleted, this, [this](ComponentNS::ComponentWidget *componentWidget)
-                { this->rescanVariants(); });
+        if (g_userRole != UserRole::Guest)
+        {
+            connect(componentWidget, &ComponentNS::ComponentWidget::componentDeleted, this, [this](ComponentNS::ComponentWidget *componentWidget)
+                    { this->rescanVariants(); });
+        }
     }
 }
 
@@ -172,15 +174,21 @@ void ComponentsPageNS::TreeFilterWidget::addFromDatabaseByVariantType(QString va
         componentWidget->getParametersWidget().setSymbol(symbol);
         componentWidget->getParametersWidget().setDatasheet(datasheet);
 
-        componentWidget->getQuantityWidget().setMaxQuantity(maxQuantity);
-        componentWidget->getQuantityWidget().setQuantity(locationQuantity);
-        componentWidget->getQuantityWidget().setRack(locationRack);
-        componentWidget->getQuantityWidget().setDrawer(locationDrawer);
+        if (g_userRole != UserRole::Guest)
+        {
+            componentWidget->getQuantityWidget().setMaxQuantity(maxQuantity);
+            componentWidget->getQuantityWidget().setQuantity(locationQuantity);
+            componentWidget->getQuantityWidget().setRack(locationRack);
+            componentWidget->getQuantityWidget().setDrawer(locationDrawer);
+        }
 
         m_containerWidget->addComponentWidget(componentWidget);
 
-        connect(componentWidget, &ComponentNS::ComponentWidget::componentDeleted, this, [this](ComponentNS::ComponentWidget *componentWidget)
-                { this->rescanVariants(); });
+        if (g_userRole != UserRole::Guest)
+        {
+            connect(componentWidget, &ComponentNS::ComponentWidget::componentDeleted, this, [this](ComponentNS::ComponentWidget *componentWidget)
+                    { this->rescanVariants(); });
+        }
     }
 }
 
@@ -361,7 +369,7 @@ void ComponentsPageNS::TreeFilterWidget::itemChanged(QTreeWidgetItem *item, int 
         for (int i = 0; i < item->childCount(); i++)
         {
             QTreeWidgetItem *childItem = item->child(i);
-            if (childItem->checkState(0) != checkState)
+            if (childItem->checkState(0) != checkState && !childItem->isDisabled())
                 childItem->setCheckState(0, checkState);
         }
         m_treeRecurrencyFlag = false;
