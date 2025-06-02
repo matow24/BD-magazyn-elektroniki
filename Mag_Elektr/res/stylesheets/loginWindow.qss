@@ -6,6 +6,7 @@ QLineEdit
     background-color: transparent;
     border: 1px solid green;
     min-width: 20px;
+    margin-bottom: 16px;
 }
 
 
@@ -39,5 +40,5 @@ QPushButton#proceedWithoutLoginButton{
     margin-top: 20px;
     background-color: transparent;
     border: 1px solid green;
-    min-width: 20px;
+    min-width: 28px;
 }

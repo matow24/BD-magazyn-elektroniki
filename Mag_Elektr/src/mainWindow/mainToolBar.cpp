@@ -1,7 +1,7 @@
 #include "mainWindow/mainToolBar.hpp"
 
 MainToolBar::MainToolBar(QWidget *parent) : QToolBar(parent)
-{
+{ 
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MAINWINDOW_NAME]);
     this->setMovable(false);
     this->setFloatable(false);

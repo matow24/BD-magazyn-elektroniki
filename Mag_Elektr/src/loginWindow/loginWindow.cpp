@@ -8,7 +8,7 @@ LoginWindow::LoginWindow(QWidget *parent) : QMainWindow(parent)
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_LOGINWINDOW_NAME]);
 
     window = new QWidget;
-    window->setMinimumSize(1260, 700);
+    window->setMinimumSize(720, 720);
     window->setMaximumSize(this->width(), this->height());
 
     emailEdit = new QLineEdit(this);

@@ -10,6 +10,9 @@
 
 #include "main.hpp"
 
+#include "modifyPage/modUserPage.hpp"
+#include "modifyPage/modComponentsPage.hpp"
+
 enum ModPage
 {
     ModComponents,
@@ -28,8 +31,8 @@ private:
     QToolButton *m_buttonUsers = nullptr;
     QToolButton *m_buttonLocations = nullptr;
 
-    //UserPage *m_usersPage = nullptr;
-    //ModComponentsPage *m_modComponentsPage = nullptr;
+    ModUserPage *m_userPage = nullptr;
+    ModComponentsPage *m_modComponentsPage = nullptr;
     //LocationPage *m_locationPage = nullptr;
     QStackedWidget *m_stackedWidget = nullptr;
 
