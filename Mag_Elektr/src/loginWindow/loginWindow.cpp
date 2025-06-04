@@ -4,12 +4,12 @@ LoginWindow::LoginWindow(QWidget *parent) : QMainWindow(parent)
 {
     this->setWindowTitle(tr("Magazyn Elektroniki - Logowanie"));
     this->setMinimumSize(1280, 720);
-    this->showMaximized();
+    this->show();
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_LOGINWINDOW_NAME]);
 
     window = new QWidget;
-    window->setMinimumSize(720, 720);
-    window->setMaximumSize(this->width(), this->height());
+    window->setMinimumSize(this->width()/2, this->height());
+    window->setMaximumSize(this->width()/2, this->height());
 
     emailEdit = new QLineEdit(this);
     emailEdit->setPlaceholderText("Email");
@@ -28,7 +28,7 @@ LoginWindow::LoginWindow(QWidget *parent) : QMainWindow(parent)
     connect(proceedWithoutLoginButton, &QPushButton::clicked, this, &LoginWindow::onProceedWithoutLogin);
 
     // Layout setup
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(emailEdit);
     layout->addWidget(passwordEdit);
     layout->addWidget(submitButton);
@@ -36,8 +36,17 @@ LoginWindow::LoginWindow(QWidget *parent) : QMainWindow(parent)
     layout->addSpacing(20);  // Bigger space between the buttons
     layout->addWidget(proceedWithoutLoginButton);
 
-    window->setLayout(layout);    
-    setCentralWidget(window);
+    window->setLayout(layout);   
+    
+    // center the buttons
+    QWidget *container = new QWidget(this);
+    QHBoxLayout *containerLayout = new QHBoxLayout(container);
+    containerLayout->addStretch();     
+    containerLayout->addWidget(window);  
+    containerLayout->addStretch();    
+    containerLayout->setContentsMargins(0, 0, 0, 0);
+
+    setCentralWidget(container);
 }
 
 void LoginWindow::onLogout(){
