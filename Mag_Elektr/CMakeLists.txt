@@ -41,12 +41,15 @@ set (SRC_FILES
     ${SRC_DIR}/componentsPage/component/parametersWidget.cpp
     ${SRC_DIR}/componentsPage/component/quantityWidget.cpp
 
-
     ${SRC_DIR}/historyPage/historyPage.cpp
     ${SRC_DIR}/historyPage/historyPage/containerWidget.cpp
     ${SRC_DIR}/historyPage/historyPage/filterWidget.cpp
 
     ${SRC_DIR}/modifyPage/modifyPage.cpp
+    ${SRC_DIR}/modifyPage/modComponentsPage.cpp
+    ${SRC_DIR}/modifyPage/modUserPage.cpp
+    ${SRC_DIR}/modifyPage/addUserDialog.cpp
+
 )
 
 ################################################################################

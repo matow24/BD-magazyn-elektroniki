@@ -24,13 +24,16 @@ public:
 private slots:
     void validateForm();
     void onAddClicked();
+    bool setPosition(char& );
 
 private:
     QLineEdit *firstNameEdit;
     QLineEdit *lastNameEdit;
     QLineEdit *emailEdit;
     QComboBox *positionBox;
+    QLineEdit *passwordEdit;
     QPushButton *addButton;
+    char pos;
 };
 
 #endif

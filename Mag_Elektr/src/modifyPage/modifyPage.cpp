@@ -21,9 +21,9 @@ ModifyPage::ModifyPage(QWidget *parent) : QWidget(parent)
 
     m_stackedWidget = new QStackedWidget(this);
     
-    /*m_modComponentsPage = new ModComponentsPage(this);
+    m_modComponentsPage = new ModComponentsPage(this);
     m_modComponentsPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    m_stackedWidget->addWidget(m_modComponentsPage);*/
+    m_stackedWidget->addWidget(m_modComponentsPage);
 
     connect(m_buttonComponents, &QToolButton::clicked, [this]() {
         m_stackedWidget->setCurrentIndex(0);
@@ -35,9 +35,9 @@ ModifyPage::ModifyPage(QWidget *parent) : QWidget(parent)
         m_buttonUsers->setStyleSheet(MainStyle::StyleSheets[STYLE_MODIFYPAGE_NAME]);
         m_buttonUsers->setText(tr("Edytuj użytkowników"));
 
-        /*m_userPage = new ModUserPage(this);
+        m_userPage = new ModUserPage(this);
         m_stackedWidget->addWidget(m_userPage);
-        m_userPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);*/
+        m_userPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
         m_buttonLocations = new QToolButton(this);
         m_buttonLocations->setStyleSheet(MainStyle::StyleSheets[STYLE_MODIFYPAGE_NAME]);

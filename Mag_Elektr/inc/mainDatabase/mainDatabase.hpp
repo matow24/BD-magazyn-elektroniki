@@ -115,6 +115,8 @@ namespace DB
 
                bool Add(QSqlQuery &query, QString email, QString first_name, QString last_name, QString password, char position);
 
+               bool CountEmail(QSqlQuery &query, QString email);
+
           } // namespace User
 
      } // namespace Queries

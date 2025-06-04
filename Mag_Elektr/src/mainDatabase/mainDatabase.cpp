@@ -47,6 +47,19 @@ bool Queries::User::LogIn(QSqlQuery &query, QString email)
     return true;
 }
 
+bool Queries::User::CountEmail(QSqlQuery &query, QString email)
+{
+    query.prepare(USER_COUNT__EMAIL);
+    query.bindValue(":email", email);
+
+    if (!query.exec())
+    {
+        qDebug() << "Error: Failed to count email:\n"<< query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 bool DB::Queries::User::FindAdmin(QSqlQuery &query)
 {
     query.prepare(FIND_ADMIN);
@@ -69,7 +82,7 @@ bool Queries::User::Add(QSqlQuery &query, QString email, QString first_name, QSt
 
     if (!query.exec())
     {
-        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        qDebug() << "Error: Failed to insert new user:" << query.lastError().text();
         return false;
     }
     return true;

@@ -1,7 +1,24 @@
 #include "modifyPage/addUserDialog.hpp"
 
-explicit AddUserDialog::AddUserDialog(QWidget *parent = nullptr)
-    : QDialog(parent)
+bool AddUserDialog::setPosition(char& pos){
+    if(positionBox->currentText().trimmed() == "Employee"){
+        pos = 'E';
+        return 1;
+    }
+    if(positionBox->currentText().trimmed() == "Logistician"){
+        pos = 'L';
+        return 1;
+    }
+    if(positionBox->currentText().trimmed() == "Admin"){
+        pos = 'A';
+        return 1;
+    }
+    
+    QMessageBox::critical(this, tr("Błąd nadawania uprawnień"), tr("Nie udało się wybrać uprawnień:\n"));
+    return 0;
+}
+
+AddUserDialog::AddUserDialog(QWidget *parent) : QDialog(parent)
 {
     setWindowTitle(tr("Add New User"));
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MODIFYPAGE_NAME]);
@@ -12,18 +29,20 @@ explicit AddUserDialog::AddUserDialog(QWidget *parent = nullptr)
     firstNameEdit = new QLineEdit();
     lastNameEdit = new QLineEdit();
     emailEdit = new QLineEdit();
+    passwordEdit = new QLineEdit();
     positionBox = new QComboBox();
 
     positionBox->addItems({"Employee", "Logistician", "Admin"});
 
-    formLayout->addRow("First Name:", firstNameEdit);
-    formLayout->addRow("Last Name:", lastNameEdit);
-    formLayout->addRow("Email:", emailEdit);
-    formLayout->addRow("Position:", positionBox);
+    formLayout->addRow(tr("Imię:"), firstNameEdit);
+    formLayout->addRow(tr("Nazwisko:"), lastNameEdit);
+    formLayout->addRow(tr("Email:"), emailEdit);
+    formLayout->addRow(tr("Hasło:"), passwordEdit);
+    formLayout->addRow(tr("Poziom uprawnień:"), positionBox);
 
     mainLayout->addLayout(formLayout);
 
-    addButton = new QPushButton("Add");
+    addButton = new QPushButton(tr("Dodaj użytkownika"));
     addButton->setEnabled(false); // Start disabled
     mainLayout->addWidget(addButton, 0, Qt::AlignRight);
 
@@ -49,28 +68,25 @@ void AddUserDialog::validateForm()
 
 void AddUserDialog::onAddClicked()
 {
+    if(setPosition(pos)) return;
     QString email = emailEdit->text().trimmed();
+    QString name = firstNameEdit->text().trimmed();
+    QString surname = lastNameEdit->text().trimmed();
 
     // Check for existing email
     QSqlQuery checkQuery;
-    checkQuery.prepare("SELECT COUNT(*) FROM User WHERE Email = :email");
-    checkQuery.bindValue(":email", email);
-
-    if (!checkQuery.exec()) {
-        QMessageBox::critical(this, "Database Error", "Failed to validate email:\n" + checkQuery.lastError().text());
-        return;
-    }
-
-    if (checkQuery.next() && checkQuery.value(0).toInt() > 0) {
-        QMessageBox::warning(this, "Email Exists", "The email address is already in use. Please choose another.");
-        return;
-    }
+    if (DB::Queries::User::CountEmail(checkQuery, email)){
+        if (checkQuery.next() && checkQuery.value(0).toInt() > 0) {
+            QMessageBox::warning(this, tr("Email zajęty"), tr("Ten adres email jest już zarejestrowany w bazie. Proszę podać inny."));
+            return;
+        }
+    }   
 
     // Confirm dialog
     QMessageBox::StandardButton reply = QMessageBox::question(
         this,
-        "Confirm",
-        "Do you confirm new user's data?",
+        "Zatwierdź",
+        "Czy potwierdzasz dane nowego użytkownika?",
         QMessageBox::Yes | QMessageBox::No,
         QMessageBox::No
     );
@@ -80,20 +96,13 @@ void AddUserDialog::onAddClicked()
 
     // Insert user
     QSqlQuery insertQuery;
-    insertQuery.prepare(R"(
-        INSERT INTO User (FirstName, LastName, Email, Position)
-        VALUES (:firstName, :lastName, :email, :position)
-    )");
-
-    insertQuery.bindValue(":firstName", firstNameEdit->text().trimmed());
-    insertQuery.bindValue(":lastName", lastNameEdit->text().trimmed());
-    insertQuery.bindValue(":email", email);
-    insertQuery.bindValue(":position", positionBox->currentText());
-
-    if (!insertQuery.exec()) {
-        QMessageBox::warning(this, "Error", "Failed to insert new user:\n" + insertQuery.lastError().text());
+    if (!DB::Queries::User::Add(insertQuery, email, name, surname, passwordEdit->text().trimmed(), pos)){
         return;
     }
+    else if (insertQuery.next()) {
+            auto msg = "Użytkownik " % email % ", " % name % " " % surname % ", został dodany pomyślnie.";
+            QMessageBox::information(this, tr("Dodano użytkownika"), msg);
+        }
 
     accept(); // Close dialog on success
 }

@@ -7,23 +7,23 @@
     "SELECT IFNULL(MAX(Rack), 0) + 1 FROM Location;"
 
 #define LOCATION_ADD__RACK_DRAWER                       \
-    "INSERT INTO "                                      \
-    "Location (Rack, Drawer, Component_ID, Quantity) "  \
+    "INSERT INTO Location (Rack, Drawer, Component_ID, Quantity) "  \
     "VALUES (:rack, :drawer_no, 0, 0);"
 
 #define VARIANT_ADD \
-    "INSERT INTO "          \
-    "Variant (Name, Type) " \
+    "INSERT INTO Variant (Name, Type) " \
     "VALUES (:name, :type);"
 
 #define COMPONENT_ADD \
-    "INSERT INTO "                                                  \
-    "Component (ID, Variant_Name, Name, Manufacturer, Symbol, Datasheet, MaxQuantity) " \
+    "INSERT INTO Component (ID, Variant_Name, Name, Manufacturer, Symbol, Datasheet, MaxQuantity) " \
     "VALUES ("                                                      \
         "(SELECT IFNULL(MAX(ID), 0) + 1 FROM Component), "           \
         "(SELECT Name FROM Variant WHERE Name = :variantName), "        \
         " :name, :manufacturer, :symbol, :datasheet, :maxQuantity)" \
     ");"
+
+#define USER_COUNT__EMAIL \
+    "SELECT COUNT(*) FROM User WHERE Email = :email"
 
 #define USER_UPDATE__EMAIL_COLUMN_NEWDATA \
     "UPDATE User "                        \
@@ -31,8 +31,7 @@
     "WHERE Email = :email;"
 
 #define USER_ADD \
-    "INSERT INTO "                                           \
-    "User (Email, FirstName, LastName, Password, Position) " \
+    "INSERT INTO User (Email, FirstName, LastName, Password, Position) " \
     "VALUES (:email, :first_name, :last_name, :password, :position);"
 
 #define USER_DELETE__EMAIL \

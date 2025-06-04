@@ -1,7 +1,6 @@
 #include "modifyPage/modUserPage.hpp"
 
-ModUserPage::ModUserPage(QWidget *parent)
-    : QWidget(parent)
+ModUserPage::ModUserPage(QWidget *parent) : QWidget(parent)
 {
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MODIFYPAGE_NAME]);
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
