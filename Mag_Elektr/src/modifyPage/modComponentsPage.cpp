@@ -51,3 +51,6 @@ void ModComponentsPage::onAddComponentClicked()
     QMessageBox::information(this, "Add Component", "This will open a dialog to add a new component.");
     // TODO: Open your AddComponentDialog here
 }
+
+#include "modifyPage/moc_modComponentsPage.cpp"
+// #include "modyfyPage/modComponentsPage.moc"

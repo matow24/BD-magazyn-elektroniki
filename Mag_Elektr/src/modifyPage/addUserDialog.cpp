@@ -107,3 +107,5 @@ void AddUserDialog::onAddClicked()
     accept(); // Close dialog on success
 }
 
+#include "modifyPage/moc_addUserDialog.cpp"
+// #include "modifyPage/addUserDialog.moc"

@@ -36,3 +36,6 @@ void ModUserPage::addUser()
         m_model->select(); // Refresh table view after insertion
     }
 }
+
+#include "modifyPage/moc_modUserPage.cpp"
+// #include "modifyPage/modUserPage.moc"
