@@ -101,7 +101,10 @@ ComponentNS::QuantityWidget::QuantityWidget(QWidget *parent) : QWidget(parent)
     m_spacer = new QWidget(this);
     m_mainLayout->addWidget(m_spacer, 1);
 
-    m_editLabel = new QLabel(tr("Zmiana ilości elementów"), this);
+    if (g_userRole == UserRole::Employee)
+        m_editLabel = new QLabel(tr("Pobierana ilość elementów"), this);
+    else
+        m_editLabel = new QLabel(tr("Zmiana ilości elementów"), this);
     m_mainLayout->addWidget(m_editLabel, 0, Qt::AlignCenter);
     m_editLabel->setObjectName("Component_QuantityWidget_EditLabel");
 
@@ -152,10 +155,6 @@ void ComponentNS::QuantityWidget::substractButtonClicked()
     int quantity = m_editField->text().toInt();
     quantity -= 1;
     m_editField->setText(QString::number(quantity));
-    if (quantity == (-1 * m_quantity))
-        m_substractButton->setEnabled(false);
-    if (quantity < (m_maxQuantity - m_quantity))
-        m_addButton->setEnabled(true);
 }
 
 void ComponentNS::QuantityWidget::addButtonClicked()
@@ -163,15 +162,13 @@ void ComponentNS::QuantityWidget::addButtonClicked()
     int quantity = m_editField->text().toInt();
     quantity += 1;
     m_editField->setText(QString::number(quantity));
-    if (quantity == (m_maxQuantity - m_quantity))
-        m_addButton->setEnabled(false);
-    if (quantity > (-1 * m_quantity))
-        m_substractButton->setEnabled(true);
 }
 
 void ComponentNS::QuantityWidget::confirmButtonClicked()
 {
     int quantity = m_editField->text().toInt();
+    if (g_userRole == UserRole::Employee)
+        quantity *= -1; // Employees can only take, so we reverse the logic (positive quantity means negative delta)
     emit deltaConfirmed(quantity);
     m_editField->setText("0");
 }
@@ -183,22 +180,39 @@ void ComponentNS::QuantityWidget::editTextChanged(const QString &text)
     else
         m_confirmButton->setEnabled(false);
     int quantity = text.toInt();
-    if (quantity <= (-1 * m_quantity))
+    if (g_userRole == UserRole::Employee) // Employees can only take, also logic reversed (positive quantity means negative delta)
     {
-        m_substractButton->setEnabled(false);
+        if (quantity > m_quantity)
+            m_editField->setText(QString::number(m_quantity));
+        if (quantity >= m_quantity)
+            m_addButton->setEnabled(false);
+        else
+            m_addButton->setEnabled(true);
+
+        if (quantity < 0)
+            m_editField->setText(QString::number(0));
+        if (quantity <= 0)
+            m_substractButton->setEnabled(false);
+        else
+            m_substractButton->setEnabled(true);
+    }
+
+    else // Admins can add and take, logic is normal (positive quantity means positive delta)
+    {
         if (quantity < (-1 * m_quantity))
             m_editField->setText(QString::number(-1 * m_quantity));
-    }
-    else
-        m_substractButton->setEnabled(true);
-    if (quantity >= (m_maxQuantity - m_quantity))
-    {
-        m_addButton->setEnabled(false);
+        if (quantity <= (-1 * m_quantity))
+            m_substractButton->setEnabled(false);
+        else
+            m_substractButton->setEnabled(true);
+
         if (quantity > (m_maxQuantity - m_quantity))
             m_editField->setText(QString::number(m_maxQuantity - m_quantity));
+        if (quantity >= (m_maxQuantity - m_quantity))
+            m_addButton->setEnabled(false);
+        else
+            m_addButton->setEnabled(true);
     }
-    else
-        m_addButton->setEnabled(true);
 }
 
 #include "componentsPage/component/moc_quantityWidget.cpp"

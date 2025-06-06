@@ -1,6 +1,7 @@
 #ifndef _COMPONENTWIDGET_EDIT_WIDGET_HPP
 #define _COMPONENTWIDGET_EDIT_WIDGET_HPP
 
+#include <QMessageBox>
 #include <QPushButton>
 #include <QWidget>
 #include <QVBoxLayout>

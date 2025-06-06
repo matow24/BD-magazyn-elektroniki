@@ -75,7 +75,7 @@ ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, T
         m_locationFieldLayout->addWidget(m_locationFieldRack, 1, 0);
         m_locationFieldRack->setObjectName("ComponentsPageNS_FilterWidget_LineEdit");
         m_locationFieldRack->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
-        m_locationFieldRack->setPlaceholderText("1");
+        m_locationFieldRack->setPlaceholderText("...");
 
         m_locationFieldRackValidator = new QIntValidator(1, INT_MAX, m_locationFieldRack);
         m_locationFieldRack->setValidator(m_locationFieldRackValidator);
@@ -90,7 +90,7 @@ ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, T
         m_locationFieldLayout->addWidget(m_locationFieldDrawer, 1, 1);
         m_locationFieldDrawer->setObjectName("ComponentsPageNS_FilterWidget_LineEdit");
         m_locationFieldDrawer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
-        m_locationFieldDrawer->setPlaceholderText("1");
+        m_locationFieldDrawer->setPlaceholderText("...");
 
         m_locationFieldDrawerValidator = new QIntValidator(1, INT_MAX, m_locationFieldDrawer);
         m_locationFieldDrawer->setValidator(m_locationFieldDrawerValidator);
@@ -127,7 +127,7 @@ ComponentsPageNS::FilterWidget::FilterWidget(ContainerWidget *containerWidget, T
     m_searchFieldLayout->addWidget(m_searchFieldText, 1, 0);
     m_searchFieldText->setObjectName("ComponentsPageNS_FilterWidget_LineEdit");
     m_searchFieldText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
-    m_searchFieldText->setPlaceholderText(tr("Klucz (np. STM, Opto)"));
+    m_searchFieldText->setPlaceholderText("...");
 
     m_searchFieldValidator = new QRegularExpressionValidator(QRegularExpression("[a-zA-Z0-9_]+"), m_searchFieldText);
     m_searchFieldText->setValidator(m_searchFieldValidator);

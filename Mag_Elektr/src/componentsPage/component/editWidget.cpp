@@ -40,7 +40,16 @@ ComponentNS::EditWidget::EditWidget(QWidget *parent) : QWidget(parent)
 
 void ComponentNS::EditWidget::deleteButtonClicked()
 {
-    emit deleteComponent();
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, tr("Delete Component"),
+                                  tr("Are you sure you want to delete this component?"),
+                                  QMessageBox::Yes | QMessageBox::No,
+                                  QMessageBox::No);
+
+    if (reply == QMessageBox::No)
+        return;
+    else if (reply == QMessageBox::Yes)
+        emit deleteComponent();
 }
 
 void ComponentNS::EditWidget::statisticsButtonClicked()
