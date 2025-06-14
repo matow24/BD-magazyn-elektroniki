@@ -27,16 +27,21 @@ private slots:
     bool setPosition(char& );
 
 private:
-    QLineEdit *firstNameEdit;
-    QLineEdit *lastNameEdit;
-    QLineEdit *emailEdit;
-    QComboBox *positionBox;
-    QLineEdit *passwordEdit;
+    QComboBox *variantTypeEdit;
+    QLineEdit *variantNameEdit;
+    QLineEdit *nameEdit;
+    QLineEdit *manufacturerEdit;
+    QLineEdit *symbolEdit;
+    QLineEdit *datasheetEdit;
+    QLineEdit *maxQuantityEdit;
     QPushButton *addButton;
-    char pos;
+    QPushButton *addVariantNameButton;
+    QPushButton *addVariantTypeButton;
 
-    bool isNameUnique(const QString &name);
-    bool isSymbolUnique(const QString &symbol);
+    bool areNameAndSymbolUnique();
+    void setup_variantNameEdit();
+    void setup_variantTypeEdit();
+
 };
 
 #endif

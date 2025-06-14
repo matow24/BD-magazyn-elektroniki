@@ -22,6 +22,9 @@
         " :name, :manufacturer, :symbol, :datasheet, :maxQuantity)" \
     ");"
 
+#define COMPONENT_COUNT__NAME_SYMBOL \
+    "SELECT COUNT(*) FROM Component WHERE Symbol = :symbol OR Name = :name"
+
 #define USER_COUNT__EMAIL \
     "SELECT COUNT(*) FROM User WHERE Email = :email"
 
