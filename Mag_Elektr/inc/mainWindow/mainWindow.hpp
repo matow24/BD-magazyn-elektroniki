@@ -31,7 +31,6 @@ private:
 
     QStackedWidget *m_stackedWidget = nullptr;
 
-    void setRole();
     void setWindowName();
 
 public:
@@ -40,7 +39,6 @@ public:
 signals:
     void logoutRequested();
 public slots:
-    void onLogin();
     void onLogoutClicked();
 
 private slots:

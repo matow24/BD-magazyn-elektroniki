@@ -26,7 +26,7 @@ MainToolBar::MainToolBar(QWidget *parent) : QToolBar(parent)
         m_buttonModify = new MainToolButton(this);
         m_buttonsPages->addButton(m_buttonModify, Page::Modify);
         this->addWidget(m_buttonModify);
-        m_buttonModify->setText(tr("Modyfikacja"));
+        m_buttonModify->setText(tr("Edytuj bazę"));
 
         connect(m_buttonsPages, &QButtonGroup::buttonClicked, this, &MainToolBar::pageButtonClicked);
     }

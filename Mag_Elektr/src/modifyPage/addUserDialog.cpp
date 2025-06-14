@@ -80,13 +80,14 @@ void AddUserDialog::onAddClicked()
             QMessageBox::warning(this, tr("Email zajęty"), tr("Ten adres email jest już zarejestrowany w bazie. Proszę podać inny."));
             return;
         }
+        else QMessageBox::information(this, tr("Email dostępny"), tr("Nowicjusz, jak miło :)"));
     }   
 
     // Confirm dialog
     QMessageBox::StandardButton reply = QMessageBox::question(
         this,
-        "Zatwierdź",
-        "Czy potwierdzasz dane nowego użytkownika?",
+        tr("Zatwierdź"),
+        tr("Czy potwierdzasz dane nowego użytkownika?"),
         QMessageBox::Yes | QMessageBox::No,
         QMessageBox::No
     );
@@ -97,6 +98,7 @@ void AddUserDialog::onAddClicked()
     // Insert user
     QSqlQuery insertQuery;
     if (!DB::Queries::User::Add(insertQuery, email, name, surname, passwordEdit->text().trimmed(), pos)){
+        QMessageBox::warning(this, tr("Nie dodano użytkownika"), tr("Sory, nie pykło."));
         return;
     }
     else if (insertQuery.next()) {

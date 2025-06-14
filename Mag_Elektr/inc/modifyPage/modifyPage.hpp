@@ -36,10 +36,8 @@ private:
     //LocationPage *m_locationPage = nullptr;
     QStackedWidget *m_stackedWidget = nullptr;
 
-
 public:
     ModifyPage(QWidget *parent = nullptr);
-    ~ModifyPage();
 };
 
 #endif // _MODIFYPAGE_HPP

@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     m_componentsPage = new ComponentsPage(this);
     m_componentsPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-    if (g_userRole != UserRole::Guest && g_userRole != UserRole::Employee)
+    if (g_userRole == UserRole::Admin || g_userRole == UserRole::Logistician)
     {
         m_stackedWidget = new QStackedWidget(this);
         this->setCentralWidget(m_stackedWidget);
@@ -52,21 +52,6 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::onLogoutClicked(){
-    /*
-    //FilterWidget wywala seg fault double free() przy tym:
-    QMessageBox msgBox(this);
-    msgBox.setWindowTitle("Wylogowanie");
-    msgBox.setText("Czy na pewno chcesz się wylogować?");
-    QPushButton *logoutButton = msgBox.addButton("Wyloguj", QMessageBox::YesRole);
-    QPushButton *cancelButton = msgBox.addButton("Anuluj", QMessageBox::NoRole);
-    msgBox.setDefaultButton(cancelButton);
-    msgBox.exec();
-
-    if (msgBox.clickedButton() == logoutButton) {
-        this->hide();
-        emit logoutRequested();
-    }*/
-
     if(g_userRole==UserRole::Guest){
         this->hide();
         emit logoutRequested();
@@ -74,17 +59,12 @@ void MainWindow::onLogoutClicked(){
     }
 
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Próba wylogowania", "Czy na pewno chcesz się wylogować?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    reply = QMessageBox::question(this, tr("Próba wylogowania"), tr("Czy na pewno chcesz się wylogować?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     if (reply == QMessageBox::Yes) {
         this->hide();
         emit logoutRequested();
     } else
         return;
-};
-
-void MainWindow::onLogin(){
-    setRole();
-    this->show();
 };
 
 void MainWindow::setWindowName(){
@@ -105,48 +85,6 @@ void MainWindow::setWindowName(){
     }
     this->setWindowTitle(tr("Magazyn Elektroniki") + " - " + *g_userRoleName);
 }
-
-void MainWindow::setRole(){
-    setWindowName();
-    /*
-
-    if (g_userRole != UserRole::Guest)
-    {
-        m_mainToolBar = new MainToolBar(this);
-        this->addToolBar(m_mainToolBar);
-    }
-
-    if (g_userRole != UserRole::Guest && g_userRole != UserRole::Employee)
-    {
-        m_stackedWidget = new QStackedWidget(this);
-        this->setCentralWidget(m_stackedWidget);
-        m_stackedWidget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
-        m_componentsPage = new ComponentsPage(this);
-        m_stackedWidget->addWidget(m_componentsPage);
-        m_componentsPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
-        m_historyPage = new HistoryPage(this);
-        m_stackedWidget->addWidget(m_historyPage);
-        m_historyPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
-        m_modifyPage = new ModifyPage(this);
-        m_stackedWidget->addWidget(m_modifyPage);
-        m_modifyPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
-        connect(m_mainToolBar, &MainToolBar::pageChanged, this, &MainWindow::changePage);
-
-        m_stackedWidget->setCurrentWidget(m_componentsPage);
-        m_mainToolBar->checkPageButton(Page::Components);
-    }
-    else
-    {
-        m_componentsPage = new ComponentsPage(this);
-        this->setCentralWidget(m_componentsPage);
-        m_componentsPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    }
-    */
-};
 
 void MainWindow::changePage(Page &newPage)
 {
