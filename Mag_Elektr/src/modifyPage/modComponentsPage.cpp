@@ -5,6 +5,7 @@
 
 ModComponentsPage::ModComponentsPage(QWidget *parent) : QWidget(parent)
 {
+    this->setStyleSheet(MainStyle::StyleSheets[STYLE_MODIFYPAGE_NAME]);
     setupModel();
     setupLayout();
 }
@@ -28,7 +29,7 @@ void ModComponentsPage::setupModel()
     m_tableView->setModel(m_model);
     m_tableView->setEditTriggers(QAbstractItemView::NoEditTriggers); // make view read-only
     m_tableView->resizeColumnsToContents();
-}
+} 
 
 void ModComponentsPage::setupLayout()
 {
@@ -48,8 +49,10 @@ void ModComponentsPage::setupLayout()
 
 void ModComponentsPage::onAddComponentClicked()
 {
-    QMessageBox::information(this, "Add Component", "This will open a dialog to add a new component.");
-    // TODO: Open your AddComponentDialog here
+    AddComponentDialog dialog(this);
+    if (dialog.exec() == QDialog::Accepted) {
+        m_model->select(); // Refresh table view after insertion
+    }
 }
 
 #include "modifyPage/moc_modComponentsPage.cpp"

@@ -10,6 +10,7 @@
 #include <QHBoxLayout>
 
 #include "main.hpp"
+#include "modifyPage/addComponentDialog.hpp"
 
 class ModComponentsPage : public QWidget
 {

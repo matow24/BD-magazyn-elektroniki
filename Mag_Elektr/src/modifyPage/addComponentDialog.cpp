@@ -1,6 +1,7 @@
 #include "modifyPage/addComponentDialog.hpp"
 
-AddComponentDialog::AddComponentDialog() {
+AddComponentDialog::AddComponentDialog(QWidget *parent) : QDialog(parent)
+{
     setWindowTitle(tr("Add New User"));
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MODIFYPAGE_NAME]);
 
@@ -93,8 +94,6 @@ void AddComponentDialog::onAddVariantTypeClicked() {
     variantTypeEdit->setCurrentText(newType);
 }
 
-
-
 void AddComponentDialog::setup_variantNameEdit() {
     QSqlQuery query;
     query.prepare("SELECT Name FROM Variant");
@@ -127,30 +126,12 @@ void AddComponentDialog::validateForm()
 
 }
 
-void AddComponentDialog::onVariantNameChanged(const QString &name) {
-    if (name == "Add new variant") {
-        addVariantTypeButton->setEnabled(true);
-        variantTypeEdit->setEnabled(true);
-        variantTypeEdit->clear(); // let user pick manually
-        setup_variantTypeEdit();
-        return;
-    }
-
-    QSqlQuery query;
-    query.prepare("SELECT Type FROM Variant WHERE Name = :name");
-    query.bindValue(":name", name);
-    if (query.exec() && query.next()) {
-        variantTypeEdit->clear();
-        variantTypeEdit->addItem(query.value(0).toString());
-    }
-}
-
 bool AddComponentDialog::areNameAndSymbolUnique()
 {
     QString symbol = symbolEdit->text().trimmed();
     QString name = nameEdit->text().trimmed();
     QSqlQuery query;
-    query.prepare(COMPONENT_COUNT__NAME_SYMBOL);
+    query.prepare("SELECT COUNT(*) FROM Component WHERE Symbol = :symbol OR Name = :name");
     query.bindValue(":symbol", symbol);
     query.bindValue(":name", name);
     if (query.exec() && query.next()) {
@@ -224,5 +205,5 @@ void AddComponentDialog::onAddClicked()
     }
 }
 
-#include "modifyPage/moc_AddComponentDialog.cpp"
-// #include "modifyPage/AddComponentDialog.moc"
+#include "modifyPage/moc_addComponentDialog.cpp"
+// #include "modifyPage/addComponentDialog.moc"

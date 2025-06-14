@@ -6,6 +6,7 @@
 #include <QFormLayout>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QInputDialog>
 #include <QPushButton>
 #include <QMessageBox>
 #include <QSqlQuery>
@@ -24,11 +25,13 @@ public:
 private slots:
     void validateForm();
     void onAddClicked();
-    bool setPosition(char& );
+    void onVariantNameChanged(const QString &name);
+    void onAddVariantNameClicked();
+    void onAddVariantTypeClicked();
 
 private:
     QComboBox *variantTypeEdit;
-    QLineEdit *variantNameEdit;
+    QComboBox *variantNameEdit;
     QLineEdit *nameEdit;
     QLineEdit *manufacturerEdit;
     QLineEdit *symbolEdit;
@@ -41,7 +44,6 @@ private:
     bool areNameAndSymbolUnique();
     void setup_variantNameEdit();
     void setup_variantTypeEdit();
-
 };
 
 #endif

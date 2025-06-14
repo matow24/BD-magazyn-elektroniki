@@ -49,6 +49,7 @@ set (SRC_FILES
     ${SRC_DIR}/modifyPage/modComponentsPage.cpp
     ${SRC_DIR}/modifyPage/modUserPage.cpp
     ${SRC_DIR}/modifyPage/addUserDialog.cpp
+    ${SRC_DIR}/modifyPage/addComponentDialog.cpp
 
 )
 
