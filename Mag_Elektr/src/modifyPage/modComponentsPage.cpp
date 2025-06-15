@@ -27,7 +27,7 @@ void ModComponentsPage::setupModel()
 
     m_tableView = new QTableView(this);
     m_tableView->setModel(m_model);
-    m_tableView->setEditTriggers(QAbstractItemView::NoEditTriggers); // make view read-only
+    m_tableView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::SelectedClicked);
     m_tableView->resizeColumnsToContents();
 } 
 

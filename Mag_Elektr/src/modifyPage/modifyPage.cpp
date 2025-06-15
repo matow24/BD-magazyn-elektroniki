@@ -37,10 +37,9 @@ ModifyPage::ModifyPage(QWidget *parent) : QWidget(parent)
         m_stackedWidget->addWidget(m_userPage);
         m_userPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-            /*
-        m_locationPage = new QLabel("This is Page 3");
+        m_locationPage = new ModLocationsPage(this);
         m_stackedWidget->addWidget(m_locationPage);
-        m_locationPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);*/
+        m_locationPage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
         m_toolbarLayout->addWidget(m_buttonComponents);
         m_toolbarLayout->addWidget(m_buttonUsers);
