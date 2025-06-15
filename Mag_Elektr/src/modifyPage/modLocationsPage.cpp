@@ -19,7 +19,7 @@ void ModLocationsPage::setupModel()
     m_model->setHeaderData(0, Qt::Horizontal, tr("Regał"));
     m_model->setHeaderData(1, Qt::Horizontal, tr("Szuflada"));
     m_model->setHeaderData(2, Qt::Horizontal, tr("ID komponentu"));
-    m_model->setHeaderData(3, Qt::Horizontal, tr("Liczba elementów"));
+    m_model->setHeaderData(3, Qt::Horizontal, tr("Liczba elementów w szufladzie"));
 
     m_tableView = new QTableView(this);
     m_tableView->setModel(m_model);
@@ -57,13 +57,24 @@ void ModLocationsPage::onAddRegalClicked()
     if (reply == QMessageBox::No)
         return;
 
-    // Insert szuflady
-    QSqlQuery insertQuery;
-    if (!DB::Queries::Location::Add()){
-        QMessageBox::warning(this, tr("Nie dodano regału"), tr("Sory, nie pykło."));
+    // Nowy nr regału
+    QSqlQuery query;
+    if(!DB::Queries::Location::FindNextRackNumber(query)){
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie znaleziono numeru regału."));
         return;
-    }
-    else if (insertQuery.next()) {
+    } else if (query.next()) {
+            DB::Attrb::Location::Rack nr_nowego_regalu(query.value(0).toInt());
+
+            // Insert szuflady
+            for(int i=0; i<LICZBA_SZUFLAD_W_REGALE; i++){
+                DB::Attrb::Location::Drawer nr_nowej_szuflady(i);
+                QSqlQuery insertQuery;
+                if (!DB::Queries::Location::Add(insertQuery, nr_nowego_regalu, nr_nowej_szuflady)){
+                    QString istr = QString::number(i);
+                    QMessageBox::warning(this, tr("Nie pykło"), tr("Nie dodano szuflady ") % istr);
+                    break;
+                }
+            }
             QMessageBox::information(this, tr("Dodano regał"), tr("Regał i szuflady zostały dodane pomyślnie."));
         }
 

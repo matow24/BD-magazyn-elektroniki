@@ -11,6 +11,8 @@
 
 #include "main.hpp"
 
+#define LICZBA_SZUFLAD_W_REGALE 16
+
 class ModLocationsPage : public QWidget
 {
     Q_OBJECT
@@ -19,7 +21,7 @@ public:
     explicit ModLocationsPage(QWidget *parent = nullptr);
 
 private slots:
-    void onAddComponentClicked();
+    void onAddRegalClicked();
 
 private:
     QSqlTableModel *m_model;
