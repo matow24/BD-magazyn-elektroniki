@@ -60,7 +60,7 @@ bool Queries::User::CountEmail(QSqlQuery &query, QString email)
     return true;
 }
 
-bool DB::Queries::User::FindAdmin(QSqlQuery &query)
+bool Queries::User::FindAdmin(QSqlQuery &query)
 {
     query.prepare(FIND_ADMIN);
     if (!query.exec())
