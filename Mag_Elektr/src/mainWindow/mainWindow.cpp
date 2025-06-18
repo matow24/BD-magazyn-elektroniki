@@ -3,7 +3,6 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     setWindowName();
-    this->setMinimumSize(1280, 720);
     this->hide();
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MAINWINDOW_NAME]);
 

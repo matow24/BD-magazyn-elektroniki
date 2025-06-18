@@ -1,7 +1,7 @@
 QMainWindow
 {
-    min-height: 720px;
-    min-width: 1280px;
+    min-height: 7px;
+    min-width: 10px;
 }
 
 QToolBar
