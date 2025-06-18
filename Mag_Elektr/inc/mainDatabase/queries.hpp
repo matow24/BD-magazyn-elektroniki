@@ -11,17 +11,13 @@
     "VALUES (:rack, :drawer_no, 0, 0);"
 
 #define VARIANT_ADD \
-    "INSERT INTO Variant (Name, Type) " \
+    "INSERT OR IGNORE INTO Variant (Name, Type) " \
     "VALUES (:name, :type);"
 
 #define COMPONENT_ADD \
-    "INSERT INTO Component (ID, Variant_Name, Name, Manufacturer, Symbol, Datasheet, MaxQuantity) " \
-    "VALUES ("                                                      \
-        "(SELECT IFNULL(MAX(ID), 0) + 1 FROM Component), "           \
-        "(SELECT Name FROM Variant WHERE Name = :variantName), "        \
-        " :name, :manufacturer, :symbol, :datasheet, :maxQuantity)" \
-    ");"
-
+    "INSERT INTO Component (Variant_Name, Name, Manufacturer, Symbol, Datasheet, MaxQuantity) \
+    VALUES (:variant, :name, :manuf, :symbol, :sheet, :max);"
+    
 #define COMPONENT_COUNT__NAME_SYMBOL \
     "SELECT COUNT(*) FROM Component WHERE Symbol = :symbol OR Name = :name"
 
@@ -61,6 +57,10 @@
 #define COMPONENT_DELETE__ID \
     "DELETE FROM Component " \
     "WHERE ID = :ID;"
+
+#define COMPONENT_DELETE__NAME \
+    "DELETE FROM Component " \
+    "WHERE Name = :Name;"
 
 #define COMPONENT_SELECTWHERE__ID                       \
     "SELECT "                                           \

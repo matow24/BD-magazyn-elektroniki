@@ -44,6 +44,10 @@ namespace DB
 
                bool Delete(QSqlQuery &query, Attrb::Component::ID ID);
 
+               bool Delete(QSqlQuery &query, Attrb::Component::Name Name);
+
+               bool CountNameSymbol(QSqlQuery &query, Attrb::Component::Name Name, Attrb::Component::Symbol Symbol);
+
                bool SelectWhere(QSqlQuery &query, Attrb::Component::ID ID);
 
                bool SelectWhere(QSqlQuery &query, Attrb::Variant::Name Name);

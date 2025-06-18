@@ -2,7 +2,7 @@
 
 AddComponentDialog::AddComponentDialog(QWidget *parent) : QDialog(parent)
 {
-    setWindowTitle(tr("Add New User"));
+    setWindowTitle(tr("Add New Component"));
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MODIFYPAGE_NAME]);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -97,19 +97,23 @@ void AddComponentDialog::onAddVariantTypeClicked() {
 void AddComponentDialog::setup_variantNameEdit() {
     QSqlQuery query;
     query.prepare("SELECT Name FROM Variant");
-    while(query.next()){
-        variantNameEdit->addItem(query.value(0).toString());
-    }
-    variantNameEdit->addItem("Add new variant");
+    if(query.exec()){
+        while(query.next()){
+            variantNameEdit->addItem(query.value(0).toString());
+        }
+        variantNameEdit->addItem("Add new variant");
+    } 
 }
 
 void AddComponentDialog::setup_variantTypeEdit() {
     QSqlQuery query;
     query.prepare("SELECT Type FROM Variant GROUP BY Type");
-    while(query.next()){
-        variantTypeEdit->addItem(query.value(0).toString());
-    }
-    variantTypeEdit->addItem("Dodaj nowy rodzaj");
+    if(query.exec()){
+        while(query.next()){
+            variantTypeEdit->addItem(query.value(0).toString());
+        }
+        variantTypeEdit->addItem("Dodaj nowy rodzaj");
+    } 
 }
 
 void AddComponentDialog::validateForm()
@@ -128,16 +132,14 @@ void AddComponentDialog::validateForm()
 
 bool AddComponentDialog::areNameAndSymbolUnique()
 {
-    QString symbol = symbolEdit->text().trimmed();
-    QString name = nameEdit->text().trimmed();
     QSqlQuery query;
-    query.prepare("SELECT COUNT(*) FROM Component WHERE Symbol = :symbol OR Name = :name");
-    query.bindValue(":symbol", symbol);
-    query.bindValue(":name", name);
-    if (query.exec() && query.next()) {
-        return query.value(0).toInt() == 0;
+    DB::Attrb::Component::Name name(nameEdit->text().trimmed());
+    DB::Attrb::Component::Symbol symbol(symbolEdit->text().trimmed());
+    if(DB::Queries::Component::CountNameSymbol(query, name, symbol)){
+        if(query.next()) 
+            return query.value(0).toInt() == 0;
     }
-    return false;
+    return false; 
 }
 
 void AddComponentDialog::onAddClicked()
@@ -148,18 +150,6 @@ void AddComponentDialog::onAddClicked()
         return;
     }
 
-    // Confirm dialog
-    QMessageBox::StandardButton reply = QMessageBox::question(
-        this,
-        tr("Zatwierdź"),
-        tr("Czy potwierdzasz dane nowego komponentu?"),
-        QMessageBox::Yes | QMessageBox::No,
-        QMessageBox::No
-    );
-
-    if (reply == QMessageBox::No)
-        return;
-
     QString variantName = variantNameEdit->currentText();
     QString variantType = variantTypeEdit->currentText();
     QString name = nameEdit->text();
@@ -167,42 +157,30 @@ void AddComponentDialog::onAddClicked()
     QString manufacturer = manufacturerEdit->text();
     QString datasheet = datasheetEdit->text();
     uint maxQty = maxQuantityEdit->text().toUInt();
-
-    // Check for duplicates
-    QSqlQuery check;
-    check.prepare("SELECT COUNT(*) FROM Component WHERE Name = :name OR Symbol = :symbol");
-    check.bindValue(":name", name);
-    check.bindValue(":symbol", symbol);
-    if (!check.exec() || (check.next() && check.value(0).toInt() > 0)) {
-        QMessageBox::warning(this, "Duplicate", "Name or Symbol already exists.");
-        return;
-    }
     
     // Insert variant if not present
     QSqlQuery variantInsert;
-    variantInsert.prepare("INSERT OR IGNORE INTO Variant (Name, Type) VALUES (:name, :type)");
-    variantInsert.bindValue(":name", variantName);
-    variantInsert.bindValue(":type", variantType);
+    DB::Attrb::Variant::Name Variant_Name(variantName);
+    DB::Attrb::Variant::Type vType(variantType);
+    if(!DB::Queries::Variant::Add(variantInsert, Variant_Name, vType)){
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać nowego wariantu komponentu."));
+        return;
+    }
 
     // Insert component   
     QSqlQuery insert;
-    insert.prepare(R"(
-        INSERT INTO Component (Variant_Name, Name, Manufacturer, Symbol, Datasheet, MaxQuantity)
-        VALUES (:variant, :name, :manuf, :symbol, :sheet, :max)
-    )");
-    insert.bindValue(":variant", variantName);
-    insert.bindValue(":name", name);
-    insert.bindValue(":manuf", manufacturer);
-    insert.bindValue(":symbol", symbol);
-    insert.bindValue(":sheet", datasheet);
-    insert.bindValue(":max", maxQty);
-
-    if (!insert.exec()) {
-        QMessageBox::critical(this, "Insert Failed", insert.lastError().text());
+    DB::Attrb::Component::Name Name(name);
+    DB::Attrb::Component::Manufacturer Manufacturer(manufacturer);
+    DB::Attrb::Component::Symbol Symbol(symbol);
+    DB::Attrb::Component::Datasheet Datasheet(datasheet);
+    DB::Attrb::Component::MaxQuantity MaxQuantity(maxQty);
+    if(!DB::Queries::Component::Add(insert, Variant_Name, Name, Manufacturer, Symbol, Datasheet, MaxQuantity)){
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać komponentu."));
+        return;
     } else {
-        QMessageBox::information(this, "Success", tr("Component added."));
         accept();
     }
+
 }
 
 #include "modifyPage/moc_addComponentDialog.cpp"

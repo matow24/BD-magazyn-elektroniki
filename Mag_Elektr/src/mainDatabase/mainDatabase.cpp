@@ -137,12 +137,12 @@ bool Queries::Variant::Select(QSqlQuery &query)
 
 bool Queries::Component::Add(QSqlQuery &query, Attrb::Variant::Name Variant_Name, Attrb::Component::Name Name, Attrb::Component::Manufacturer Manufacturer, Attrb::Component::Symbol Symbol, Attrb::Component::Datasheet Datasheet, Attrb::Component::MaxQuantity MaxQuantity){
     query.prepare(COMPONENT_ADD);
-    query.bindValue(":variantName", Variant_Name.m_Name);
+    query.bindValue(":variant", Variant_Name.m_Name);
     query.bindValue(":name", Name.m_Name);
-    query.bindValue(":manufacturer", Manufacturer.m_Manufacturer);
+    query.bindValue(":manuf", Manufacturer.m_Manufacturer);
     query.bindValue(":symbol", Symbol.m_Symbol);
-    query.bindValue(":datasheet", Datasheet.m_Datasheet);
-    query.bindValue(":maxQuantity", MaxQuantity.m_MaxQuantity);
+    query.bindValue(":sheet", Datasheet.m_Datasheet);
+    query.bindValue(":max", MaxQuantity.m_MaxQuantity);
 
     if (!query.exec())
     {
@@ -164,6 +164,33 @@ bool Queries::Component::Delete(QSqlQuery &query, Attrb::Component::ID ID)
     }
     return true;
 }
+
+bool Queries::Component::Delete(QSqlQuery &query, Attrb::Component::Name Name)
+{
+    query.prepare(COMPONENT_DELETE__NAME);
+    query.bindValue(":Name", Name.m_Name);
+
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Component::CountNameSymbol(QSqlQuery &query, Attrb::Component::Name Name, Attrb::Component::Symbol Symbol){
+    query.prepare(COMPONENT_COUNT__NAME_SYMBOL);
+    query.bindValue(":symbol", Symbol.m_Symbol);
+    query.bindValue(":name", Name.m_Name);
+
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 
 bool Queries::Component::SelectWhere(QSqlQuery &query, Attrb::Component::ID ID)
 {
