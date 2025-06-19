@@ -62,7 +62,7 @@ bool Queries::User::CountEmail(QSqlQuery &query, QString email)
 
 bool Queries::User::FindAdmin(QSqlQuery &query)
 {
-    query.prepare(FIND_ADMIN);
+    query.prepare(USER_FIND_ADMIN);
     if (!query.exec())
     {
         qDebug() << "Error: Unable to execute query:" << query.lastError().text();
@@ -298,6 +298,40 @@ bool Queries::Location::Add(QSqlQuery &query, Attrb::Location::Rack Rack, Attrb:
     query.bindValue(":Rack", Rack.m_Rack);
     query.bindValue(":Drawer", Drawer.m_Drawer);
 
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Location::CountEmptyDrawers(QSqlQuery &query)
+{
+    query.prepare(LOCATION_COUNT_EMPTY_DRAWERS);
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Location::GetEmptyDrawersInRack(QSqlQuery &query, Attrb::Location::Rack Rack)
+{
+    query.prepare(LOCATION_SELECT_EMPTY_DRAWERS__RACK);
+    query.bindValue(":Rack", Rack.m_Rack);
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Location::GetEmptyDrawers(QSqlQuery &query)
+{
+    query.prepare(LOCATION_SELECT_EMPTY_DRAWERS);
     if (!query.exec())
     {
         qDebug() << "Error: Unable to execute query:" << query.lastError().text();

@@ -26,6 +26,7 @@ private slots:
     void validateForm();
     void onAddClicked();
     void onVariantNameChanged(const QString &name);
+    void onRegalNumberChanged(const QString &name);
     void onAddVariantNameClicked();
     void onAddVariantTypeClicked();
 
@@ -37,6 +38,8 @@ private:
     QLineEdit *symbolEdit;
     QLineEdit *datasheetEdit;
     QLineEdit *maxQuantityEdit;
+    QComboBox *regalEdit;
+    QComboBox *szufladaEdit;
     QPushButton *addButton;
     QPushButton *addVariantNameButton;
     QPushButton *addVariantTypeButton;
@@ -44,6 +47,7 @@ private:
     bool areNameAndSymbolUnique();
     void setup_variantNameEdit();
     void setup_variantTypeEdit();
+    void setup_RegalSzufladaEdit();
 };
 
 #endif

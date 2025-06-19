@@ -18,6 +18,8 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) : QDialog(parent)
     manufacturerEdit = new QLineEdit();
     datasheetEdit   = new QLineEdit();
     maxQuantityEdit = new QLineEdit();
+    regalEdit       = new QComboBox();
+    szufladaEdit    = new QComboBox();
 
     formLayout->addRow(tr("Wariant:"),          variantNameEdit);
     formLayout->addRow(tr("Rodzaj:"),           variantTypeEdit);
@@ -26,6 +28,8 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) : QDialog(parent)
     formLayout->addRow(tr("Symbol:"),           symbolEdit);
     formLayout->addRow(tr("Dane techniczne:"),  datasheetEdit);
     formLayout->addRow(tr("Maksymalna liczba elmentów w szufladzie:"), maxQuantityEdit);
+    formLayout->addRow(tr("Numer regału:"),     regalEdit);
+    formLayout->addRow(tr("Numer szuflady:"),   szufladaEdit);
 
     mainLayout->addLayout(formLayout);
 
@@ -40,6 +44,7 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) : QDialog(parent)
     mainLayout->addWidget(addVariantTypeButton, 0, Qt::AlignRight);
 
     connect(variantNameEdit, &QComboBox::currentTextChanged, this, &AddComponentDialog::onVariantNameChanged);
+    connect(regalEdit, &QComboBox::currentTextChanged, this, &AddComponentDialog::onRegalNumberChanged);
     connect(addVariantNameButton, &QPushButton::clicked, this, &AddComponentDialog::onAddVariantNameClicked);
     connect(addVariantTypeButton, &QPushButton::clicked, this, &AddComponentDialog::onAddVariantTypeClicked);
     connect(addButton, &QPushButton::clicked, this, &AddComponentDialog::onAddClicked);
@@ -59,6 +64,18 @@ void AddComponentDialog::onVariantNameChanged(const QString &name) {
         if (query.next()) {
             variantTypeEdit->clear();
             variantTypeEdit->addItem(query.value(0).toString());
+        }
+    }
+}
+
+void AddComponentDialog::onRegalNumberChanged(const QString &regal) {
+    szufladaEdit->clear();
+
+    QSqlQuery query;
+    DB::Attrb::Location::Rack lrack(regal.toInt());
+    if(DB::Queries::Location::GetEmptyDrawersInRack(query, lrack)){
+        if (query.next()) {
+            szufladaEdit->addItem(query.value(0).toString());
         }
     }
 }
@@ -106,6 +123,19 @@ void AddComponentDialog::setup_variantTypeEdit() {
     }
 }
 
+void AddComponentDialog::setup_RegalSzufladaEdit() {
+    regalEdit->clear();
+    szufladaEdit->clear();
+
+    QSqlQuery query;
+    if(DB::Queries::Location::GetEmptyDrawers(query)){
+        while(query.next()){
+            regalEdit->addItem(query.value(0).toString());
+            //szufladaEdit->addItem(query.value(1).toString());
+        }
+    }
+}
+
 void AddComponentDialog::validateForm()
 {
     bool filled = !variantNameEdit->currentText().isEmpty() &&
@@ -114,7 +144,9 @@ void AddComponentDialog::validateForm()
                   !manufacturerEdit->text().isEmpty() &&
                   !symbolEdit->text().isEmpty() &&
                   !datasheetEdit->text().isEmpty() &&
-                  !maxQuantityEdit->text().isEmpty();
+                  !maxQuantityEdit->text().isEmpty();// &&
+                  //!regalEdit->currentText().isEmpty() &&
+                  //!szufladaEdit->currentText().isEmpty();
 
     addButton->setEnabled(filled);
 

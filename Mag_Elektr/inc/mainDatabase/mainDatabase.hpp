@@ -69,6 +69,12 @@ namespace DB
           {
                bool Add(QSqlQuery &query, Attrb::Location::Rack Rack, Attrb::Location::Drawer Drawer);
 
+               bool CountEmptyDrawers(QSqlQuery &query);
+
+               bool GetEmptyDrawersInRack(QSqlQuery &query, Attrb::Location::Rack Rack);
+
+               bool GetEmptyDrawers(QSqlQuery &query);
+
                bool FindNextRackNumber(QSqlQuery &query);
 
                bool SelectWhere(QSqlQuery &query, Attrb::Location::Rack Rack, Attrb::Location::Drawer Drawer);

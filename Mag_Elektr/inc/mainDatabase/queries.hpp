@@ -10,16 +10,13 @@
     "INSERT INTO Location (Rack, Drawer, Component_ID, Quantity) "  \
     "VALUES (:rack, :drawer_no, 0, 0);"
 
-#define VARIANT_ADD \
-    "INSERT OR IGNORE INTO Variant (Name, Type) " \
-    "VALUES (:name, :type);"
+#define LOCATION_RACKS "SELECT Rack FROM Location GROUP BY Rack;"
 
-#define COMPONENT_ADD \
-    "INSERT INTO Component (Variant_Name, Name, Manufacturer, Symbol, Datasheet, MaxQuantity) \
-    VALUES (:variant, :name, :manuf, :symbol, :sheet, :max);"
-    
-#define COMPONENT_COUNT__NAME_SYMBOL \
-    "SELECT COUNT(*) FROM Component WHERE Symbol = :symbol OR Name = :name"
+#define LOCATION_SELECT_EMPTY_DRAWERS__RACK "SELECT Drawer FROM Location WHERE Rack = :rack AND Component_ID = 0"
+
+#define LOCATION_SELECT_EMPTY_DRAWERS "SELECT Rack, Drawer FROM Location WHERE Component_ID = 0"
+
+#define LOCATION_COUNT_EMPTY_DRAWERS "SELECT COUNT(*) FROM Location WHERE Component_ID = 0"
 
 #define USER_COUNT__EMAIL \
     "SELECT COUNT(*) FROM User WHERE Email = :email"
@@ -39,10 +36,14 @@
 #define USER_LOGIN__EMAIL \
     "SELECT Password, Position FROM User WHERE email = :email"
 
-#define FIND_ADMIN \
+#define USER_FIND_ADMIN \
     "SELECT FirstName, LastName, Email FROM User WHERE Position = 'A'"
 
 #define LAST_INSERT_ROW_ID "SELECT last_insert_rowid() AS ID;"
+
+#define VARIANT_ADD \
+    "INSERT OR IGNORE INTO Variant (Name, Type) " \
+    "VALUES (:name, :type);"
 
 #define VARIANT_SELECT "SELECT * FROM Variant;"
 
@@ -59,6 +60,13 @@
     "   FROM Component "                              \
     "   WHERE Component.Variant_Name = Variant.Name " \
     ");"
+
+#define COMPONENT_ADD \
+    "INSERT INTO Component (Variant_Name, Name, Manufacturer, Symbol, Datasheet, MaxQuantity) \
+    VALUES (:variant, :name, :manuf, :symbol, :sheet, :max);"
+    
+#define COMPONENT_COUNT__NAME_SYMBOL \
+    "SELECT COUNT(*) FROM Component WHERE Symbol = :symbol OR Name = :name"
 
 #define COMPONENT_DELETE__ID \
     "DELETE FROM Component " \
