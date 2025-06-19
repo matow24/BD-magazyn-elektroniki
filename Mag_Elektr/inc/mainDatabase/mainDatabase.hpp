@@ -36,6 +36,12 @@ namespace DB
                bool DeleteNotExists(QSqlQuery &query);
 
                bool Select(QSqlQuery &query);
+
+               bool GetVariantTypes(QSqlQuery &query);
+
+               bool GetVariantNames(QSqlQuery &query);
+
+               bool GetTypeByName(QSqlQuery &query, Attrb::Variant::Name Name);
           } // namespace Variant
 
           namespace Component

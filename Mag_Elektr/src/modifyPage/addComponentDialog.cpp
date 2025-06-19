@@ -19,8 +19,6 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) : QDialog(parent)
     datasheetEdit   = new QLineEdit();
     maxQuantityEdit = new QLineEdit();
 
-    variantTypeEdit->setEnabled(false); // Start disabled
-
     formLayout->addRow(tr("Wariant:"),          variantNameEdit);
     formLayout->addRow(tr("Rodzaj:"),           variantTypeEdit);
     formLayout->addRow(tr("Nazwa:"),            nameEdit);
@@ -39,7 +37,6 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) : QDialog(parent)
     mainLayout->addWidget(addVariantNameButton, 0, Qt::AlignRight);
 
     addVariantTypeButton = new QPushButton(tr("Dodaj rodzaj"));
-    addVariantTypeButton->setEnabled(false); // Start disabled
     mainLayout->addWidget(addVariantTypeButton, 0, Qt::AlignRight);
 
     connect(variantNameEdit, &QComboBox::currentTextChanged, this, &AddComponentDialog::onVariantNameChanged);
@@ -56,24 +53,18 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) : QDialog(parent)
 }
 
 void AddComponentDialog::onVariantNameChanged(const QString &name) {
-    if (name == "Add new variant") {
-        addVariantTypeButton->setEnabled(true);
-        variantTypeEdit->setEnabled(true);
-        variantTypeEdit->clear();
-        return;
-    }
-
     QSqlQuery query;
-    query.prepare("SELECT Type FROM Variant WHERE Name = :name");
-    query.bindValue(":name", name);
-    if (query.exec() && query.next()) {
-        variantTypeEdit->clear();
-        variantTypeEdit->addItem(query.value(0).toString());
+    DB::Attrb::Variant::Name vname(name);
+    if(DB::Queries::Variant::GetTypeByName(query, vname)){
+        if (query.next()) {
+            variantTypeEdit->clear();
+            variantTypeEdit->addItem(query.value(0).toString());
+        }
     }
 }
 
 void AddComponentDialog::onAddVariantNameClicked() {
-    QString newVariant = QInputDialog::getText(this, "New Variant", "Enter variant name:");
+    QString newVariant = QInputDialog::getText(this, tr("Nowy wariant"), tr("Podaj nowy wariant:"));
     if (newVariant.isEmpty()) return;
 
     if (variantNameEdit->findText(newVariant) == -1) {
@@ -85,7 +76,7 @@ void AddComponentDialog::onAddVariantNameClicked() {
 }
 
 void AddComponentDialog::onAddVariantTypeClicked() {
-    QString newType = QInputDialog::getText(this, "New Type", "Enter variant type:");
+    QString newType = QInputDialog::getText(this, tr("Nowy rodzaj"), tr("Podaj nowy rodzaj:"));
     if (newType.isEmpty()) return;
 
     if (variantTypeEdit->findText(newType) == -1) {
@@ -96,24 +87,23 @@ void AddComponentDialog::onAddVariantTypeClicked() {
 
 void AddComponentDialog::setup_variantNameEdit() {
     QSqlQuery query;
-    query.prepare("SELECT Name FROM Variant");
-    if(query.exec()){
+    if(DB::Queries::Variant::GetVariantNames(query)){
         while(query.next()){
             variantNameEdit->addItem(query.value(0).toString());
         }
-        variantNameEdit->addItem("Add new variant");
-    } 
+    }
 }
 
 void AddComponentDialog::setup_variantTypeEdit() {
+    variantTypeEdit->clear();
+    variantTypeEdit->setEnabled(false);
+
     QSqlQuery query;
-    query.prepare("SELECT Type FROM Variant GROUP BY Type");
-    if(query.exec()){
+    if(DB::Queries::Variant::GetVariantTypes(query)){
         while(query.next()){
             variantTypeEdit->addItem(query.value(0).toString());
         }
-        variantTypeEdit->addItem("Dodaj nowy rodzaj");
-    } 
+    }
 }
 
 void AddComponentDialog::validateForm()

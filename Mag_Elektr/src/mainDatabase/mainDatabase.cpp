@@ -135,6 +135,40 @@ bool Queries::Variant::Select(QSqlQuery &query)
     return true;
 }
 
+bool Queries::Variant::GetVariantTypes(QSqlQuery &query)
+{
+    query.prepare(VARIANT_TYPES);
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Variant::GetVariantNames(QSqlQuery &query)
+{
+    query.prepare(VARIANT_NAMES);
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Variant::GetTypeByName(QSqlQuery &query, Attrb::Variant::Name Name)
+{
+    query.prepare(VARIANT_TYPE__NAME);
+    query.bindValue(":name", Name.m_Name);
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 bool Queries::Component::Add(QSqlQuery &query, Attrb::Variant::Name Variant_Name, Attrb::Component::Name Name, Attrb::Component::Manufacturer Manufacturer, Attrb::Component::Symbol Symbol, Attrb::Component::Datasheet Datasheet, Attrb::Component::MaxQuantity MaxQuantity){
     query.prepare(COMPONENT_ADD);
     query.bindValue(":variant", Variant_Name.m_Name);

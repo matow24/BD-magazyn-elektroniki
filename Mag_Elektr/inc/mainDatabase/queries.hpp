@@ -46,6 +46,12 @@
 
 #define VARIANT_SELECT "SELECT * FROM Variant;"
 
+#define VARIANT_TYPES "SELECT Type FROM Variant GROUP BY Type;"
+
+#define VARIANT_NAMES "SELECT Name FROM Variant"
+
+#define VARIANT_TYPE__NAME "SELECT Type FROM Variant WHERE Name = :name"
+
 #define VARIANT_DELETENOTEXISTS                       \
     "DELETE FROM Variant "                            \
     "WHERE NOT EXISTS ( "                             \
