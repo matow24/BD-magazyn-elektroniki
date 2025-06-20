@@ -1,20 +1,33 @@
+QMainWindow
+{
+    min-height: 540px;
+    min-width: 960px;
+}
+
 QLineEdit
 {
-    font-size: 16px;
-    padding-left: 5px;
-    padding-right: 5px;
+    font-size: 18px;
+    padding: 5px;
     background-color: transparent;
     border: 1px solid green;
     min-width: 20px;
     margin-bottom: 16px;
 }
 
+QPushButton
+{
+    font-size: 18px;
+    padding: 5px;
+}
+
+QMessageBox
+{
+    font-size: 14px;
+}
 
 QPushButton#submitButton
 {
-    padding: 5px;
     min-width: 20px;
-    font-size: 14px;
     border: none;
     background-color: green;
     color: palette(Base);
@@ -31,9 +44,9 @@ QPushButton#submitButton:checked, QPushButton#submitButton:pressed
 }
 
 QPushButton#forgotPasswordButton{
-    flat="true";    
-    padding: 5px;
-    font-size: 11px;
+    font-size: 8px;
+    background: transparent; 
+    border: none;
 }
 
 QPushButton#proceedWithoutLoginButton{

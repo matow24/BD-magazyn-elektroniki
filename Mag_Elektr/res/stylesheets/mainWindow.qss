@@ -1,7 +1,7 @@
 QMainWindow
 {
-    min-height: 7px;
-    min-width: 10px;
+    min-height: 540px;
+    min-width: 960px;
 }
 
 QToolBar
@@ -17,6 +17,7 @@ QToolButton
     padding: 5px;
     icon-size: 20px;
     font-size: 20px;
+    font-weight: 600; 
     min-height: 30px;
     border: 1px solid green;
     background-color: transparent;
@@ -25,6 +26,7 @@ QToolButton
 QToolButton:hover
 {
     background-color: darkgreen;
+    color: rgba(255, 255, 255, 255);
 }
 
 QToolButton:checked

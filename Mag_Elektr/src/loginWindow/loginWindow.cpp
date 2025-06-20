@@ -3,25 +3,25 @@
 LoginWindow::LoginWindow(QWidget *parent) : QMainWindow(parent)
 {
     this->setWindowTitle(tr("Magazyn Elektroniki - Logowanie"));
-    this->setMinimumSize(1280, 720);
     this->show();
-    this->setStyleSheet(MainStyle::StyleSheets[STYLE_LOGINWINDOW_NAME]);
-
-    window = new QWidget;
-    window->setMinimumSize(this->width()/2, this->height());
-    window->setMaximumSize(this->width()/2, this->height());
 
     emailEdit = new QLineEdit(this);
     emailEdit->setPlaceholderText("Email");
 
     passwordEdit = new QLineEdit(this);
-    passwordEdit->setPlaceholderText("Hasło");
+    passwordEdit->setPlaceholderText(tr("Hasło"));
     passwordEdit->setEchoMode(QLineEdit::Password);
 
-    submitButton = new QPushButton("Zaloguj", this);
-    proceedWithoutLoginButton = new QPushButton("Przejdź dalej bez logowania", this);
-    forgotPasswordButton = new QPushButton("Nie pamiętam hasła", this);
+    submitButton = new QPushButton(tr("Zaloguj"), this);
+    proceedWithoutLoginButton = new QPushButton(tr("Przejdź dalej bez logowania"), this);
+    forgotPasswordButton = new QPushButton(tr("Nie pamiętam hasła"), this);
     forgotPasswordButton->setFlat(true); // Makes it look like a link
+
+    this->setStyleSheet(MainStyle::StyleSheets[STYLE_LOGINWINDOW_NAME]);
+
+    window = new QWidget;
+    window->setMinimumSize(this->width()/2, this->height());
+    window->setMaximumSize(this->width()/2, this->height());
 
     connect(submitButton, &QPushButton::clicked, this, &LoginWindow::onSubmit);
     connect(forgotPasswordButton, &QPushButton::clicked, this, &LoginWindow::onForgotPassword);
@@ -54,7 +54,6 @@ void LoginWindow::onLogout(){
     passwordEdit->clear();
 
     g_userRole = UserRole::Guest;
-    //reset g_userEmail
 
     this->show();  
     this->raise();  
@@ -80,14 +79,14 @@ void LoginWindow::onSubmit() {
     QString password = passwordEdit->text();
 
     if (email.isEmpty() || password.isEmpty()) {
-        QMessageBox::warning(this, "Błąd danych wejściowych", "Należy podać tak email, jak i hasło.");
+        QMessageBox::warning(this, tr("Błąd danych wejściowych"), tr("Należy podać tak email, jak i hasło."));
         return;
     }
 
     QSqlQuery query;
     QString queryEmail(email);
     if (!DB::Queries::User::LogIn(query, queryEmail))
-        QMessageBox::warning(this, "Błąd logowania", "Niepoprawne hasło.");
+        QMessageBox::warning(this, tr("Błąd logowania"), tr("Niepoprawne hasło."));
     else{
         if (query.next()) {
             QString dbPassword = query.value(0).toString();
@@ -100,10 +99,10 @@ void LoginWindow::onSubmit() {
                 emit loginSuccessful(); 
                 close();
             } else {
-                QMessageBox::warning(this, "Błąd logowania", "Niepoprawne hasło.");
+                QMessageBox::warning(this, tr("Błąd logowania"), tr("Niepoprawne hasło."));
             }
         } else {
-            QMessageBox::warning(this, "Błąd logowania", "Nie znaleziono adresu email.");
+            QMessageBox::warning(this, tr("Błąd logowania"), tr("Nie znaleziono adresu email."));
         }
     }
 }
@@ -120,10 +119,10 @@ void LoginWindow::onForgotPassword() {
             adminLastName = query.value(1).toString();
             adminEmail = query.value(2).toString();
         }
-    } else QMessageBox::information(this, "Zapytaj admina o nowe hasło", "A nie, nie ma admina XD");
+    } else QMessageBox::information(this, tr("Zapytaj admina o nowe hasło"), tr("A nie, nie ma admina XD"));
 
     auto msg = "Jeśli nie pamiętasz hasła, zgłoś się do administratora bazy danych, którym jest " % adminFirstName % " " % adminLastName % ", " % adminEmail;
-    QMessageBox::information(this, "Zapytaj admina o nowe hasło", msg);
+    QMessageBox::information(this, tr("Zapytaj admina o nowe hasło"), msg);
 }
 
 void LoginWindow::onProceedWithoutLogin() {
