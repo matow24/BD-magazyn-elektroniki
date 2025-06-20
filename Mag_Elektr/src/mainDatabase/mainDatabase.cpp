@@ -71,14 +71,14 @@ bool Queries::User::FindAdmin(QSqlQuery &query)
     return true;
 }
 
-bool Queries::User::Add(QSqlQuery &query, QString email, QString first_name, QString last_name, QString password, char position)
+bool Queries::User::Add(QSqlQuery &query, Attrb::User::Email email, Attrb::User::FirstName first_name, Attrb::User::LastName last_name, Attrb::User::Password password, Attrb::Position position)
 {
     query.prepare(USER_ADD);
-    query.bindValue(":email", email);
-    query.bindValue(":first_name", first_name);
-    query.bindValue(":last_name", last_name);
-    query.bindValue(":password", password);
-    query.bindValue(":position", position);
+    query.bindValue(":email", email.m_Email);
+    query.bindValue(":first_name", first_name.m_FirstName);
+    query.bindValue(":last_name", last_name.m_LastName);
+    query.bindValue(":password", password.m_Password);
+    query.bindValue(":position", QChar(static_cast<int>(position)));
 
     if (!query.exec())
     {

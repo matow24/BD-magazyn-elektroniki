@@ -24,7 +24,7 @@ public:
 private slots:
     void validateForm();
     void onAddClicked();
-    bool setPosition(char& );
+    bool setPosition(DB::Attrb::Position& );
 
 private:
     QLineEdit *firstNameEdit;
@@ -33,7 +33,7 @@ private:
     QComboBox *positionBox;
     QLineEdit *passwordEdit;
     QPushButton *addButton;
-    char pos;
+    DB::Attrb::Position upraw;
 };
 
 #endif

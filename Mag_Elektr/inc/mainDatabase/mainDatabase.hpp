@@ -129,7 +129,7 @@ namespace DB
 
                bool FindAdmin(QSqlQuery &query);
 
-               bool Add(QSqlQuery &query, QString email, QString first_name, QString last_name, QString password, char position);
+               bool Add(QSqlQuery &query, Attrb::User::Email email, Attrb::User::FirstName first_name, Attrb::User::LastName last_name, Attrb::User::Password password, Attrb::Position position);
 
                bool CountEmail(QSqlQuery &query, QString email);
 

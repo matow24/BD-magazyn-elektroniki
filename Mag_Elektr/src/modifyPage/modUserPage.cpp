@@ -17,7 +17,7 @@ ModUserPage::ModUserPage(QWidget *parent) : QWidget(parent)
     // Add button layout
     QHBoxLayout *buttonLayout = new QHBoxLayout();
     buttonLayout->addStretch();  // push button to the right
-    buttonLayout->setContentsMargins(0,0,0,20);
+    buttonLayout->setContentsMargins(0,0,0,0);
 
     QPushButton *addButton = new QPushButton(tr("➕ Dodaj Użytkownika"), this);
     buttonLayout->addWidget(addButton);

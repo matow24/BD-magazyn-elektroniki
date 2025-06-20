@@ -1,26 +1,26 @@
 #include "modifyPage/addUserDialog.hpp"
 
-bool AddUserDialog::setPosition(char& pos){
+bool AddUserDialog::setPosition(DB::Attrb::Position& pos){
     if(positionBox->currentText().trimmed() == "Employee"){
-        pos = 'E';
-        return 1;
+        pos = DB::Attrb::Position::Employee;
+        return 0;
     }
     if(positionBox->currentText().trimmed() == "Logistician"){
-        pos = 'L';
-        return 1;
+        pos = DB::Attrb::Position::Logistician;
+        return 0;
     }
     if(positionBox->currentText().trimmed() == "Admin"){
-        pos = 'A';
-        return 1;
+        pos = DB::Attrb::Position::Admin;
+        return 0;
     }
     
     QMessageBox::critical(this, tr("Błąd nadawania uprawnień"), tr("Nie udało się wybrać uprawnień:\n"));
-    return 0;
+    return 1;
 }
 
 AddUserDialog::AddUserDialog(QWidget *parent) : QDialog(parent)
 {
-    setWindowTitle(tr("Add New User"));
+    setWindowTitle(tr("Dodaj nowego użytkownika"));
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MODIFYPAGE_NAME]);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -68,43 +68,30 @@ void AddUserDialog::validateForm()
 
 void AddUserDialog::onAddClicked()
 {
-    if(setPosition(pos)) return;
-    QString email = emailEdit->text().trimmed();
-    QString name = firstNameEdit->text().trimmed();
-    QString surname = lastNameEdit->text().trimmed();
+    if(setPosition(upraw)) return;
+
+    QString stremail = emailEdit->text().trimmed();
+    DB::Attrb::User::Email email(stremail);
+    DB::Attrb::User::FirstName name(firstNameEdit->text().trimmed());
+    DB::Attrb::User::LastName surname(lastNameEdit->text().trimmed());
+    DB::Attrb::User::Password pass(passwordEdit->text().trimmed());
+    DB::Attrb::User::Position pozycja(upraw);
 
     // Check for existing email
     QSqlQuery checkQuery;
-    if (DB::Queries::User::CountEmail(checkQuery, email)){
+    if (DB::Queries::User::CountEmail(checkQuery, stremail)){
         if (checkQuery.next() && checkQuery.value(0).toInt() > 0) {
             QMessageBox::warning(this, tr("Email zajęty"), tr("Ten adres email jest już zarejestrowany w bazie. Proszę podać inny."));
             return;
         }
-        else QMessageBox::information(this, tr("Email dostępny"), tr("Nowicjusz, jak miło :)"));
     }   
-
-    // Confirm dialog
-    QMessageBox::StandardButton reply = QMessageBox::question(
-        this,
-        tr("Zatwierdź"),
-        tr("Czy potwierdzasz dane nowego użytkownika?"),
-        QMessageBox::Yes | QMessageBox::No,
-        QMessageBox::No
-    );
-
-    if (reply == QMessageBox::No)
-        return;
 
     // Insert user
     QSqlQuery insertQuery;
-    if (!DB::Queries::User::Add(insertQuery, email, name, surname, passwordEdit->text().trimmed(), pos)){
+    if (!DB::Queries::User::Add(insertQuery, email, name, surname, pass, upraw)){
         QMessageBox::warning(this, tr("Nie dodano użytkownika"), tr("Sory, nie pykło."));
         return;
     }
-    else if (insertQuery.next()) {
-            auto msg = "Użytkownik " % email % ", " % name % " " % surname % ", został dodany pomyślnie.";
-            QMessageBox::information(this, tr("Dodano użytkownika"), msg);
-        }
 
     accept(); // Close dialog on success
 }
