@@ -14,7 +14,7 @@
 
 #define LOCATION_SELECT_EMPTY_DRAWERS__RACK "SELECT Drawer FROM Location WHERE Rack = :Rack AND Component_ID = 0"
 
-#define LOCATION_SELECT_EMPTY_DRAWERS "SELECT Rack, Drawer FROM Location WHERE Component_ID = 0"
+#define LOCATION_SELECT_EMPTY_DRAWERS "SELECT Rack FROM Location WHERE IFNULL(Component_ID, 0) = 0 GROUP BY Rack"
 
 #define LOCATION_COUNT_EMPTY_DRAWERS "SELECT COUNT(*) FROM Location WHERE Component_ID = 0"
 
@@ -64,6 +64,8 @@
 #define COMPONENT_ADD \
     "INSERT INTO Component (Variant_Name, Name, Manufacturer, Symbol, Datasheet, MaxQuantity) \
     VALUES (:variant, :name, :manuf, :symbol, :sheet, :max);"
+
+#define COMPONENT_NEWEST_ID "SELECT ID FROM Component ORDER BY ID DESC LIMIT 1"
     
 #define COMPONENT_COUNT__NAME_SYMBOL \
     "SELECT COUNT(*) FROM Component WHERE Symbol = :symbol OR Name = :name"

@@ -45,6 +45,11 @@ void ModLocationsPage::setupLayout()
     setLayout(mainLayout);
 }
 
+void ModLocationsPage::refresh()
+{
+    m_model->select();
+}
+
 void ModLocationsPage::onAddRegalClicked()
 {
     // Liczba szuflad w regale

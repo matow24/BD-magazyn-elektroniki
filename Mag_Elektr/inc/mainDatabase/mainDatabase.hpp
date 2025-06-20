@@ -54,6 +54,8 @@ namespace DB
 
                bool CountNameSymbol(QSqlQuery &query, Attrb::Component::Name Name, Attrb::Component::Symbol Symbol);
 
+               bool GetNewestID(QSqlQuery &query);
+
                bool SelectWhere(QSqlQuery &query, Attrb::Component::ID ID);
 
                bool SelectWhere(QSqlQuery &query, Attrb::Variant::Name Name);

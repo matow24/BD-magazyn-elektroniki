@@ -52,6 +52,7 @@ ModifyPage::ModifyPage(QWidget *parent) : QWidget(parent)
             m_stackedWidget->setCurrentIndex(Users);
         });
         connect(m_buttonLocations, &QToolButton::clicked, [this]() {
+            m_locationPage->refresh();
             m_stackedWidget->setCurrentIndex(Locations);
         });
 

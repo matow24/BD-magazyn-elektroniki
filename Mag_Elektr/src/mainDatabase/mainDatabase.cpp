@@ -225,6 +225,16 @@ bool Queries::Component::CountNameSymbol(QSqlQuery &query, Attrb::Component::Nam
     return true;
 }
 
+bool Queries::Component::GetNewestID(QSqlQuery &query)
+{
+    query.prepare(COMPONENT_NEWEST_ID);
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
 
 bool Queries::Component::SelectWhere(QSqlQuery &query, Attrb::Component::ID ID)
 {

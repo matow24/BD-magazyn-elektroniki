@@ -18,6 +18,7 @@ class ModLocationsPage : public QWidget
 
 public:
     explicit ModLocationsPage(QWidget *parent = nullptr);
+    void refresh();
 
 private slots:
     void onAddRegalClicked();

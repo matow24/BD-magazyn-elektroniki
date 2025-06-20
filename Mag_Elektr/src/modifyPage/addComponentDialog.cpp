@@ -2,7 +2,7 @@
 
 AddComponentDialog::AddComponentDialog(QWidget *parent) : QDialog(parent)
 {
-    setWindowTitle(tr("Add New Component"));
+    setWindowTitle(tr("Dodaj nowy komponent"));
     this->setStyleSheet(MainStyle::StyleSheets[STYLE_MODIFYPAGE_NAME]);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -20,6 +20,7 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) : QDialog(parent)
     maxQuantityEdit = new QLineEdit();
     regalEdit       = new QComboBox();
     szufladaEdit    = new QComboBox();
+    setup_RegalSzufladaEdit();
 
     formLayout->addRow(tr("Wariant:"),          variantNameEdit);
     formLayout->addRow(tr("Rodzaj:"),           variantTypeEdit);
@@ -74,7 +75,7 @@ void AddComponentDialog::onRegalNumberChanged(const QString &regal) {
     QSqlQuery query;
     DB::Attrb::Location::Rack lrack(regal.toInt());
     if(DB::Queries::Location::GetEmptyDrawersInRack(query, lrack)){
-        if (query.next()) {
+        while (query.next()) {
             szufladaEdit->addItem(query.value(0).toString());
         }
     }
@@ -131,9 +132,9 @@ void AddComponentDialog::setup_RegalSzufladaEdit() {
     if(DB::Queries::Location::GetEmptyDrawers(query)){
         while(query.next()){
             regalEdit->addItem(query.value(0).toString());
-            //szufladaEdit->addItem(query.value(1).toString());
         }
     }
+    onRegalNumberChanged(regalEdit->currentText());
 }
 
 void AddComponentDialog::validateForm()
@@ -145,8 +146,8 @@ void AddComponentDialog::validateForm()
                   !symbolEdit->text().isEmpty() &&
                   !datasheetEdit->text().isEmpty() &&
                   !maxQuantityEdit->text().isEmpty();// &&
-                  //!regalEdit->currentText().isEmpty() &&
-                  //!szufladaEdit->currentText().isEmpty();
+                  !regalEdit->currentText().isEmpty() &&
+                  !szufladaEdit->currentText().isEmpty();
 
     addButton->setEnabled(filled);
 
@@ -199,9 +200,26 @@ void AddComponentDialog::onAddClicked()
     if(!DB::Queries::Component::Add(insert, Variant_Name, Name, Manufacturer, Symbol, Datasheet, MaxQuantity)){
         QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać komponentu."));
         return;
-    } else {
-        accept();
+    } 
+    
+    // Update location
+    QSqlQuery newestIDquery;
+    if(!DB::Queries::Component::GetNewestID(newestIDquery)){
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się odczytać ID komponentu."));
+        return;
     }
+    if(newestIDquery.next()) {
+        QSqlQuery updateLocation;
+        DB::Attrb::Location::Drawer Drawer(szufladaEdit->currentText().toInt());
+        DB::Attrb::Location::Rack Rack(regalEdit->currentText().toInt());
+        DB::Attrb::Location::Component_ID new_Component_ID(newestIDquery.value(0).toInt());
+        if(!DB::Queries::Location::UpdateSetComponentID(updateLocation, new_Component_ID, Rack, Drawer)) {
+            QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się przyporządkować komponentu do szuflady."));
+            return;
+        }
+    }
+    
+    accept();
 
 }
 
