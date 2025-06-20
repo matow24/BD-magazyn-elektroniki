@@ -11,6 +11,7 @@
 #include <QInputDialog>
 
 #include "main.hpp"
+//#include "modifyPage/LocationWithComponent.hpp"
 
 class ModLocationsPage : public QWidget
 {

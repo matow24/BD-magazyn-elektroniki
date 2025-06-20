@@ -12,6 +12,9 @@ ModLocationsPage::ModLocationsPage(QWidget *parent) : QWidget(parent)
 
 void ModLocationsPage::setupModel()
 {
+    /*if (!DB::Queries::Location::CreateLocationWithComponentView()) {
+        QMessageBox::critical(nullptr, "Database Error", "Failed to create LocationWithComponent view.");
+    }*/
     m_model = new QSqlTableModel(this);
     m_model->setTable("Location");
     m_model->select();
