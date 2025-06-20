@@ -3,7 +3,6 @@
 #define _MODCOMPONENTSPAGE_HPP
 
 #include <QWidget>
-#include <QSqlTableModel>
 #include <QTableView>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -11,6 +10,7 @@
 
 #include "main.hpp"
 #include "modifyPage/addComponentDialog.hpp"
+#include "modifyPage/first2ColumnsLockedTableView.hpp"
 
 class ModComponentsPage : public QWidget
 {

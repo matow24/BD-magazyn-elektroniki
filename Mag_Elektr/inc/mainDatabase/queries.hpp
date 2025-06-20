@@ -8,11 +8,11 @@
 
 #define LOCATION_ADD__RACK_DRAWER                       \
     "INSERT INTO Location (Rack, Drawer, Component_ID, Quantity) "  \
-    "VALUES (:rack, :drawer_no, 0, 0);"
+    "VALUES (:Rack, :Drawer, 0, 0);"
 
 #define LOCATION_RACKS "SELECT Rack FROM Location GROUP BY Rack;"
 
-#define LOCATION_SELECT_EMPTY_DRAWERS__RACK "SELECT Drawer FROM Location WHERE Rack = :rack AND Component_ID = 0"
+#define LOCATION_SELECT_EMPTY_DRAWERS__RACK "SELECT Drawer FROM Location WHERE Rack = :Rack AND Component_ID = 0"
 
 #define LOCATION_SELECT_EMPTY_DRAWERS "SELECT Rack, Drawer FROM Location WHERE Component_ID = 0"
 

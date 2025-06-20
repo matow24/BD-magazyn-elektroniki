@@ -25,6 +25,8 @@ void ModLocationsPage::setupModel()
     m_tableView->setModel(m_model);
     m_tableView->setEditTriggers(QAbstractItemView::NoEditTriggers); // make view read-only
     m_tableView->resizeColumnsToContents();
+
+    liczba_szuflad_w_regale = 2;
 } 
 
 void ModLocationsPage::setupLayout()
@@ -45,17 +47,14 @@ void ModLocationsPage::setupLayout()
 
 void ModLocationsPage::onAddRegalClicked()
 {
-    // Confirm dialog
-    QMessageBox::StandardButton reply = QMessageBox::question(
-        this,
-        tr("Zatwierdź"),
-        tr("Czy potwierdzasz dodanie nowego regału?"),
-        QMessageBox::Yes | QMessageBox::No,
-        QMessageBox::No
-    );
-
-    if (reply == QMessageBox::No)
+    // Liczba szuflad w regale
+    QString no_of_drawers = QInputDialog::getText(this, tr("Nowy regał"), tr("Podaj liczbę szuflad w nowym regale:"));
+    if (no_of_drawers.isEmpty()) return;
+    liczba_szuflad_w_regale = no_of_drawers.toInt();
+    if(liczba_szuflad_w_regale <= 0) {
+        QMessageBox::warning(this, tr("Błąd liczby szuflad"), tr("Liczba szuflad musi być dodatnia."));
         return;
+    }
 
     // Nowy nr regału
     QSqlQuery query;
@@ -66,16 +65,21 @@ void ModLocationsPage::onAddRegalClicked()
             DB::Attrb::Location::Rack nr_nowego_regalu(query.value(0).toInt());
 
             // Insert szuflady
-            for(int i=0; i<LICZBA_SZUFLAD_W_REGALE; i++){
+            bool allSucceeded = true;
+            for(int i=1; i<=liczba_szuflad_w_regale; i++){
                 DB::Attrb::Location::Drawer nr_nowej_szuflady(i);
                 QSqlQuery insertQuery;
-                if (!DB::Queries::Location::Add(insertQuery, nr_nowego_regalu, nr_nowej_szuflady)){
+
+                if (!DB::Queries::Location::Add(insertQuery, nr_nowego_regalu, nr_nowej_szuflady)) {
                     QString istr = QString::number(i);
-                    QMessageBox::warning(this, tr("Nie pykło"), tr("Nie dodano szuflady ") % istr);
+                    QMessageBox::warning(this, tr("Nie pykło"), tr("Nie dodano szuflady ") + istr);
+                    allSucceeded = false;
                     break;
                 }
             }
-            QMessageBox::information(this, tr("Dodano regał"), tr("Regał i szuflady zostały dodane pomyślnie."));
+            if (allSucceeded) {
+                QMessageBox::information(this, tr("Dodano regał"), tr("Regał i szuflady zostały dodane pomyślnie."));
+            }
         }
 
     m_model->select(); // Refresh table view after insertion

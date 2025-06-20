@@ -8,10 +8,9 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QInputDialog>
 
 #include "main.hpp"
-
-#define LICZBA_SZUFLAD_W_REGALE 16
 
 class ModLocationsPage : public QWidget
 {
@@ -27,6 +26,7 @@ private:
     QSqlTableModel *m_model;
     QTableView *m_tableView;
     QPushButton *m_addButton;
+    uint liczba_szuflad_w_regale;
 
     void setupModel();
     void setupLayout();

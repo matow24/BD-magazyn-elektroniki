@@ -12,7 +12,7 @@ ModComponentsPage::ModComponentsPage(QWidget *parent) : QWidget(parent)
 
 void ModComponentsPage::setupModel()
 {
-    m_model = new QSqlTableModel(this);
+    m_model = new First2ColumnsLockedTableModel(this);
     m_model->setTable("Component");
     m_model->select();
 
