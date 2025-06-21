@@ -444,6 +444,18 @@ bool Queries::Operation::InsertOperation(QSqlQuery &query, Attrb::Operation::Use
     return true;
 }
 
+bool Queries::Operation::GetNewestID(QSqlQuery &query)
+{
+    query.prepare(OPERATION_NEWEST_ID);
+
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 bool Queries::Operation::InsertChangeComponent(QSqlQuery &query, Attrb::Operation_ChangeComponent::Operation_ID Operation_ID,
                                                Attrb::Operation_ChangeComponent::Component_ID Component_ID, Attrb::OperationType Type)
 {
@@ -486,6 +498,25 @@ bool Queries::Operation::InsertMoveComponent(QSqlQuery &query, Attrb::Operation_
     query.bindValue(":Component_ID", Component_ID.m_Component_ID);
     query.bindValue(":Old_Location_Rack", Old_Location_Rack.m_Old_Location_Rack);
     query.bindValue(":Old_Location_Drawer", Old_Location_Drawer.m_Old_Location_Drawer);
+    query.bindValue(":New_Location_Rack", New_Location_Rack.m_New_Location_Rack);
+    query.bindValue(":New_Location_Drawer", New_Location_Drawer.m_New_Location_Drawer);
+
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Operation::InsertMoveComponentAdd(QSqlQuery &query, Attrb::Operation_MoveComponent::Operation_ID Operation_ID,
+                                        Attrb::Operation_MoveComponent::Component_ID Component_ID,
+                                        Attrb::Operation_MoveComponent::New_Location_Rack New_Location_Rack,
+                                        Attrb::Operation_MoveComponent::New_Location_Drawer New_Location_Drawer)
+{
+    query.prepare(OPERATION_INSERTMOVECOMPONENT_ADD_COMPONENT);
+    query.bindValue(":Operation_ID", Operation_ID.m_Operation_ID);
+    query.bindValue(":Component_ID", Component_ID.m_Component_ID);
     query.bindValue(":New_Location_Rack", New_Location_Rack.m_New_Location_Rack);
     query.bindValue(":New_Location_Drawer", New_Location_Drawer.m_New_Location_Drawer);
 

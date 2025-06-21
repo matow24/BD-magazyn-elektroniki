@@ -165,14 +165,22 @@ bool AddComponentDialog::areNameAndSymbolUnique()
     return false; 
 }
 
-void AddComponentDialog::onAddClicked()
+bool AddComponentDialog::updateLocation(int newestID)
 {
-    // Check for unique name and symbol
-    if(!areNameAndSymbolUnique()){
-        QMessageBox::critical(this, tr("Błędna nazwa lub symbol"), tr("Komponent o tej nazwie lub symbolu już istnieje w bazie."));
-        return;
+    QSqlQuery updateLocation;
+    DB::Attrb::Location::Drawer Drawer(szufladaEdit->currentText().toInt());
+    DB::Attrb::Location::Rack Rack(regalEdit->currentText().toInt());
+    DB::Attrb::Location::Component_ID new_Component_ID(newestID);
+    if(!DB::Queries::Location::UpdateSetComponentID(updateLocation, new_Component_ID, Rack, Drawer)) {
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się przyporządkować komponentu do szuflady."));
+        return 1;
     }
+    return 0;
+}
 
+// Insert variant, if not present, and component 
+bool AddComponentDialog::addVariant_Component()
+{
     QString variantName = variantNameEdit->currentText();
     QString variantType = variantTypeEdit->currentText();
     QString name = nameEdit->text();
@@ -180,17 +188,14 @@ void AddComponentDialog::onAddClicked()
     QString manufacturer = manufacturerEdit->text();
     QString datasheet = datasheetEdit->text();
     uint maxQty = maxQuantityEdit->text().toUInt();
-    
-    // Insert variant if not present
+
     QSqlQuery variantInsert;
     DB::Attrb::Variant::Name Variant_Name(variantName);
     DB::Attrb::Variant::Type vType(variantType);
     if(!DB::Queries::Variant::Add(variantInsert, Variant_Name, vType)){
         QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać nowego wariantu komponentu."));
-        return;
+        return 1;
     }
-
-    // Insert component   
     QSqlQuery insert;
     DB::Attrb::Component::Name Name(name);
     DB::Attrb::Component::Manufacturer Manufacturer(manufacturer);
@@ -199,26 +204,77 @@ void AddComponentDialog::onAddClicked()
     DB::Attrb::Component::MaxQuantity MaxQuantity(maxQty);
     if(!DB::Queries::Component::Add(insert, Variant_Name, Name, Manufacturer, Symbol, Datasheet, MaxQuantity)){
         QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać komponentu."));
-        return;
+        return 1;
     } 
+
+    return 0;
+}
+
+void AddComponentDialog::onAddClicked()
+{
+    // Check for unique name and symbol
+    if(!areNameAndSymbolUnique()){
+        QMessageBox::critical(this, tr("Błędna nazwa lub symbol"), tr("Komponent o tej nazwie lub symbolu już istnieje w bazie."));
+        return;
+    }
     
-    // Update location
+    // Insert variant, if not present, and component 
+    if(addVariant_Component()) return;
+
+    // Add operation in history
+    QSqlQuery insertOperation;
+    DB::Attrb::Operation::User_Email User_Email(g_userEmail);
+    if(!DB::Queries::Operation::InsertOperation(insertOperation, User_Email)) {
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać operacji."));
+        return;
+    }
+
+    // Get IDs of Component and Operation
+    QSqlQuery newestoperationIDquery;
+    if(!DB::Queries::Operation::GetNewestID(newestoperationIDquery)){
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się odczytać ID operacji."));
+        return;
+    }
     QSqlQuery newestIDquery;
     if(!DB::Queries::Component::GetNewestID(newestIDquery)){
         QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się odczytać ID komponentu."));
         return;
     }
+
     if(newestIDquery.next()) {
-        QSqlQuery updateLocation;
-        DB::Attrb::Location::Drawer Drawer(szufladaEdit->currentText().toInt());
-        DB::Attrb::Location::Rack Rack(regalEdit->currentText().toInt());
-        DB::Attrb::Location::Component_ID new_Component_ID(newestIDquery.value(0).toInt());
-        if(!DB::Queries::Location::UpdateSetComponentID(updateLocation, new_Component_ID, Rack, Drawer)) {
-            QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się przyporządkować komponentu do szuflady."));
-            return;
+        // Update location
+       if(updateLocation(newestIDquery.value(0).toInt())) return;
+
+       if(newestoperationIDquery.next()) 
+       {
+            // Add ChangeComponent operation
+            QSqlQuery insertChangeComponentOperation;
+            DB::Attrb::Operation_ChangeComponent::Operation_ID Operation_ID(newestoperationIDquery.value(0).toInt());
+            DB::Attrb::Operation_ChangeComponent::Component_ID Component_ID(newestIDquery.value(0).toInt());
+            if(!DB::Queries::Operation::InsertChangeComponent(insertChangeComponentOperation, Operation_ID, Component_ID, DB::Attrb::OperationType::Add)) {
+                QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać operacji zmiany komponentu."));
+                return;
+            }
+
+            // Add MoveComponent operation
+            QSqlQuery insertMoveComponentOperation;
+            DB::Attrb::Operation_MoveComponent::Operation_ID MoveOperation_ID(newestoperationIDquery.value(0).toInt());
+            DB::Attrb::Operation_MoveComponent::Component_ID MoveComponent_ID(newestIDquery.value(0).toInt());
+            DB::Attrb::Operation_MoveComponent::New_Location_Rack New_Location_Rack(regalEdit->currentText().toInt());
+            DB::Attrb::Operation_MoveComponent::New_Location_Drawer New_Location_Drawer(szufladaEdit->currentText().toInt());
+            if(!DB::Queries::Operation::InsertMoveComponentAdd(insertChangeComponentOperation, MoveOperation_ID, MoveComponent_ID, New_Location_Rack, New_Location_Drawer)) {
+                QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać operacji przeniesienia komponentu."));
+                return;
+            }
         }
     }
     
+
+
+    
+    
+
+
     accept();
 
 }

@@ -48,6 +48,8 @@ private:
     void setup_variantNameEdit();
     void setup_variantTypeEdit();
     void setup_RegalSzufladaEdit();
+    bool updateLocation(int newestID);
+    bool addVariant_Component();
 };
 
 #endif

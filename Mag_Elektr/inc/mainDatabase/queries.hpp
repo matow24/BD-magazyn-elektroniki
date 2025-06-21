@@ -3,21 +3,6 @@
 
 #define DATABASE_TYPE "QSQLITE"
 
-#define LOCATION_FIND_NEXT_RACK_NO \
-    "SELECT IFNULL(MAX(Rack), 0) + 1 FROM Location;"
-
-#define LOCATION_ADD__RACK_DRAWER                       \
-    "INSERT INTO Location (Rack, Drawer, Component_ID, Quantity) "  \
-    "VALUES (:Rack, :Drawer, 0, 0);"
-
-#define LOCATION_RACKS "SELECT Rack FROM Location GROUP BY Rack;"
-
-#define LOCATION_SELECT_EMPTY_DRAWERS__RACK "SELECT Drawer FROM Location WHERE Rack = :Rack AND Component_ID = 0"
-
-#define LOCATION_SELECT_EMPTY_DRAWERS "SELECT Rack FROM Location WHERE IFNULL(Component_ID, 0) = 0 GROUP BY Rack"
-
-#define LOCATION_COUNT_EMPTY_DRAWERS "SELECT COUNT(*) FROM Location WHERE Component_ID = 0"
-
 #define USER_COUNT__EMAIL \
     "SELECT COUNT(*) FROM User WHERE Email = :email"
 
@@ -168,6 +153,21 @@
     "LEFT JOIN Location AS L ON C.ID = L.Component_ID " \
     "WHERE C.Name LIKE '%' || :substr_Name || '%';"
 
+#define LOCATION_FIND_NEXT_RACK_NO \
+    "SELECT IFNULL(MAX(Rack), 0) + 1 FROM Location;"
+
+#define LOCATION_ADD__RACK_DRAWER                       \
+    "INSERT INTO Location (Rack, Drawer, Component_ID, Quantity) "  \
+    "VALUES (:Rack, :Drawer, 0, 0);"
+
+#define LOCATION_RACKS "SELECT Rack FROM Location GROUP BY Rack;"
+
+#define LOCATION_SELECT_EMPTY_DRAWERS__RACK "SELECT Drawer FROM Location WHERE Rack = :Rack AND Component_ID = 0"
+
+#define LOCATION_SELECT_EMPTY_DRAWERS "SELECT Rack FROM Location WHERE IFNULL(Component_ID, 0) = 0 GROUP BY Rack"
+
+#define LOCATION_COUNT_EMPTY_DRAWERS "SELECT COUNT(*) FROM Location WHERE Component_ID = 0"
+
 #define LOCATION_SELECTWHERE__RACK_DRAWER \
     "SELECT * "                           \
     "FROM Location "                      \
@@ -198,6 +198,8 @@
     "Operation (DateTime, User_Email) " \
     "VALUES (DATETIME('now'), :User_Email);"
 
+#define OPERATION_NEWEST_ID "SELECT ID FROM Operation ORDER BY ID DESC LIMIT 1"
+
 #define OPERATION_INSERTCHANGECOMPONENT                             \
     "INSERT INTO "                                                  \
     "Operation_ChangeComponent (Operation_ID, Component_ID, Type) " \
@@ -212,6 +214,16 @@
     "INSERT INTO "                                                                                                                          \
     "Operation_MoveComponent (Operation_ID, Component_ID, Old_Location_Rack, Old_Location_Drawer, New_Location_Rack, New_Location_Drawer) " \
     "VALUES (:Operation_ID, :Component_ID, :Old_Location_Rack, :Old_Location_Drawer, :New_Location_Rack, :New_Location_Drawer);"
+
+#define OPERATION_INSERTMOVECOMPONENT_ADD_COMPONENT \
+    "INSERT INTO "                                                                                                                          \
+    "Operation_MoveComponent (Operation_ID, Component_ID, Old_Location_Rack, Old_Location_Drawer, New_Location_Rack, New_Location_Drawer) " \
+    "VALUES (:Operation_ID, :Component_ID, NULL, NULL, :New_Location_Rack, :New_Location_Drawer);"
+
+#define OPERATION_INSERTMOVECOMPONENT_DELETE_COMPONENT \
+    "INSERT INTO "                                                                                                                          \
+    "Operation_MoveComponent (Operation_ID, Component_ID, Old_Location_Rack, Old_Location_Drawer, New_Location_Rack, New_Location_Drawer) " \
+    "VALUES (:Operation_ID, :Component_ID, :Old_Location_Rack, :Old_Location_Drawer, NULL, NULL);"
 
 #define OPERATION_SELECTWHERECHANGECOMPONENT__NOT_NULL            \
     "SELECT "                                                     \

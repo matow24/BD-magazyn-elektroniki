@@ -75,7 +75,6 @@ void AddUserDialog::onAddClicked()
     DB::Attrb::User::FirstName name(firstNameEdit->text().trimmed());
     DB::Attrb::User::LastName surname(lastNameEdit->text().trimmed());
     DB::Attrb::User::Password pass(passwordEdit->text().trimmed());
-    DB::Attrb::User::Position pozycja(upraw);
 
     // Check for existing email
     QSqlQuery checkQuery;

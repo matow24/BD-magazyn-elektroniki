@@ -96,6 +96,8 @@ namespace DB
           {
                bool InsertOperation(QSqlQuery &query, Attrb::Operation::User_Email User_Email);
 
+               bool GetNewestID(QSqlQuery &query);
+
                bool InsertChangeComponent(QSqlQuery &query, Attrb::Operation_ChangeComponent::Operation_ID Operation_ID,
                                           Attrb::Operation_ChangeComponent::Component_ID Component_ID, Attrb::OperationType Type);
 
@@ -106,6 +108,11 @@ namespace DB
                                         Attrb::Operation_MoveComponent::Component_ID Component_ID,
                                         Attrb::Operation_MoveComponent::Old_Location_Rack Old_Location_Rack,
                                         Attrb::Operation_MoveComponent::Old_Location_Drawer Old_Location_Drawer,
+                                        Attrb::Operation_MoveComponent::New_Location_Rack New_Location_Rack,
+                                        Attrb::Operation_MoveComponent::New_Location_Drawer New_Location_Drawer);
+
+               bool InsertMoveComponentAdd(QSqlQuery &query, Attrb::Operation_MoveComponent::Operation_ID Operation_ID,
+                                        Attrb::Operation_MoveComponent::Component_ID Component_ID,
                                         Attrb::Operation_MoveComponent::New_Location_Rack New_Location_Rack,
                                         Attrb::Operation_MoveComponent::New_Location_Drawer New_Location_Drawer);
 

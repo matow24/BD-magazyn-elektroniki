@@ -34,6 +34,7 @@ private:
     QLineEdit *passwordEdit;
     QPushButton *addButton;
     DB::Attrb::Position upraw;
+    DB::Attrb::OperationType oper_type;
 };
 
 #endif
