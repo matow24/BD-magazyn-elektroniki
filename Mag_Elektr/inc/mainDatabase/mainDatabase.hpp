@@ -98,6 +98,12 @@ namespace DB
 
                bool GetNewestID(QSqlQuery &query);
 
+               bool InsertChangeUser(QSqlQuery &query, Attrb::Operation_ChangeUser::Operation_ID Operation_ID,
+                                          Attrb::Operation_ChangeUser::User_Email User_Email, Attrb::OperationType Type);
+
+               bool InsertChangeRack(QSqlQuery &query, Attrb::Operation_ChangeRack::Operation_ID Operation_ID,
+                                          Attrb::Operation_ChangeRack::RackNr RackNr, Attrb::OperationType Type);
+
                bool InsertChangeComponent(QSqlQuery &query, Attrb::Operation_ChangeComponent::Operation_ID Operation_ID,
                                           Attrb::Operation_ChangeComponent::Component_ID Component_ID, Attrb::OperationType Type);
 

@@ -158,7 +158,7 @@
 
 #define LOCATION_ADD__RACK_DRAWER                       \
     "INSERT INTO Location (Rack, Drawer, Component_ID, Quantity) "  \
-    "VALUES (:Rack, :Drawer, 0, 0);"
+    "VALUES (:Rack, :Drawer, NULL, 0);"
 
 #define LOCATION_RACKS "SELECT Rack FROM Location GROUP BY Rack;"
 
@@ -166,7 +166,7 @@
 
 #define LOCATION_SELECT_EMPTY_DRAWERS "SELECT Rack FROM Location WHERE IFNULL(Component_ID, 0) = 0 GROUP BY Rack"
 
-#define LOCATION_COUNT_EMPTY_DRAWERS "SELECT COUNT(*) FROM Location WHERE Component_ID = 0"
+#define LOCATION_COUNT_EMPTY_DRAWERS "SELECT COUNT(*) FROM Location WHERE IFNULL(Component_ID, 0) = 0"
 
 #define LOCATION_SELECTWHERE__RACK_DRAWER \
     "SELECT * "                           \
@@ -198,7 +198,17 @@
     "Operation (DateTime, User_Email) " \
     "VALUES (DATETIME('now'), :User_Email);"
 
-#define OPERATION_NEWEST_ID "SELECT ID FROM Operation ORDER BY ID DESC LIMIT 1"
+#define OPERATION_NEWEST_ID "SELECT ID FROM Operation ORDER BY DateTime DESC LIMIT 1"
+
+#define OPERATION_INSERTCHANGEUSER                           \
+    "INSERT INTO "                                                  \
+    "Operation_ChangeUser (Operation_ID, User_Email, Type) " \
+    "VALUES (:Operation_ID, :User_Email, :Type);"
+
+#define OPERATION_INSERTCHANGERACK                          \
+    "INSERT INTO "                                                  \
+    "Operation_ChangeRack (Operation_ID, RackNr, Type) " \
+    "VALUES (:Operation_ID, :RackNr, :Type);"
 
 #define OPERATION_INSERTCHANGECOMPONENT                             \
     "INSERT INTO "                                                  \

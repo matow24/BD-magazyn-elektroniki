@@ -88,8 +88,34 @@ void AddUserDialog::onAddClicked()
     // Insert user
     QSqlQuery insertQuery;
     if (!DB::Queries::User::Add(insertQuery, email, name, surname, pass, upraw)){
-        QMessageBox::warning(this, tr("Nie dodano użytkownika"), tr("Sory, nie pykło."));
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie dodano użytkownika."));
         return;
+    }
+
+    // Add operation in history
+    QSqlQuery insertOperation;
+    DB::Attrb::Operation::User_Email oprUser_Email(g_userEmail);
+    if(!DB::Queries::Operation::InsertOperation(insertOperation, oprUser_Email)) {
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać operacji."));
+        return;
+    }
+
+    // Get newest Operation ID
+    QSqlQuery newestIDquery;
+    if(!DB::Queries::Operation::GetNewestID(newestIDquery)){
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się odczytać ID komponentu."));
+        return;
+    }
+    if(newestIDquery.next()) {
+        
+        // Add ChangeUser operation
+        QSqlQuery insertChangeUserOperation;
+        DB::Attrb::Operation_ChangeUser::Operation_ID Operation_ID(newestIDquery.value(0).toInt());
+        DB::Attrb::Operation_ChangeUser::User_Email chUser_Email(stremail);
+        if(!DB::Queries::Operation::InsertChangeUser(insertChangeUserOperation, Operation_ID, chUser_Email, DB::Attrb::OperationType::Add)){
+            QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać operacji zmiany użytkownika."));
+            return;
+        }
     }
 
     accept(); // Close dialog on success

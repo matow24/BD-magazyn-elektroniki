@@ -456,6 +456,36 @@ bool Queries::Operation::GetNewestID(QSqlQuery &query)
     return true;
 }
 
+bool Queries::Operation::InsertChangeUser(QSqlQuery &query, Attrb::Operation_ChangeUser::Operation_ID Operation_ID,
+                        Attrb::Operation_ChangeUser::User_Email User_Email, Attrb::OperationType Type)
+{
+    query.prepare(OPERATION_INSERTCHANGEUSER);
+    query.bindValue(":Operation_ID", Operation_ID.m_Operation_ID);
+    query.bindValue(":User_Email", User_Email.m_User_Email);
+    query.bindValue(":Type", QChar(static_cast<int>(Type)));
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}               
+
+bool Queries::Operation::InsertChangeRack(QSqlQuery &query, Attrb::Operation_ChangeRack::Operation_ID Operation_ID,
+                                          Attrb::Operation_ChangeRack::RackNr RackNr, Attrb::OperationType Type)
+{
+    query.prepare(OPERATION_INSERTCHANGERACK);
+    query.bindValue(":Operation_ID", Operation_ID.m_Operation_ID);
+    query.bindValue(":RackNr", RackNr.m_Rack);
+    query.bindValue(":Type", QChar(static_cast<int>(Type)));
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 bool Queries::Operation::InsertChangeComponent(QSqlQuery &query, Attrb::Operation_ChangeComponent::Operation_ID Operation_ID,
                                                Attrb::Operation_ChangeComponent::Component_ID Component_ID, Attrb::OperationType Type)
 {

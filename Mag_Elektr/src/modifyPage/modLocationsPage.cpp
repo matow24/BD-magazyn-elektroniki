@@ -86,6 +86,33 @@ void ModLocationsPage::onAddRegalClicked()
                 }
             }
             if (allSucceeded) {
+
+                // Add operation in history
+                QSqlQuery insertOperation;
+                DB::Attrb::Operation::User_Email oprUser_Email(g_userEmail);
+                if(!DB::Queries::Operation::InsertOperation(insertOperation, oprUser_Email)) {
+                    QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać operacji."));
+                    return;
+                }
+
+                // Get newest Operation ID
+                QSqlQuery newestIDquery;
+                if(!DB::Queries::Operation::GetNewestID(newestIDquery)) {
+                    QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się odczytać ID komponentu."));
+                    return;
+                }
+                if(newestIDquery.next()) {
+                    
+                    // Add ChangeRack operation
+                    QSqlQuery oprquery;
+                    DB::Attrb::Operation_ChangeRack::Operation_ID Operation_ID(newestIDquery.value(0).toInt());
+                    DB::Attrb::Operation_ChangeRack::RackNr RackNr(query.value(0).toInt());
+                    if(!DB::Queries::Operation::InsertChangeRack(oprquery, Operation_ID, RackNr, DB::Attrb::OperationType::Add)) {
+                        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać operacji na regale."));
+                        return;
+                    }
+                }
+
                 QMessageBox::information(this, tr("Dodano regał"), tr("Regał i szuflady zostały dodane pomyślnie."));
             }
         }
