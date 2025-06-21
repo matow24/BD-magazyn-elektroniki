@@ -25,7 +25,7 @@ void HistoryPageNS::ContainerWidget::clearAll()
     this->setColumnHidden(m_columnIdxMap.value(tr("ID Komponentu")), true);
     this->setColumnHidden(m_columnIdxMap.value(tr("Zmiana Ilości")), true);
     this->setColumnHidden(m_columnIdxMap.value(tr("Adres Email Modyfikowany")), true);
-    this->setColumnHidden(m_columnIdxMap.value(tr("Nr. Regału")), true);
+    this->setColumnHidden(m_columnIdxMap.value(tr("Nr Regału")), true);
     this->setColumnHidden(m_columnIdxMap.value(tr("Stary Regał")), true);
     this->setColumnHidden(m_columnIdxMap.value(tr("Stara Szuflada")), true);
     this->setColumnHidden(m_columnIdxMap.value(tr("Nowy Regał")), true);
@@ -77,13 +77,13 @@ void HistoryPageNS::ContainerWidget::addOperation_ChangeRack(int ID, QDateTime D
     this->setCenteredItem(row, m_columnIdxMap.value(tr("Data")), DateTime.toString("yyyy-MM-dd hh:mm:ss"));
     this->setCenteredItem(row, m_columnIdxMap.value(tr("Email Użytkownika")), User_Email);
     this->setCenteredItem(row, m_columnIdxMap.value(tr("Typ")), Type);
-    this->setCenteredItem(row, m_columnIdxMap.value(tr("Nr. Regału")), RackNr);
+    this->setCenteredItem(row, m_columnIdxMap.value(tr("Nr Regału")), RackNr);
 
     this->setColumnHidden(m_columnIdxMap.value(tr("Rodzaj Operacji")), false);
     this->setColumnHidden(m_columnIdxMap.value(tr("Data")), false);
     this->setColumnHidden(m_columnIdxMap.value(tr("Email Użytkownika")), false);
     this->setColumnHidden(m_columnIdxMap.value(tr("Typ")), false);
-    this->setColumnHidden(m_columnIdxMap.value(tr("Nr. Regału")), false);
+    this->setColumnHidden(m_columnIdxMap.value(tr("Nr Regału")), false);
 }
 
 void HistoryPageNS::ContainerWidget::addOperation_ChangeUser(int ID, QDateTime DateTime, QString User_Email, QString Mod_User_Email, QChar Type)
@@ -147,7 +147,7 @@ HistoryPageNS::ContainerWidget::ContainerWidget(QWidget *parent)
     m_columnIdxMap.insert(tr("ID Komponentu"), 4);
     m_columnIdxMap.insert(tr("Zmiana Ilości"), 5);
     m_columnIdxMap.insert(tr("Adres Email Modyfikowany"), 6);
-    m_columnIdxMap.insert(tr("Nr. Regału"), 7);
+    m_columnIdxMap.insert(tr("Nr Regału"), 7);
     m_columnIdxMap.insert(tr("Stary Regał"), 8);
     m_columnIdxMap.insert(tr("Stara Szuflada"), 9);
     m_columnIdxMap.insert(tr("Nowy Regał"), 10);
