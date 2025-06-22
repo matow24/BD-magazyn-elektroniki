@@ -10,6 +10,8 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QDebug>
+#include <QInputDialog>
+
 
 #include "main.hpp"
 #include "modifyPage/addUserDialog.hpp"
@@ -23,9 +25,11 @@ public:
 
 private slots:
     void addUser();
+    void removeUser();
 
 private:
     QSqlTableModel *m_model;
+    bool addOperation(QString);
 };
 
 #endif

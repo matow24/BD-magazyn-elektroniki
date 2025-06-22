@@ -88,6 +88,19 @@ bool Queries::User::Add(QSqlQuery &query, Attrb::User::Email email, Attrb::User:
     return true;
 }
 
+bool Queries::User::Delete(QSqlQuery &query, Attrb::User::Email email)
+{
+    query.prepare(USER_DELETE__EMAIL);
+    query.bindValue(":email", email.m_Email);
+
+    if (!query.exec())
+    {
+        qDebug() << "Error: Failed to delete user:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 bool Queries::LastInsertRowID(QSqlQuery &query)
 {
     query.prepare(LAST_INSERT_ROW_ID);

@@ -154,6 +154,8 @@ namespace DB
 
                bool CountEmail(QSqlQuery &query, QString email);
 
+               bool Delete(QSqlQuery &query, Attrb::User::Email email);
+
           } // namespace User
 
      } // namespace Queries
