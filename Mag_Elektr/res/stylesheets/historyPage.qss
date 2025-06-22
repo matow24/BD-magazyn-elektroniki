@@ -16,6 +16,7 @@ QTableWidget#HistoryPageNS_ContainerWidget
 QTableView
 {
     gridline-color: green;
+    font-size: 14px;
 }
 QHeaderView::section
 {
@@ -33,6 +34,7 @@ QWidget#HistoryPageNS_FilterWidget
 QLabel#HistoryPageNS_FilterWidget_Label
 {
     border: none;
+    font-size: 14px;
     background-color: transparent;
 }
 
@@ -42,6 +44,7 @@ QDateEdit#HistoryPageNS_FilterWidget_DateEdit
     background-color: transparent;
     padding-left: 5px;
     padding-right: 5px;
+    font-size: 14px;
 }
 
 QDateEdit#HistoryPageNS_FilterWidget_DateEdit:disabled
@@ -56,6 +59,7 @@ QCalendarWidget
     selection-background-color: palette(Base);
     selection-color: darkgreen;
     border: 1px solid green;
+    font-size: 14px;
 }
 
 QCalendarWidget QWidget
@@ -90,6 +94,7 @@ QLineEdit#HistoryPageNS_FilterWidget_LineEdit
     background-color: transparent;
     padding-left: 5px;
     padding-right: 5px;
+    font-size: 14px;
 }
 
 QLineEdit#HistoryPageNS_FilterWidget_LineEdit:disabled
@@ -103,6 +108,7 @@ QPushButton#HistoryPageNS_FilterWidget_Button
     border: none;
     background-color: green;
     color: palette(Base);
+    font-size: 14px;
 }
 
 QPushButton#HistoryPageNS_FilterWidget_Button:disabled

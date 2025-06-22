@@ -6,7 +6,7 @@ QWidget#ComponentsPage_FilterPanel
 
 QLineEdit#ComponentsPageNS_FilterWidget_Label
 {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 QLineEdit#ComponentsPageNS_FilterWidget_LineEdit
@@ -48,6 +48,7 @@ QTreeWidget#ComponentsPageNS_TreeFilterWidget
     border: none;
     padding: 0px;
     spacing: 0px;
+    font-size: 14px;
     background-color: transparent;
 }
 
@@ -67,6 +68,7 @@ QFrame#ComponentsPage_Frame
 QWidget#ComponentsPageNS_ContainerWidget
 {
     border: none;
+    font-size: 14px;
     background-color: transparent;
 }
 
@@ -74,12 +76,14 @@ QWidget#Component_Component
 {
     border: 2px solid green;
     border-radius: 5px;
+    font-size: 14px;
     background-color: transparent;
 }
 
 QWidget#Component_EditWidget
 {
     border: none;
+    font-size: 14px;
     background-color: green;
 }
 
@@ -136,7 +140,7 @@ QWidget#Component_QuantityWidget_InfoWidget
 
 QLabel#Component_QuantityWidget_NameLabel
 {
-    font-size: 12px;
+    font-size: 14px;
     padding-left: 5px;
     padding-right: 5px;
     color: palette(Base);
@@ -152,7 +156,7 @@ QLabel#Component_QuantityWidget_ValueLabel
 
 QLabel#Component_QuantityWidget_EditLabel
 {
-    font-size: 12px;
+    font-size: 14px;
     padding-left: 5px;
     padding-right: 5px;
 }
