@@ -160,13 +160,19 @@
     "INSERT INTO Location (Rack, Drawer, Component_ID, Quantity) "  \
     "VALUES (:Rack, :Drawer, NULL, 0);"
 
+#define LOCATION_REMOVE__RACK "DELETE FROM Location WHERE Rack=:Rack;"
+
 #define LOCATION_RACKS "SELECT Rack FROM Location GROUP BY Rack;"
 
-#define LOCATION_SELECT_EMPTY_DRAWERS__RACK "SELECT Drawer FROM Location WHERE Rack = :Rack AND Component_ID = 0"
+#define LOCATION_SELECT_EMPTY_DRAWERS__RACK "SELECT Drawer FROM Location WHERE Rack = :Rack AND IFNULL(Component_ID, 0) = 0;"
 
-#define LOCATION_SELECT_EMPTY_DRAWERS "SELECT Rack FROM Location WHERE IFNULL(Component_ID, 0) = 0 GROUP BY Rack"
+#define LOCATION_SELECT_EMPTY_DRAWERS "SELECT Rack FROM Location WHERE IFNULL(Component_ID, 0) = 0 GROUP BY Rack;"
 
-#define LOCATION_COUNT_EMPTY_DRAWERS "SELECT COUNT(*) FROM Location WHERE IFNULL(Component_ID, 0) = 0"
+#define LOCATION_COUNT_EMPTY_DRAWERS "SELECT COUNT(*) FROM Location WHERE IFNULL(Component_ID, 0) = 0;"
+
+#define LOCATION_COUNT_NONEMPTY_DRAWERS__RACK "SELECT COUNT(*) FROM Location WHERE Rack = :Rack AND Component_ID IS NOT NULL;"
+
+#define LOCATION_COUNT__RACK "SELECT COUNT(*) FROM Location WHERE Rack = :Rack;"
 
 #define LOCATION_SELECTWHERE__RACK_DRAWER \
     "SELECT * "                           \

@@ -316,9 +316,45 @@ bool Queries::Location::Add(QSqlQuery &query, Attrb::Location::Rack Rack, Attrb:
     return true;
 }
 
+bool Queries::Location::DeleteRack(QSqlQuery &query, Attrb::Location::Rack Rack)
+{
+    query.prepare(LOCATION_REMOVE__RACK);
+    query.bindValue(":Rack", Rack.m_Rack);
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 bool Queries::Location::CountEmptyDrawers(QSqlQuery &query)
 {
     query.prepare(LOCATION_COUNT_EMPTY_DRAWERS);
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Location::CountNonemptyDrawersInRack(QSqlQuery &query, Attrb::Location::Rack Rack)
+{
+    query.prepare(LOCATION_COUNT_NONEMPTY_DRAWERS__RACK);
+    query.bindValue(":Rack", Rack.m_Rack);
+    if (!query.exec())
+    {
+        qDebug() << "Error: Unable to execute query:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool Queries::Location::IsRackInDatabase(QSqlQuery &query, Attrb::Location::Rack Rack)
+{
+    query.prepare(LOCATION_COUNT__RACK);
+    query.bindValue(":Rack", Rack.m_Rack);
     if (!query.exec())
     {
         qDebug() << "Error: Unable to execute query:" << query.lastError().text();

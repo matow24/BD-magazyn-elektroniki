@@ -37,12 +37,16 @@ void ModLocationsPage::setupLayout()
     m_addButton = new QPushButton(tr("➕ Dodaj regał"));
     connect(m_addButton, &QPushButton::clicked, this, &ModLocationsPage::onAddRegalClicked);
 
+    m_removeButton = new QPushButton(tr("➖ Usuń pusty regał"));
+    connect(m_removeButton, &QPushButton::clicked, this, &ModLocationsPage::onRemoveRegalClicked);
+
     auto *mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(m_tableView);
 
     auto *buttonLayout = new QHBoxLayout();
     buttonLayout->addStretch();
     buttonLayout->addWidget(m_addButton);
+    buttonLayout->addWidget(m_removeButton);
     mainLayout->addLayout(buttonLayout);
 
     setLayout(mainLayout);
@@ -51,6 +55,85 @@ void ModLocationsPage::setupLayout()
 void ModLocationsPage::refresh()
 {
     m_model->select();
+}
+
+bool ModLocationsPage::addOperation(int nr_regalu, DB::Attrb::OperationType oprtyp)
+{
+    // Add operation in history
+    QSqlQuery insertOperation;
+    DB::Attrb::Operation::User_Email oprUser_Email(g_userEmail);
+    if(!DB::Queries::Operation::InsertOperation(insertOperation, oprUser_Email)) {
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać operacji."));
+        return 1;
+    }
+
+    // Get newest Operation ID
+    QSqlQuery newestIDquery;
+    if(!DB::Queries::Operation::GetNewestID(newestIDquery)) {
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się odczytać ID operacji."));
+        return 1;
+    }
+    if(newestIDquery.next()) {
+        
+        // Add ChangeRack operation
+        QSqlQuery oprquery;
+        DB::Attrb::Operation_ChangeRack::Operation_ID Operation_ID(newestIDquery.value(0).toInt());
+        DB::Attrb::Operation_ChangeRack::RackNr RackNr(nr_regalu);
+        if(!DB::Queries::Operation::InsertChangeRack(oprquery, Operation_ID, RackNr, oprtyp)) {
+            QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać operacji na regale."));
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+void ModLocationsPage::onRemoveRegalClicked()
+{
+    // Numer regału usunięcia
+    QString strnr_regalu = QInputDialog::getText(this, tr("Usuń regał"), tr("Podaj numer regału do usunięcia:"));
+    if (strnr_regalu.isEmpty()) return;
+    int nr_regalu = strnr_regalu.toInt();
+
+    if(nr_regalu <= 0) {
+        QMessageBox::warning(this, tr("Błąd numeru regału"), tr("Nie ma regału o takim numerze."));
+        return;
+    }
+    QSqlQuery rackexsistsquery;
+    DB::Attrb::Location::Rack Rack(nr_regalu);
+    if(!DB::Queries::Location::IsRackInDatabase(rackexsistsquery, Rack)) {
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie znaleziono numeru regału."));
+        return;
+    } else if (rackexsistsquery.next()) {
+        if(rackexsistsquery.value(0).toInt() <= 0) {
+            QMessageBox::warning(this, tr("Błąd numeru regału"), tr("Nie ma regału o takim numerze."));
+            return;
+        }
+    }
+
+    QSqlQuery query;
+    if(!DB::Queries::Location::CountNonemptyDrawersInRack(query, Rack)) {
+        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie znaleziono numeru regału."));
+        return;
+    } else if (query.next()) {
+        // Niepusty
+        if(query.value(0).toInt() != 0) {
+            QMessageBox::warning(this, tr("Błąd numeru regału"), tr("Ten regał nie jest pusty. Aby go usunąć, usuń wpierw wszystkie komponenty z jego szuflad."));
+            return;
+        }
+        // Pusty; Usuń
+        else {
+            QSqlQuery deletequery;
+            if(!DB::Queries::Location::DeleteRack(deletequery, Rack)) {
+                QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się usunąć regału."));
+                return;
+            }
+            
+            if(addOperation(nr_regalu, DB::Attrb::OperationType::Remove)) return;
+
+            m_model->select(); // Refresh table view
+        }
+    }
 }
 
 void ModLocationsPage::onAddRegalClicked()
@@ -86,32 +169,7 @@ void ModLocationsPage::onAddRegalClicked()
                 }
             }
             if (allSucceeded) {
-
-                // Add operation in history
-                QSqlQuery insertOperation;
-                DB::Attrb::Operation::User_Email oprUser_Email(g_userEmail);
-                if(!DB::Queries::Operation::InsertOperation(insertOperation, oprUser_Email)) {
-                    QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać operacji."));
-                    return;
-                }
-
-                // Get newest Operation ID
-                QSqlQuery newestIDquery;
-                if(!DB::Queries::Operation::GetNewestID(newestIDquery)) {
-                    QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się odczytać ID komponentu."));
-                    return;
-                }
-                if(newestIDquery.next()) {
-                    
-                    // Add ChangeRack operation
-                    QSqlQuery oprquery;
-                    DB::Attrb::Operation_ChangeRack::Operation_ID Operation_ID(newestIDquery.value(0).toInt());
-                    DB::Attrb::Operation_ChangeRack::RackNr RackNr(query.value(0).toInt());
-                    if(!DB::Queries::Operation::InsertChangeRack(oprquery, Operation_ID, RackNr, DB::Attrb::OperationType::Add)) {
-                        QMessageBox::warning(this, tr("Nie pykło"), tr("Nie udało się dodać operacji na regale."));
-                        return;
-                    }
-                }
+                if(addOperation(query.value(0).toInt(), DB::Attrb::OperationType::Add)) return;
 
                 QMessageBox::information(this, tr("Dodano regał"), tr("Regał i szuflady zostały dodane pomyślnie."));
             }

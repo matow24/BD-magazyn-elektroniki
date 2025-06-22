@@ -23,15 +23,18 @@ public:
 
 private slots:
     void onAddRegalClicked();
+    void onRemoveRegalClicked();
 
 private:
     QSqlTableModel *m_model;
     QTableView *m_tableView;
     QPushButton *m_addButton;
+    QPushButton *m_removeButton;
     uint liczba_szuflad_w_regale;
 
     void setupModel();
     void setupLayout();
+    bool addOperation(int, DB::Attrb::OperationType);
 };
 
 #endif
