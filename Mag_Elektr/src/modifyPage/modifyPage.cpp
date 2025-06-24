@@ -46,6 +46,7 @@ ModifyPage::ModifyPage(QWidget *parent) : QWidget(parent)
         m_toolbarLayout->addWidget(m_buttonLocations);
 
         connect(m_buttonComponents, &QToolButton::clicked, [this]() {
+            m_modComponentsPage->refresh();
             m_stackedWidget->setCurrentIndex(ModComponents);
         });
         connect(m_buttonUsers, &QToolButton::clicked, [this]() {
