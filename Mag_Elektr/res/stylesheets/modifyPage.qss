@@ -8,6 +8,18 @@ QPushButton
     padding: 5px;
 }
 
+QToolButton:hover
+{
+    background-color: darkgreen;
+    color: rgba(255, 255, 255, 255);
+}
+
+QToolButton:checked
+{
+    background-color: green;
+    color: palette(Base);
+}
+
 QMessageBox, QInputDialog
 {
     font-size: 16px;

@@ -102,6 +102,7 @@ void MainWindow::changePage(Page &newPage)
         m_stackedWidget->setCurrentWidget(m_historyPage);
         break;
     case Page::Modify:
+        m_modifyPage->refreshModComponentsPage();
         m_stackedWidget->setCurrentWidget(m_modifyPage);
         break;
     }

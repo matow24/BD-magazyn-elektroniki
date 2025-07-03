@@ -39,6 +39,7 @@ private:
 
 public:
     ModifyPage(QWidget *parent = nullptr);
+    void refreshModComponentsPage();
 };
 
 #endif // _MODIFYPAGE_HPP

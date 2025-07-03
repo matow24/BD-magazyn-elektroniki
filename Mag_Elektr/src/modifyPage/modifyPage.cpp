@@ -47,12 +47,21 @@ ModifyPage::ModifyPage(QWidget *parent) : QWidget(parent)
 
         connect(m_buttonComponents, &QToolButton::clicked, [this]() {
             m_modComponentsPage->refresh();
+            m_buttonComponents->setChecked(true);
+            m_buttonUsers->setChecked(false);
+            m_buttonLocations->setChecked(false);
             m_stackedWidget->setCurrentIndex(ModComponents);
         });
         connect(m_buttonUsers, &QToolButton::clicked, [this]() {
+            m_buttonComponents->setChecked(false);
+            m_buttonUsers->setChecked(true);
+            m_buttonLocations->setChecked(false);
             m_stackedWidget->setCurrentIndex(Users);
         });
         connect(m_buttonLocations, &QToolButton::clicked, [this]() {
+            m_buttonComponents->setChecked(false);
+            m_buttonUsers->setChecked(false);
+            m_buttonLocations->setChecked(true);
             m_locationPage->refresh();
             m_stackedWidget->setCurrentIndex(Locations);
         });
@@ -61,6 +70,11 @@ ModifyPage::ModifyPage(QWidget *parent) : QWidget(parent)
     }
 
     m_mainLayout->addWidget(m_stackedWidget);
+}
+
+void ModifyPage::refreshModComponentsPage()
+{
+    m_modComponentsPage->refresh();
 }
 
 #include "modifyPage/moc_modifyPage.cpp"

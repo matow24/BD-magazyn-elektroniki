@@ -44,7 +44,7 @@ void MainStyle::loadStyleSheets()
         fileStyle_mainWindow.close();
     }
     else
-        qWarning("Failed to load MainWindow stylesheet");
+        qWarning("Failed to load MainWindow style sheet");
 
     QFile fileStyle_modifyPage(STYLE_MODIFYPAGE_PATH);
     if (fileStyle_modifyPage.open(QIODevice::ReadOnly | QIODevice::Text))
